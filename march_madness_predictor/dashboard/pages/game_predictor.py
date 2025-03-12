@@ -88,7 +88,7 @@ def layout(data_loader=None):
         dbc.Row([
             # Spread input
             dbc.Col([
-                html.Label("Vegas Spread (+ for Team 1 favored)"),
+                html.Label("Vegas Spread (positive if Team 1 favored, negative if Team 2 favored)"),
                 dbc.Input(
                     id="vegas-spread-input",
                     type="number",
