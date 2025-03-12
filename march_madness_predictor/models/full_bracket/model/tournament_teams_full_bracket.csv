@@ -1,0 +1,65 @@
+TeamName,Seed,Region,ChampionshipPct,SimilarityPct,PredictedExitRound,ActualFinish
+Auburn,1,East,10.0,63.6004792874961,7.0,Championship Game
+Illinois,16,East,0.75,0.0,2.0,First Round
+Gonzaga,8,East,5.25,0.0,5.0,Elite 8
+Creighton,9,East,0.3,0.0,5.0,Second Round
+Wisconsin,5,East,2.5,53.55075515296293,4.0,Second Round
+Oklahoma,12,East,0.3,0.0,3.0,First Round
+Duke,4,East,20.7,53.91352032797471,5.0,Sweet 16
+Arizona,13,East,1.5,13.799013271250772,2.0,First Round
+Auburn,6,East,10.25,0.0,7.0,Championship Game
+Alabama,11,East,5.25,0.0,3.0,Sweet 16
+Tennessee,3,East,12.15,92.8720514171327,3.0,Elite 8
+Marquette,14,East,0.75,0.0,2.0,First Round
+Purdue,7,East,1.5,23.42905355521586,4.0,Second Round
+Purdue,10,East,1.25,0.0,4.0,Second Round
+Florida,2,East,13.55,83.80507926015072,5.0,Elite 8
+Michigan,15,East,0.75,0.0,2.0,First Round
+Auburn,1,West,10.0,63.6004792874961,7.0,Championship Game
+Illinois,16,West,0.75,0.0,2.0,First Round
+Creighton,8,West,0.3,0.0,5.0,Second Round
+Creighton,9,West,0.3,0.0,5.0,Second Round
+Wisconsin,5,West,2.5,53.55075515296293,4.0,Second Round
+Alabama,12,West,5.25,0.0,3.0,Sweet 16
+Michigan St.,4,West,13.2,63.85797519645586,4.0,Sweet 16
+Arizona,13,West,1.5,13.799013271250772,2.0,First Round
+Houston,6,West,10.25,0.0,6.0,National Champion
+Clemson,11,West,0.75,0.0,3.0,First Round
+Alabama,3,West,8.55,89.27532912113384,3.0,Sweet 16
+Marquette,14,West,0.75,0.0,2.0,First Round
+Iowa St.,7,West,3.0,43.887845719487835,2.0,Second Round
+Wisconsin,10,West,2.75,0.0,4.0,Second Round
+Gonzaga,2,West,5.0,72.92002100647048,5.0,Elite 8
+Texas Tech,15,West,5.25,0.0,2.0,Sweet 16
+Houston,1,South,17.15,74.76665371358764,6.0,National Champion
+Arkansas,16,South,0.55,0.0,2.0,First Round
+Gonzaga,8,South,5.25,0.0,5.0,Elite 8
+Ohio St.,9,South,0.3,0.0,4.0,First Round
+Missouri,5,South,3.0,33.16883587756382,5.0,Second Round
+SMU,12,South,0.3,0.0,3.0,First Round
+Texas Tech,4,South,5.0,82.9264768998897,2.0,Sweet 16
+Kentucky,13,South,1.5,3.4447137581271505,2.0,First Round
+Houston,6,South,10.25,0.0,6.0,National Champion
+Tennessee,11,South,5.25,0.0,3.0,Elite 8
+Alabama,3,South,8.55,89.27532912113384,3.0,Sweet 16
+Louisville,14,South,0.75,0.0,2.0,First Round
+Duke,7,South,10.25,0.0,5.0,Sweet 16
+Wisconsin,10,South,2.75,0.0,4.0,Second Round
+Gonzaga,2,South,5.0,72.92002100647048,5.0,Elite 8
+Texas Tech,15,South,5.25,0.0,2.0,Sweet 16
+Houston,1,Midwest,17.15,74.76665371358764,6.0,National Champion
+Colorado St.,16,Midwest,0.3,0.0,2.0,First Round
+Creighton,8,Midwest,0.3,0.0,5.0,Second Round
+Purdue,9,Midwest,1.25,0.0,4.0,Second Round
+Auburn,5,Midwest,10.25,0.0,7.0,Championship Game
+Tennessee,12,Midwest,5.25,0.0,3.0,Elite 8
+Texas Tech,4,Midwest,5.0,82.9264768998897,2.0,Sweet 16
+Kentucky,13,Midwest,1.5,3.4447137581271505,2.0,First Round
+Purdue,6,Midwest,1.5,23.42905355521586,4.0,Second Round
+Mississippi,11,Midwest,0.75,0.0,3.0,First Round
+Duke,3,Midwest,20.7,53.91352032797471,5.0,Sweet 16
+Saint Mary's,14,Midwest,0.75,0.0,2.0,First Round
+Duke,7,Midwest,10.25,0.0,5.0,Sweet 16
+UC San Diego,10,Midwest,0.3,0.0,3.0,First Round
+Tennessee,2,Midwest,12.15,92.8720514171327,3.0,Elite 8
+St. John's,15,Midwest,0.75,0.0,2.0,First Round

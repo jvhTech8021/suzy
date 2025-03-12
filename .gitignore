@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+march_madness_env/
+.DS_Store

@@ -1,0 +1,13 @@
+Mock Tournament Bracket Based on Champion Profile Similarity:
+================================================================================
+EAST                      WEST
+1. Florida              1. Auburn
+8. Alabama              8. Akron
+4. Houston              4. Duke
+5. Abilene Christian    5. Air Force
+
+SOUTH                     MIDWEST
+1. Alabama A&M          1. Alabama St.
+8. Arizona St.          8. Arizona
+4. Alcorn St.           4. Albany
+5. American             5. Appalachian St.

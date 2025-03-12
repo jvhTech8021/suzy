@@ -1,0 +1,133 @@
+NCAA TOURNAMENT BRACKET - FULL SIMULATION
+================================================================================
+
+Generated on: 2025-03-12 12:17:08
+
+EAST REGION
+----------------------------------------
+
+FIRST ROUND:
+(1) Florida vs. (16) Ohio St. --> Florida
+(8) Saint Mary's vs. (9) Colorado St. --> Saint Mary's
+(5) Michigan vs. (12) Indiana --> Michigan
+(4) Arizona vs. (13) Santa Clara --> Arizona
+(6) Mississippi St. vs. (11) McNeese --> Mississippi St.
+(3) Gonzaga vs. (14) Northwestern --> Gonzaga
+(7) Baylor vs. (10) Texas --> Texas
+(2) Tennessee vs. (15) Nebraska --> Tennessee
+
+SECOND ROUND:
+(1) Florida vs. (8) Saint Mary's --> Florida
+(5) Michigan vs. (4) Arizona --> Arizona
+(6) Mississippi St. vs. (3) Gonzaga --> Gonzaga
+(10) Texas vs. (2) Tennessee --> Tennessee
+
+SWEET 16:
+(1) Florida vs. (4) Arizona --> Florida
+(3) Gonzaga vs. (2) Tennessee --> Tennessee
+
+ELITE 8:
+(1) Florida vs. (2) Tennessee --> Florida
+
+REGION WINNER: Florida
+========================================
+
+WEST REGION
+----------------------------------------
+
+FIRST ROUND:
+(1) Auburn vs. (16) Oklahoma --> Auburn
+(8) Oregon vs. (9) Connecticut --> Oregon
+(5) Missouri vs. (12) San Diego St. --> San Diego St.
+(4) Purdue vs. (13) Memphis --> Purdue
+(6) Mississippi vs. (11) Liberty --> Mississippi
+(3) Kentucky vs. (14) Arkansas --> Kentucky
+(7) VCU vs. (10) Penn St. --> VCU
+(2) Alabama vs. (15) North Carolina --> Alabama
+
+SECOND ROUND:
+(1) Auburn vs. (8) Oregon --> Auburn
+(12) San Diego St. vs. (4) Purdue --> Purdue
+(6) Mississippi vs. (3) Kentucky --> Kentucky
+(7) VCU vs. (2) Alabama --> Alabama
+
+SWEET 16:
+(1) Auburn vs. (4) Purdue --> Auburn
+(3) Kentucky vs. (2) Alabama --> Alabama
+
+ELITE 8:
+(1) Auburn vs. (2) Alabama --> Auburn
+
+REGION WINNER: Auburn
+========================================
+
+SOUTH REGION
+----------------------------------------
+
+FIRST ROUND:
+(1) Duke vs. (16) Xavier --> Duke
+(8) Illinois vs. (9) UC San Diego --> UC San Diego
+(5) Texas A&M vs. (12) San Francisco --> Texas A&M
+(4) Maryland vs. (13) Utah St. --> Utah St.
+(6) Marquette vs. (11) SMU --> SMU
+(3) Iowa St. vs. (14) West Virginia --> Iowa St.
+(7) Kansas vs. (10) Pittsburgh --> Pittsburgh
+(2) Michigan St. vs. (15) Villanova --> Michigan St.
+
+SECOND ROUND:
+(1) Duke vs. (9) UC San Diego --> Duke
+(5) Texas A&M vs. (13) Utah St. --> Texas A&M
+(11) SMU vs. (3) Iowa St. --> Iowa St.
+(10) Pittsburgh vs. (2) Michigan St. --> Michigan St.
+
+SWEET 16:
+(1) Duke vs. (5) Texas A&M --> Duke
+(3) Iowa St. vs. (2) Michigan St. --> Michigan St.
+
+ELITE 8:
+(1) Duke vs. (2) Michigan St. --> Duke
+
+REGION WINNER: Duke
+========================================
+
+MIDWEST REGION
+----------------------------------------
+
+FIRST ROUND:
+(1) Houston vs. (16) USC --> Houston
+(8) Clemson vs. (9) Creighton --> Clemson
+(5) Louisville vs. (12) Cincinnati --> Louisville
+(4) St. John's vs. (13) Boise St. --> St. John's
+(6) BYU vs. (11) Georgia --> BYU
+(3) Wisconsin vs. (14) Vanderbilt --> Wisconsin
+(7) UCLA vs. (10) Drake --> UCLA
+(2) Texas Tech vs. (15) New Mexico --> Texas Tech
+
+SECOND ROUND:
+(1) Houston vs. (8) Clemson --> Houston
+(5) Louisville vs. (4) St. John's --> St. John's
+(6) BYU vs. (3) Wisconsin --> Wisconsin
+(7) UCLA vs. (2) Texas Tech --> Texas Tech
+
+SWEET 16:
+(1) Houston vs. (4) St. John's --> Houston
+(3) Wisconsin vs. (2) Texas Tech --> Texas Tech
+
+ELITE 8:
+(1) Houston vs. (2) Texas Tech --> Houston
+
+REGION WINNER: Houston
+========================================
+
+FINAL FOUR
+----------------------------------------
+
+SEMIFINAL 1: (1) Florida vs. (1) Auburn --> Florida
+
+SEMIFINAL 2: (1) Duke vs. (1) Houston --> Duke
+
+CHAMPIONSHIP: (1) Florida vs. (1) Duke --> Florida
+
+========================================
+
+NCAA TOURNAMENT CHAMPION: Florida

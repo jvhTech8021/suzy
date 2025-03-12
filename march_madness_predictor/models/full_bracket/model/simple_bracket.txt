@@ -1,0 +1,123 @@
+NCAA TOURNAMENT BRACKET - BASED ON CHAMPION PROFILE SIMILARITY
+================================================================================
+
+EAST REGION
+----------------------------------------
+Seed 1: Tennessee (Similarity: 92.9%)
+Seed 2: Houston (Similarity: 74.8%)
+Seed 3: Duke (Similarity: 53.9%)
+Seed 4: Purdue (Similarity: 23.4%)
+Seed 5: San Francisco (Similarity: 0.0%)
+Seed 6: Saint Joseph's (Similarity: 0.0%)
+Seed 7: Saint Louis (Similarity: 0.0%)
+Seed 8: Sacramento St. (Similarity: 0.0%)
+Seed 9: Seattle (Similarity: 0.0%)
+Seed 10: Santa Clara (Similarity: 0.0%)
+Seed 11: Stanford (Similarity: 0.0%)
+Seed 12: Southern Utah (Similarity: 0.0%)
+Seed 13: Southern (Similarity: 0.0%)
+Seed 14: South Dakota St. (Similarity: 0.0%)
+Seed 15: South Alabama (Similarity: 0.0%)
+Seed 16: Portland (Similarity: 0.0%)
+
+First Round Matchups:
+(1) Tennessee vs. (16) Portland
+(8) Sacramento St. vs. (9) Seattle
+(5) San Francisco vs. (12) Southern Utah
+(4) Purdue vs. (13) Southern
+(6) Saint Joseph's vs. (11) Stanford
+(3) Duke vs. (14) South Dakota St.
+(7) Saint Louis vs. (10) Santa Clara
+(2) Houston vs. (15) South Alabama
+========================================
+
+WEST REGION
+----------------------------------------
+Seed 1: Alabama (Similarity: 89.3%)
+Seed 2: Gonzaga (Similarity: 72.9%)
+Seed 3: Wisconsin (Similarity: 53.6%)
+Seed 4: Arizona (Similarity: 13.8%)
+Seed 5: San Diego St. (Similarity: 0.0%)
+Seed 6: Sam Houston St. (Similarity: 0.0%)
+Seed 7: Richmond (Similarity: 0.0%)
+Seed 8: Rutgers (Similarity: 0.0%)
+Seed 9: Rice (Similarity: 0.0%)
+Seed 10: South Carolina St. (Similarity: 0.0%)
+Seed 11: St. Thomas (Similarity: 0.0%)
+Seed 12: Southern Miss (Similarity: 0.0%)
+Seed 13: Southeastern Louisiana (Similarity: 0.0%)
+Seed 14: South Dakota (Similarity: 0.0%)
+Seed 15: SMU (Similarity: 0.0%)
+Seed 16: Purdue Fort Wayne (Similarity: 0.0%)
+
+First Round Matchups:
+(1) Alabama vs. (16) Purdue Fort Wayne
+(8) Rutgers vs. (9) Rice
+(5) San Diego St. vs. (12) Southern Miss
+(4) Arizona vs. (13) Southeastern Louisiana
+(6) Sam Houston St. vs. (11) St. Thomas
+(3) Wisconsin vs. (14) South Dakota
+(7) Richmond vs. (10) South Carolina St.
+(2) Gonzaga vs. (15) SMU
+========================================
+
+SOUTH REGION
+----------------------------------------
+Seed 1: Florida (Similarity: 83.8%)
+Seed 2: Michigan St. (Similarity: 63.9%)
+Seed 3: Iowa St. (Similarity: 43.9%)
+Seed 4: Kentucky (Similarity: 3.4%)
+Seed 5: San Diego (Similarity: 0.0%)
+Seed 6: Saint Peter's (Similarity: 0.0%)
+Seed 7: Saint Francis (Similarity: 0.0%)
+Seed 8: Robert Morris (Similarity: 0.0%)
+Seed 9: Rhode Island (Similarity: 0.0%)
+Seed 10: Seton Hall (Similarity: 0.0%)
+Seed 11: St. John's (Similarity: 0.0%)
+Seed 12: Southern Indiana (Similarity: 0.0%)
+Seed 13: Southeast Missouri (Similarity: 0.0%)
+Seed 14: Queens (Similarity: 0.0%)
+Seed 15: SIUE (Similarity: 0.0%)
+Seed 16: Northwestern (Similarity: 0.0%)
+
+First Round Matchups:
+(1) Florida vs. (16) Northwestern
+(8) Robert Morris vs. (9) Rhode Island
+(5) San Diego vs. (12) Southern Indiana
+(4) Kentucky vs. (13) Southeast Missouri
+(6) Saint Peter's vs. (11) St. John's
+(3) Iowa St. vs. (14) Queens
+(7) Saint Francis vs. (10) Seton Hall
+(2) Michigan St. vs. (15) SIUE
+========================================
+
+MIDWEST REGION
+----------------------------------------
+Seed 1: Texas Tech (Similarity: 82.9%)
+Seed 2: Auburn (Similarity: 63.6%)
+Seed 3: Missouri (Similarity: 33.2%)
+Seed 4: San Jose St. (Similarity: 0.0%)
+Seed 5: Samford (Similarity: 0.0%)
+Seed 6: Saint Mary's (Similarity: 0.0%)
+Seed 7: Sacred Heart (Similarity: 0.0%)
+Seed 8: Rider (Similarity: 0.0%)
+Seed 9: Radford (Similarity: 0.0%)
+Seed 10: Siena (Similarity: 0.0%)
+Seed 11: St. Bonaventure (Similarity: 0.0%)
+Seed 12: Southern Illinois (Similarity: 0.0%)
+Seed 13: South Florida (Similarity: 0.0%)
+Seed 14: South Carolina (Similarity: 0.0%)
+Seed 15: Quinnipiac (Similarity: 0.0%)
+Seed 16: Northern Iowa (Similarity: 0.0%)
+
+First Round Matchups:
+(1) Texas Tech vs. (16) Northern Iowa
+(8) Rider vs. (9) Radford
+(5) Samford vs. (12) Southern Illinois
+(4) San Jose St. vs. (13) South Florida
+(6) Saint Mary's vs. (11) St. Bonaventure
+(3) Missouri vs. (14) South Carolina
+(7) Sacred Heart vs. (10) Siena
+(2) Auburn vs. (15) Quinnipiac
+========================================
+
