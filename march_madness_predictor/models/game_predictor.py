@@ -446,8 +446,8 @@ class GamePredictor:
                 # Make sure both values are not NaN before calculation
                 if not pd.isna(team1_height_data["effhgt"]) and not pd.isna(team2_height_data["effhgt"]):
                     effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
-                    if abs(effhgt_diff) > 1.0:  # Only consider significant differences
-                        height_adjustment = effhgt_diff * 0.5  # Scale appropriately (0.5 points per inch)
+                    if abs(effhgt_diff) > 0.7:  # Lowered threshold from 1.0 to 0.7 inch
+                        height_adjustment = effhgt_diff * 0.8  # Increased from 0.5 to 0.8 points per inch
                         team1_expected_score += height_adjustment
             
             # Experience advantage
@@ -455,17 +455,17 @@ class GamePredictor:
                 # Make sure both values are not NaN before calculation
                 if not pd.isna(team1_height_data["experience"]) and not pd.isna(team2_height_data["experience"]):
                     exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
-                    if abs(exp_diff) > 0.5:  # Only consider significant differences
-                        experience_adjustment = exp_diff * 0.5  # Reduced from 0.8 to 0.5 points per year of experience
+                    if abs(exp_diff) > 0.4:  # Lowered threshold from 0.5 to 0.4 years
+                        experience_adjustment = exp_diff * 0.7  # Increased from 0.5 to 0.7 points per year
                         team1_expected_score += experience_adjustment
-                
-            # Bench utilization can impact tournament games (fresher players)
+            
+            # Bench depth
             if team1_height_data["bench"] is not None and team2_height_data["bench"] is not None:
                 # Make sure both values are not NaN before calculation
                 if not pd.isna(team1_height_data["bench"]) and not pd.isna(team2_height_data["bench"]):
                     bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
-                    if abs(bench_diff) > 5:  # Only apply if difference is significant (> 5% bench minutes)
-                        bench_adjustment = bench_diff * 0.05  # Scale appropriately
+                    if abs(bench_diff) > 4:  # Lowered threshold from 5 to 4 percent
+                        bench_adjustment = bench_diff * 0.08  # Increased from 0.05 to 0.08 points per percentage
                         team1_expected_score += bench_adjustment
         
         # Add a final check to make sure expected scores are not NaN
@@ -556,7 +556,8 @@ class GamePredictor:
             "tournament_adjustment": tournament_adjustment,
             "seed_adjustment": seed_adjustment,
             "height_adjustment": height_adjustment,
-            "experience_adjustment": experience_adjustment
+            "experience_adjustment": experience_adjustment,
+            "bench_adjustment": bench_adjustment
         }
         
         return result
@@ -745,36 +746,42 @@ class GamePredictor:
         if team1_height_data["has_height_data"] and team2_height_data["has_height_data"]:
             # Height advantage
             if team1_height_data["effhgt"] is not None and team2_height_data["effhgt"] is not None:
-                effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
-                if abs(effhgt_diff) > 1.0:  # Only consider significant differences
-                    factors.append({
-                        'factor': 'Height',
-                        'advantage': team1_name if effhgt_diff > 0 else team2_name,
-                        'magnitude': abs(effhgt_diff) * 2,  # Weight height more heavily
-                        'description': f"{'Taller' if effhgt_diff > 0 else 'Shorter'} team (by {abs(effhgt_diff):.1f}\")"
-                    })
+                # Make sure both values are not NaN before calculation
+                if not pd.isna(team1_height_data["effhgt"]) and not pd.isna(team2_height_data["effhgt"]):
+                    effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
+                    if abs(effhgt_diff) > 0.7:  # Lowered threshold from 1.0 to 0.7 inch
+                        factors.append({
+                            'factor': 'Height',
+                            'advantage': team1_name if effhgt_diff > 0 else team2_name,
+                            'magnitude': abs(effhgt_diff) * 2.5,  # Increased from 2 to 2.5
+                            'description': f"{'Taller' if effhgt_diff > 0 else 'Shorter'} team (by {abs(effhgt_diff):.1f}\")"
+                        })
             
             # Experience advantage
             if team1_height_data["experience"] is not None and team2_height_data["experience"] is not None:
-                exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
-                if abs(exp_diff) > 0.5:  # Only consider significant differences
-                    factors.append({
-                        'factor': 'Experience',
-                        'advantage': team1_name if exp_diff > 0 else team2_name,
-                        'magnitude': abs(exp_diff) * 3,  # Weight experience heavily
-                        'description': f"{'More' if exp_diff > 0 else 'Less'} experienced (by {abs(exp_diff):.1f} years)"
-                    })
+                # Make sure both values are not NaN before calculation
+                if not pd.isna(team1_height_data["experience"]) and not pd.isna(team2_height_data["experience"]):
+                    exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
+                    if abs(exp_diff) > 0.4:  # Lowered threshold from 0.5 to 0.4 years
+                        factors.append({
+                            'factor': 'Experience',
+                            'advantage': team1_name if exp_diff > 0 else team2_name,
+                            'magnitude': abs(exp_diff) * 3.5,  # Increased from 3 to 3.5
+                            'description': f"{'More' if exp_diff > 0 else 'Less'} experienced (by {abs(exp_diff):.1f} years)"
+                        })
             
             # Bench depth
             if team1_height_data["bench"] is not None and team2_height_data["bench"] is not None:
-                bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
-                if abs(bench_diff) > 5:  # Only consider significant differences
-                    factors.append({
-                        'factor': 'Bench Depth',
-                        'advantage': team1_name if bench_diff > 0 else team2_name,
-                        'magnitude': abs(bench_diff) / 3,
-                        'description': f"{'Deeper' if bench_diff > 0 else 'Thinner'} bench (by {abs(bench_diff):.1f}% minutes)"
-                    })
+                # Make sure both values are not NaN before calculation
+                if not pd.isna(team1_height_data["bench"]) and not pd.isna(team2_height_data["bench"]):
+                    bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
+                    if abs(bench_diff) > 4:  # Lowered threshold from 5 to 4 percent
+                        factors.append({
+                            'factor': 'Bench Depth',
+                            'advantage': team1_name if bench_diff > 0 else team2_name,
+                            'magnitude': abs(bench_diff) / 2.5,  # Increased importance (reduced divisor from 3 to 2.5)
+                            'description': f"{'Deeper' if bench_diff > 0 else 'Thinner'} bench (by {abs(bench_diff):.1f}% minutes)"
+                        })
         
         # Sort factors by magnitude
         factors.sort(key=lambda x: x['magnitude'], reverse=True)
