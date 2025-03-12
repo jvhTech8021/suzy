@@ -21,6 +21,7 @@ class GamePredictor:
         self.current_data = None
         self.exit_round_data = None
         self.champion_profile_data = None
+        self.height_data = None  # New field for height, experience, and bench data
         
         # Define core metrics that are most likely available in KenPom data
         self.core_metrics = [
@@ -35,6 +36,11 @@ class GamePredictor:
             'FTR', 'FTRD',          # May be 'FTR' and 'FTRD'
             'Two_Pct', 'TwoD_Pct',  # May be '2P%' and '2P%D'
             'Three_Pct', 'ThreeD_Pct'  # May be '3P%' and '3P%D'
+        ]
+        
+        # Define height and experience metrics
+        self.height_metrics = [
+            'Size', 'Hgt5', 'EffHgt', 'Exp', 'Bench', 'GT10'
         ]
         
         # Define alternate column names that might be in the data
@@ -93,6 +99,14 @@ class GamePredictor:
         else:
             # Use data loader to get data
             self.current_data = self.data_loader.get_current_season_data()
+            
+            # Load height and experience data if available
+            try:
+                self.height_data = self.data_loader.get_height_data()
+                print(f"Loaded height and experience data for {len(self.height_data)} teams")
+            except Exception as e:
+                print(f"Error loading height and experience data: {str(e)}")
+                self.height_data = None
     
     def _load_tournament_prediction_data(self):
         """Load tournament prediction data from other models"""
@@ -279,6 +293,51 @@ class GamePredictor:
         
         return sorted(self.current_data['TeamName'].unique())
     
+    def _get_height_data(self, team_name):
+        """
+        Get height and experience data for a team
+        
+        Parameters:
+        -----------
+        team_name : str
+            Name of the team
+            
+        Returns:
+        --------
+        dict
+            Dictionary with height and experience data
+        """
+        result = {
+            "has_height_data": False,
+            "size": None,
+            "hgt5": None,
+            "effhgt": None,
+            "experience": None,
+            "bench": None,
+            "gt10": None
+        }
+        
+        # Check if height data is available
+        if self.height_data is None:
+            return result
+        
+        # Look for the team in the height data
+        team_data = self.height_data[self.height_data['TeamName'] == team_name]
+        if len(team_data) == 0:
+            return result
+        
+        # Extract data
+        team_row = team_data.iloc[0]
+        result["has_height_data"] = True
+        result["size"] = team_row.get('Size', None)
+        result["hgt5"] = team_row.get('Hgt5', None)
+        result["effhgt"] = team_row.get('EffHgt', None)
+        result["experience"] = team_row.get('Exp', None)
+        result["bench"] = team_row.get('Bench', None)
+        result["gt10"] = team_row.get('GT10', None)
+        
+        return result
+    
     def predict_game(self, team1_name, team2_name, location='neutral'):
         """
         Predict the outcome of a game between two teams using KenPom metrics
@@ -315,6 +374,10 @@ class GamePredictor:
         # Get tournament prediction data for both teams
         team1_tournament_data = self._get_tournament_prediction_data(team1_name)
         team2_tournament_data = self._get_tournament_prediction_data(team2_name)
+        
+        # Get height and experience data for both teams
+        team1_height_data = self._get_height_data(team1_name)
+        team2_height_data = self._get_height_data(team2_name)
         
         # Get historical matchup data
         historical_data = self._analyze_historical_matchups(team1_name, team2_name)
@@ -369,6 +432,30 @@ class GamePredictor:
             seed_diff = team2_tournament_data["seed"] - team1_tournament_data["seed"]
             seed_adjustment = seed_diff / 8  # Scale appropriately
             team1_expected_score += seed_adjustment
+        
+        # Apply height and experience adjustments if available
+        height_adjustment = 0
+        experience_adjustment = 0
+        
+        if team1_height_data["has_height_data"] and team2_height_data["has_height_data"]:
+            # Height adjustment: taller teams tend to have an advantage
+            # EffHgt is effective height, which considers the frontcourt height weighted by minutes played
+            effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
+            if abs(effhgt_diff) > 1.0:  # Only apply if difference is significant (> 1 inch)
+                height_adjustment = effhgt_diff * 0.5  # Scale appropriately (0.5 points per inch)
+                team1_expected_score += height_adjustment
+            
+            # Experience adjustment: more experienced teams tend to perform better in close games
+            exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
+            if abs(exp_diff) > 0.5:  # Only apply if difference is significant (> 0.5 years)
+                experience_adjustment = exp_diff * 0.8  # Scale appropriately (0.8 points per year of experience)
+                team1_expected_score += experience_adjustment
+                
+            # Bench utilization can impact tournament games (fresher players)
+            bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
+            if abs(bench_diff) > 5:  # Only apply if difference is significant (> 5% bench minutes)
+                bench_adjustment = bench_diff * 0.05  # Scale appropriately
+                team1_expected_score += bench_adjustment
         
         # Calculate spread (always Team1 - Team2)
         spread = team1_expected_score - team2_expected_score
@@ -426,13 +513,15 @@ class GamePredictor:
                 "name": team1_name,
                 "predicted_score": team1_expected_score,
                 "win_probability": team1_wp,
-                "tournament_data": team1_tournament_data
+                "tournament_data": team1_tournament_data,
+                "height_data": team1_height_data
             },
             "team2": {
                 "name": team2_name,
                 "predicted_score": team2_expected_score,
                 "win_probability": team2_wp,
-                "tournament_data": team2_tournament_data
+                "tournament_data": team2_tournament_data,
+                "height_data": team2_height_data
             },
             "spread": spread,
             "total": total,
@@ -441,7 +530,9 @@ class GamePredictor:
             "team_stats": stat_comparisons,
             "historical_matchups": historical_data,
             "tournament_adjustment": tournament_adjustment,
-            "seed_adjustment": seed_adjustment
+            "seed_adjustment": seed_adjustment,
+            "height_adjustment": height_adjustment,
+            "experience_adjustment": experience_adjustment
         }
         
         return result
@@ -619,10 +710,49 @@ class GamePredictor:
                     'description': f"{'Better' if three_diff > 0 else 'Worse'} three-point shooting"
                 })
         
+        # Add height and experience factors if available
+        team1_name = team1['TeamName']
+        team2_name = team2['TeamName']
+        
+        # Get height data for both teams
+        team1_height_data = self._get_height_data(team1_name)
+        team2_height_data = self._get_height_data(team2_name)
+        
+        if team1_height_data["has_height_data"] and team2_height_data["has_height_data"]:
+            # Height advantage
+            effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
+            if abs(effhgt_diff) > 1.0:  # Only consider significant differences
+                factors.append({
+                    'factor': 'Height',
+                    'advantage': team1_name if effhgt_diff > 0 else team2_name,
+                    'magnitude': abs(effhgt_diff) * 2,  # Weight height more heavily
+                    'description': f"{'Taller' if effhgt_diff > 0 else 'Shorter'} team (by {abs(effhgt_diff):.1f}\")"
+                })
+            
+            # Experience advantage
+            exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
+            if abs(exp_diff) > 0.5:  # Only consider significant differences
+                factors.append({
+                    'factor': 'Experience',
+                    'advantage': team1_name if exp_diff > 0 else team2_name,
+                    'magnitude': abs(exp_diff) * 3,  # Weight experience heavily
+                    'description': f"{'More' if exp_diff > 0 else 'Less'} experienced (by {abs(exp_diff):.1f} years)"
+                })
+            
+            # Bench depth
+            bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
+            if abs(bench_diff) > 5:  # Only consider significant differences
+                factors.append({
+                    'factor': 'Bench Depth',
+                    'advantage': team1_name if bench_diff > 0 else team2_name,
+                    'magnitude': abs(bench_diff) / 3,
+                    'description': f"{'Deeper' if bench_diff > 0 else 'Thinner'} bench (by {abs(bench_diff):.1f}% minutes)"
+                })
+        
         # Sort factors by magnitude
         factors.sort(key=lambda x: x['magnitude'], reverse=True)
         
-        return factors[:5]  # Return top 5 factors
+        return factors[:6]  # Return top 6 factors instead of 5 to include height/experience
     
     def _analyze_historical_matchups(self, team1_name, team2_name):
         """

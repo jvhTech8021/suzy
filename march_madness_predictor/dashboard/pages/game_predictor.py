@@ -107,12 +107,18 @@ def layout(data_loader=None):
                             html.Li("Tournament championship probabilities"),
                             html.Li("Predicted tournament exit rounds"),
                             html.Li("Team seeding information"),
+                            html.Li("Team height, experience, and bench depth"),
                             html.Li("Home court advantage (+3.5 points for home team)")
                         ]),
                         html.P([
                             "When tournament prediction data is available, the model incorporates it ",
                             "to provide more context-aware game predictions, especially for matchups ",
                             "in tournament settings."
+                        ]),
+                        html.P([
+                            "The enhanced model now considers physical attributes like team height, ",
+                            "college experience (in years), and bench utilization to provide more ",
+                            "accurate predictions for tournament matchups."
                         ])
                     ])
                 ])
@@ -333,6 +339,11 @@ def predict_game(n_clicks, team1, team2, location):
     has_tournament_data = (team1_tournament_data["has_exit_round_data"] or team1_tournament_data["has_champion_profile_data"] or
                            team2_tournament_data["has_exit_round_data"] or team2_tournament_data["has_champion_profile_data"])
     
+    # Height and experience data
+    team1_height_data = prediction["team1"]["height_data"]
+    team2_height_data = prediction["team2"]["height_data"]
+    has_height_data = team1_height_data["has_height_data"] and team2_height_data["has_height_data"]
+    
     # Generate tournament data display
     tournament_data_section = []
     if has_tournament_data:
@@ -442,6 +453,95 @@ def predict_game(n_clicks, team1, team2, location):
             ], className="mb-4")
         ]
     
+    # Generate height and experience data display
+    height_data_section = []
+    if has_height_data:
+        # Create table rows for height data
+        height_rows = []
+        
+        # Overall Size
+        height_rows.append(
+            html.Tr([
+                html.Td("Overall Size"),
+                html.Td(f"{team1_height_data['size']:.1f}"),
+                html.Td(f"{team2_height_data['size']:.1f}")
+            ])
+        )
+        
+        # Average Height
+        height_rows.append(
+            html.Tr([
+                html.Td("Starting 5 Height"),
+                html.Td(f"{team1_height_data['hgt5']:.1f}\""),
+                html.Td(f"{team2_height_data['hgt5']:.1f}\"")
+            ])
+        )
+        
+        # Effective Height
+        height_rows.append(
+            html.Tr([
+                html.Td("Effective Height"),
+                html.Td(f"{team1_height_data['effhgt']:.1f}\""),
+                html.Td(f"{team2_height_data['effhgt']:.1f}\"")
+            ])
+        )
+        
+        # Experience
+        height_rows.append(
+            html.Tr([
+                html.Td("Experience"),
+                html.Td(f"{team1_height_data['experience']:.2f} years"),
+                html.Td(f"{team2_height_data['experience']:.2f} years")
+            ])
+        )
+        
+        # Bench Minutes
+        height_rows.append(
+            html.Tr([
+                html.Td("Bench Minutes"),
+                html.Td(f"{team1_height_data['bench']:.1f}%"),
+                html.Td(f"{team2_height_data['bench']:.1f}%")
+            ])
+        )
+        
+        # Create the height data section
+        height_data_section = [
+            dbc.Row([
+                dbc.Col([
+                    html.H4("Height and Experience Data", className="mb-3"),
+                    dbc.Table([
+                        html.Thead(
+                            html.Tr([
+                                html.Th("Metric"),
+                                html.Th(team1),
+                                html.Th(team2)
+                            ])
+                        ),
+                        html.Tbody(height_rows)
+                    ], bordered=True, hover=True, striped=True),
+                    
+                    # Add info about how these factors affected the prediction
+                    html.Div([
+                        html.P([
+                            "Height and experience impact on this matchup:"
+                        ], className="mt-3 mb-2"),
+                        html.Ul([
+                            html.Li([
+                                "Height adjustment: ",
+                                html.Strong(f"{prediction.get('height_adjustment', 0):.2f} points") 
+                                if prediction.get('height_adjustment', 0) != 0 else "None"
+                            ]),
+                            html.Li([
+                                "Experience adjustment: ",
+                                html.Strong(f"{prediction.get('experience_adjustment', 0):.2f} points")
+                                if prediction.get('experience_adjustment', 0) != 0 else "None"
+                            ])
+                        ])
+                    ])
+                ])
+            ], className="mb-4")
+        ]
+    
     # Return the prediction results
     return html.Div([
         html.H3("Game Prediction", className="mb-4"),
@@ -488,6 +588,9 @@ def predict_game(n_clicks, team1, team2, location):
         
         # Tournament data section (if available)
         html.Div(tournament_data_section) if has_tournament_data else html.Div(),
+        
+        # Height and experience data section (if available)
+        html.Div(height_data_section) if has_height_data else html.Div(),
         
         # Key statistics comparison
         dbc.Row([

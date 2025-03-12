@@ -491,3 +491,32 @@ class DataLoader:
             data = self.get_tournament_level_analysis(round_num)
             if data:
                 all_data[round_num] = data 
+    
+    def get_height_data(self):
+        """
+        Load the height and experience data for current season teams
+        
+        Returns:
+        --------
+        pd.DataFrame
+            DataFrame containing height, experience, and bench data
+        """
+        if "height_data" in self._cache:
+            return self._cache["height_data"]
+        
+        file_path = os.path.join(self.kenpom_data_dir, "height25.csv")
+        
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Height data not found at {file_path}")
+        
+        df = pd.read_csv(file_path)
+        
+        # Clean data
+        for col in df.columns:
+            if df[col].dtype == 'object' and col != 'TeamName':
+                df[col] = df[col].str.replace('"', '').astype(float)
+            elif col == 'TeamName':
+                df[col] = df[col].str.replace('"', '')
+        
+        self._cache["height_data"] = df
+        return df 
