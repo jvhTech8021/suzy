@@ -24,6 +24,41 @@ def layout(data_loader):
         predictions = data_loader.get_exit_round_predictions()
         tournament_teams = predictions[predictions['Seed'].notnull()].copy()
         
+        # Calculate Sweet 16 and Elite 8 probabilities based on exit round predictions
+        tournament_teams['SweetSixteenPct'] = 0.0
+        tournament_teams['EliteEightPct'] = 0.0
+        
+        for idx, row in tournament_teams.iterrows():
+            exit_round = row['PredictedExitRoundInt'] if pd.notna(row['PredictedExitRoundInt']) else 0
+            seed = row['Seed'] if pd.notna(row['Seed']) else 16
+            
+            # Elite 8 probability calculation
+            if exit_round >= 4:  # Predicted Elite Eight or better
+                elite_eight_pct = 90.0
+            elif exit_round == 3:  # Predicted Sweet Sixteen
+                elite_eight_pct = 35.0
+            elif seed <= 4:  # Top 4 seeds
+                elite_eight_pct = 40.0
+            elif seed <= 8:
+                elite_eight_pct = 20.0
+            else:
+                elite_eight_pct = 10.0
+            
+            # Sweet 16 probability calculation
+            if exit_round >= 3:  # Predicted Sweet Sixteen or better
+                sweet_sixteen_pct = 90.0
+            elif exit_round == 2:  # Predicted Round of 32
+                sweet_sixteen_pct = 40.0
+            elif seed <= 4:  # Top 4 seeds
+                sweet_sixteen_pct = 65.0
+            elif seed <= 8:
+                sweet_sixteen_pct = 35.0
+            else:
+                sweet_sixteen_pct = 15.0
+            
+            tournament_teams.loc[idx, 'EliteEightPct'] = elite_eight_pct
+            tournament_teams.loc[idx, 'SweetSixteenPct'] = sweet_sixteen_pct
+        
         # Load seed performance data if available
         try:
             seed_performance = data_loader.get_seed_performance()
@@ -59,6 +94,34 @@ def layout(data_loader):
         )
         fig_final_four.update_layout(yaxis={'categoryorder': 'total ascending'})
         
+        # Create a bar chart of the top 20 teams by Elite Eight probability
+        top_20_e8 = tournament_teams.sort_values('EliteEightPct', ascending=False).head(20)
+        fig_elite_eight = px.bar(
+            top_20_e8,
+            y='TeamName',
+            x='EliteEightPct',
+            orientation='h',
+            title='Top 20 Elite Eight Contenders',
+            labels={'TeamName': 'Team', 'EliteEightPct': 'Elite Eight Probability (%)'},
+            color='EliteEightPct',
+            color_continuous_scale='Teal',
+        )
+        fig_elite_eight.update_layout(yaxis={'categoryorder': 'total ascending'})
+        
+        # Create a bar chart of the top 20 teams by Sweet Sixteen probability
+        top_20_s16 = tournament_teams.sort_values('SweetSixteenPct', ascending=False).head(20)
+        fig_sweet_sixteen = px.bar(
+            top_20_s16,
+            y='TeamName',
+            x='SweetSixteenPct',
+            orientation='h',
+            title='Top 20 Sweet Sixteen Contenders',
+            labels={'TeamName': 'Team', 'SweetSixteenPct': 'Sweet Sixteen Probability (%)'},
+            color='SweetSixteenPct',
+            color_continuous_scale='Cividis',
+        )
+        fig_sweet_sixteen.update_layout(yaxis={'categoryorder': 'total ascending'})
+        
         # Create a scatter plot of AdjEM vs predicted exit round
         fig_scatter = px.scatter(
             tournament_teams,
@@ -69,7 +132,7 @@ def layout(data_loader):
             color='Seed',
             size='ChampionshipPct',
             hover_name='TeamName',
-            hover_data=['PredictedExit', 'ChampionshipPct', 'FinalFourPct'],
+            hover_data=['PredictedExit', 'ChampionshipPct', 'FinalFourPct', 'EliteEightPct', 'SweetSixteenPct'],
             color_continuous_scale='Viridis_r',  # Reversed so lower seeds (better) are at the red/yellow end
         )
         
@@ -106,19 +169,21 @@ def layout(data_loader):
         
         # Create a table of the top 200 teams (instead of 100)
         top_200_df = tournament_teams.sort_values('ChampionshipPct', ascending=False).head(200)[
-            ['TeamName', 'Seed', 'ChampionshipPct', 'FinalFourPct', 'PredictedExit', 
+            ['TeamName', 'Seed', 'ChampionshipPct', 'FinalFourPct', 'EliteEightPct', 'SweetSixteenPct', 'PredictedExit', 
              'AdjEM', 'AdjOE', 'AdjDE', 'RankAdjEM']
         ]
         
         # Format the columns
         top_200_df['ChampionshipPct'] = top_200_df['ChampionshipPct'].round(1)
         top_200_df['FinalFourPct'] = top_200_df['FinalFourPct'].round(1)
+        top_200_df['EliteEightPct'] = top_200_df['EliteEightPct'].round(1)
+        top_200_df['SweetSixteenPct'] = top_200_df['SweetSixteenPct'].round(1)
         top_200_df['AdjEM'] = top_200_df['AdjEM'].round(1)
         top_200_df['AdjOE'] = top_200_df['AdjOE'].round(1)
         top_200_df['AdjDE'] = top_200_df['AdjDE'].round(1)
         
         # Rename columns for display
-        top_200_df.columns = ['Team', 'Seed', 'Champion (%)', 'Final Four (%)', 'Predicted Exit', 
+        top_200_df.columns = ['Team', 'Seed', 'Champion (%)', 'Final Four (%)', 'Elite Eight (%)', 'Sweet 16 (%)', 'Predicted Exit', 
                             'Adj EM', 'Off Eff', 'Def Eff', 'Nat Rank']
         
         top_200_table = dash_table.DataTable(
@@ -233,6 +298,26 @@ def layout(data_loader):
                 ], md=6)
             ]),
             
+            dbc.Row([
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardHeader("Elite Eight Contenders"),
+                        dbc.CardBody([
+                            dcc.Graph(figure=fig_elite_eight)
+                        ])
+                    ], className="mb-4")
+                ], md=6),
+                
+                dbc.Col([
+                    dbc.Card([
+                        dbc.CardHeader("Sweet Sixteen Contenders"),
+                        dbc.CardBody([
+                            dcc.Graph(figure=fig_sweet_sixteen)
+                        ])
+                    ], className="mb-4")
+                ], md=6)
+            ]),
+            
             dbc.Card([
                 dbc.CardHeader("Team Strength vs Predicted Tournament Exit"),
                 dbc.CardBody([
@@ -265,10 +350,10 @@ def layout(data_loader):
             ]),
             
             dbc.Card([
-                dbc.CardHeader("Top 200 Teams by Championship Probability"),
+                dbc.CardHeader("Top 200 Teams by Tournament Round Probabilities"),
                 dbc.CardBody([
                     html.P(
-                        "This table shows the top 200 teams with the highest predicted championship probability. "
+                        "This table shows the top 200 teams with their predicted probabilities of reaching various tournament rounds. "
                         "The predictions are based on a deep learning model trained on historical tournament data."
                     ),
                     top_200_table
