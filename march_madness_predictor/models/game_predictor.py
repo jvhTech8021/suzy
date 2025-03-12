@@ -436,28 +436,50 @@ class GamePredictor:
         # Apply height and experience adjustments if available
         height_adjustment = 0
         experience_adjustment = 0
+        bench_adjustment = 0  # Define this variable to avoid undefined errors
         
+        # Only apply height and experience adjustments if valid data is available for both teams
+        # But ensure this doesn't affect the base prediction
         if team1_height_data["has_height_data"] and team2_height_data["has_height_data"]:
             # Height advantage
             if team1_height_data["effhgt"] is not None and team2_height_data["effhgt"] is not None:
-                effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
-                if abs(effhgt_diff) > 1.0:  # Only consider significant differences
-                    height_adjustment = effhgt_diff * 0.5  # Scale appropriately (0.5 points per inch)
-                    team1_expected_score += height_adjustment
+                # Make sure both values are not NaN before calculation
+                if not pd.isna(team1_height_data["effhgt"]) and not pd.isna(team2_height_data["effhgt"]):
+                    effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
+                    if abs(effhgt_diff) > 1.0:  # Only consider significant differences
+                        height_adjustment = effhgt_diff * 0.5  # Scale appropriately (0.5 points per inch)
+                        team1_expected_score += height_adjustment
             
             # Experience advantage
             if team1_height_data["experience"] is not None and team2_height_data["experience"] is not None:
-                exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
-                if abs(exp_diff) > 0.5:  # Only consider significant differences
-                    experience_adjustment = exp_diff * 0.8  # Scale appropriately (0.8 points per year of experience)
-                    team1_expected_score += experience_adjustment
+                # Make sure both values are not NaN before calculation
+                if not pd.isna(team1_height_data["experience"]) and not pd.isna(team2_height_data["experience"]):
+                    exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
+                    if abs(exp_diff) > 0.5:  # Only consider significant differences
+                        experience_adjustment = exp_diff * 0.8  # Scale appropriately (0.8 points per year of experience)
+                        team1_expected_score += experience_adjustment
                 
             # Bench utilization can impact tournament games (fresher players)
             if team1_height_data["bench"] is not None and team2_height_data["bench"] is not None:
-                bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
-                if abs(bench_diff) > 5:  # Only apply if difference is significant (> 5% bench minutes)
-                    bench_adjustment = bench_diff * 0.05  # Scale appropriately
-                    team1_expected_score += bench_adjustment
+                # Make sure both values are not NaN before calculation
+                if not pd.isna(team1_height_data["bench"]) and not pd.isna(team2_height_data["bench"]):
+                    bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
+                    if abs(bench_diff) > 5:  # Only apply if difference is significant (> 5% bench minutes)
+                        bench_adjustment = bench_diff * 0.05  # Scale appropriately
+                        team1_expected_score += bench_adjustment
+        
+        # Add a final check to make sure expected scores are not NaN
+        if pd.isna(team1_expected_score) or pd.isna(team2_expected_score):
+            # If we somehow got NaN values, recalculate without the adjustments
+            # This is a fallback to ensure we always have a prediction
+            team1_expected_score = team1_expected_ppp * avg_tempo
+            team2_expected_score = team2_expected_ppp * avg_tempo
+            
+            # Re-apply only the home court advantage
+            if location == 'home_1':
+                team1_expected_score += self.home_court_advantage
+            elif location == 'home_2':
+                team2_expected_score += self.home_court_advantage
         
         # Calculate spread (always Team1 - Team2)
         spread = team1_expected_score - team2_expected_score
