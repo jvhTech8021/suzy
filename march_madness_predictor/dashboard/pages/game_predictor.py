@@ -33,9 +33,9 @@ def layout(data_loader=None):
         html.H1("NCAA Game Predictor", className="mb-4"),
         
         html.P([
-            "This page allows you to predict the outcome of a game between any two teams using KenPom metrics. ",
-            "The prediction model takes into account offensive and defensive efficiencies, tempo, shooting percentages, ",
-            "rebounding, turnovers, and other key statistics to generate spread and win probability predictions."
+            "This page allows you to predict the outcome of a game between any two teams using KenPom metrics ",
+            "and tournament prediction data. The model integrates offensive and defensive efficiencies, tempo, ",
+            "championship probabilities, exit round predictions, and seeding to generate comprehensive forecasts."
         ], className="lead"),
         
         html.Hr(),
@@ -94,8 +94,8 @@ def layout(data_loader=None):
                     dbc.CardHeader("About the Game Predictor"),
                     dbc.CardBody([
                         html.P([
-                            "The NCAA Game Predictor uses a mathematical model based on KenPom metrics ",
-                            "to predict the outcome of a game between any two teams."
+                            "The NCAA Game Predictor combines traditional KenPom metrics with ",
+                            "tournament prediction data to forecast game outcomes."
                         ]),
                         html.P([
                             "The model considers various factors, including:"
@@ -103,14 +103,16 @@ def layout(data_loader=None):
                         html.Ul([
                             html.Li("Team efficiency ratings (offense and defense)"),
                             html.Li("Pace of play (tempo)"),
-                            html.Li("Shooting percentages (overall and three-point)"),
-                            html.Li("Rebounding rates"),
-                            html.Li("Turnover rates"),
+                            html.Li("Shooting percentages and rebounding rates"),
+                            html.Li("Tournament championship probabilities"),
+                            html.Li("Predicted tournament exit rounds"),
+                            html.Li("Team seeding information"),
                             html.Li("Home court advantage (+3.5 points for home team)")
                         ]),
                         html.P([
-                            "The spread prediction takes into account statistical advantages of each team ",
-                            "and adjusts for matchup-specific factors that could influence the outcome."
+                            "When tournament prediction data is available, the model incorporates it ",
+                            "to provide more context-aware game predictions, especially for matchups ",
+                            "in tournament settings."
                         ])
                     ])
                 ])
@@ -325,6 +327,121 @@ def predict_game(n_clicks, team1, team2, location):
     elif location == "home_2":
         location_description = f"This prediction includes a home court advantage for {team2}."
     
+    # Tournament prediction data
+    team1_tournament_data = prediction["team1"]["tournament_data"]
+    team2_tournament_data = prediction["team2"]["tournament_data"]
+    has_tournament_data = (team1_tournament_data["has_exit_round_data"] or team1_tournament_data["has_champion_profile_data"] or
+                           team2_tournament_data["has_exit_round_data"] or team2_tournament_data["has_champion_profile_data"])
+    
+    # Generate tournament data display
+    tournament_data_section = []
+    if has_tournament_data:
+        # Create table rows for tournament data
+        tournament_rows = []
+        
+        # Championship probability row
+        if team1_tournament_data["championship_pct"] is not None or team2_tournament_data["championship_pct"] is not None:
+            team1_champ = team1_tournament_data["championship_pct"] if team1_tournament_data["championship_pct"] is not None else "N/A"
+            team2_champ = team2_tournament_data["championship_pct"] if team2_tournament_data["championship_pct"] is not None else "N/A"
+            
+            if isinstance(team1_champ, (int, float)):
+                team1_champ = f"{team1_champ:.1f}%"
+            if isinstance(team2_champ, (int, float)):
+                team2_champ = f"{team2_champ:.1f}%"
+                
+            tournament_rows.append(
+                html.Tr([
+                    html.Td("Championship Probability"),
+                    html.Td(team1_champ),
+                    html.Td(team2_champ)
+                ])
+            )
+        
+        # Final Four probability row
+        if team1_tournament_data["final_four_pct"] is not None or team2_tournament_data["final_four_pct"] is not None:
+            team1_ff = team1_tournament_data["final_four_pct"] if team1_tournament_data["final_four_pct"] is not None else "N/A"
+            team2_ff = team2_tournament_data["final_four_pct"] if team2_tournament_data["final_four_pct"] is not None else "N/A"
+            
+            if isinstance(team1_ff, (int, float)):
+                team1_ff = f"{team1_ff:.1f}%"
+            if isinstance(team2_ff, (int, float)):
+                team2_ff = f"{team2_ff:.1f}%"
+                
+            tournament_rows.append(
+                html.Tr([
+                    html.Td("Final Four Probability"),
+                    html.Td(team1_ff),
+                    html.Td(team2_ff)
+                ])
+            )
+        
+        # Predicted Exit round
+        if team1_tournament_data["predicted_exit"] is not None or team2_tournament_data["predicted_exit"] is not None:
+            team1_exit = team1_tournament_data["predicted_exit"] if team1_tournament_data["predicted_exit"] is not None else "N/A"
+            team2_exit = team2_tournament_data["predicted_exit"] if team2_tournament_data["predicted_exit"] is not None else "N/A"
+                
+            tournament_rows.append(
+                html.Tr([
+                    html.Td("Predicted Tournament Exit"),
+                    html.Td(team1_exit),
+                    html.Td(team2_exit)
+                ])
+            )
+        
+        # Seed row
+        if team1_tournament_data["seed"] is not None or team2_tournament_data["seed"] is not None:
+            team1_seed = team1_tournament_data["seed"] if team1_tournament_data["seed"] is not None else "N/A"
+            team2_seed = team2_tournament_data["seed"] if team2_tournament_data["seed"] is not None else "N/A"
+            
+            if isinstance(team1_seed, (int, float)):
+                team1_seed = f"{int(team1_seed)}"
+            if isinstance(team2_seed, (int, float)):
+                team2_seed = f"{int(team2_seed)}"
+                
+            tournament_rows.append(
+                html.Tr([
+                    html.Td("Tournament Seed"),
+                    html.Td(team1_seed),
+                    html.Td(team2_seed)
+                ])
+            )
+        
+        # Create the tournament data section
+        tournament_data_section = [
+            dbc.Row([
+                dbc.Col([
+                    html.H4("Tournament Predictions", className="mb-3"),
+                    dbc.Table([
+                        html.Thead(
+                            html.Tr([
+                                html.Th("Metric"),
+                                html.Th(team1),
+                                html.Th(team2)
+                            ])
+                        ),
+                        html.Tbody(tournament_rows)
+                    ], bordered=True, hover=True, striped=True),
+                    
+                    # Add info about how these factors affected the prediction
+                    html.Div([
+                        html.P([
+                            "Tournament prediction data impact on this matchup:"
+                        ], className="mt-3 mb-2"),
+                        html.Ul([
+                            html.Li([
+                                "Championship probability adjustment: ",
+                                html.Strong(f"{prediction['tournament_adjustment']:.2f} points") if prediction['tournament_adjustment'] != 0 else "None"
+                            ]),
+                            html.Li([
+                                "Seed-based adjustment: ",
+                                html.Strong(f"{prediction['seed_adjustment']:.2f} points") if prediction['seed_adjustment'] != 0 else "None"
+                            ])
+                        ])
+                    ]) if prediction['tournament_adjustment'] != 0 or prediction['seed_adjustment'] != 0 else html.Div()
+                ])
+            ], className="mb-4")
+        ]
+    
     # Return the prediction results
     return html.Div([
         html.H3("Game Prediction", className="mb-4"),
@@ -368,6 +485,9 @@ def predict_game(n_clicks, team1, team2, location):
                 )
             ], md=12, lg=4)
         ]),
+        
+        # Tournament data section (if available)
+        html.Div(tournament_data_section) if has_tournament_data else html.Div(),
         
         # Key statistics comparison
         dbc.Row([

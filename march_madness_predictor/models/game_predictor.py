@@ -19,6 +19,8 @@ class GamePredictor:
         """
         self.data_loader = data_loader
         self.current_data = None
+        self.exit_round_data = None
+        self.champion_profile_data = None
         
         # Define core metrics that are most likely available in KenPom data
         self.core_metrics = [
@@ -61,6 +63,7 @@ class GamePredictor:
         self._load_data()
         self._detect_available_columns()
         self.active_metrics = self._get_active_metrics()
+        self._load_tournament_prediction_data()
     
     def _load_data(self):
         """Load current season KenPom data"""
@@ -90,6 +93,75 @@ class GamePredictor:
         else:
             # Use data loader to get data
             self.current_data = self.data_loader.get_current_season_data()
+    
+    def _load_tournament_prediction_data(self):
+        """Load tournament prediction data from other models"""
+        if self.data_loader is None:
+            return
+        
+        # Try to load exit round predictions
+        try:
+            self.exit_round_data = self.data_loader.get_exit_round_predictions()
+            print(f"Loaded exit round predictions for {len(self.exit_round_data)} teams")
+        except Exception as e:
+            print(f"Error loading exit round predictions: {str(e)}")
+            self.exit_round_data = None
+        
+        # Try to load champion profile predictions
+        try:
+            self.champion_profile_data = self.data_loader.get_champion_profile_predictions()
+            print(f"Loaded champion profile predictions for {len(self.champion_profile_data)} teams")
+        except Exception as e:
+            print(f"Error loading champion profile predictions: {str(e)}")
+            self.champion_profile_data = None
+    
+    def _get_tournament_prediction_data(self, team_name):
+        """
+        Get tournament prediction data for a team
+        
+        Parameters:
+        -----------
+        team_name : str
+            Name of the team
+            
+        Returns:
+        --------
+        dict
+            Dictionary with tournament prediction data
+        """
+        result = {
+            "has_exit_round_data": False,
+            "has_champion_profile_data": False,
+            "championship_pct": None,
+            "final_four_pct": None,
+            "predicted_exit": None,
+            "similarity_pct": None,
+            "seed": None
+        }
+        
+        # Get exit round data if available
+        if self.exit_round_data is not None:
+            team_data = self.exit_round_data[self.exit_round_data['TeamName'] == team_name]
+            if len(team_data) > 0:
+                result["has_exit_round_data"] = True
+                result["championship_pct"] = team_data.iloc[0].get('ChampionshipPct', None)
+                result["final_four_pct"] = team_data.iloc[0].get('FinalFourPct', None)
+                result["predicted_exit"] = team_data.iloc[0].get('PredictedExit', None)
+                result["seed"] = team_data.iloc[0].get('Seed', None)
+        
+        # Get champion profile data if available
+        if self.champion_profile_data is not None:
+            team_data = self.champion_profile_data[self.champion_profile_data['TeamName'] == team_name]
+            if len(team_data) > 0:
+                result["has_champion_profile_data"] = True
+                # Only override championship and final four percentages if they're not already set
+                if result["championship_pct"] is None:
+                    result["championship_pct"] = team_data.iloc[0].get('ChampionPct', None)
+                if result["final_four_pct"] is None:
+                    result["final_four_pct"] = team_data.iloc[0].get('FinalFourPct', None)
+                result["similarity_pct"] = team_data.iloc[0].get('SimilarityPct', None)
+        
+        return result
     
     def _detect_available_columns(self):
         """
@@ -240,6 +312,10 @@ class GamePredictor:
         team1 = team1.iloc[0]
         team2 = team2.iloc[0]
         
+        # Get tournament prediction data for both teams
+        team1_tournament_data = self._get_tournament_prediction_data(team1_name)
+        team2_tournament_data = self._get_tournament_prediction_data(team2_name)
+        
         # Get historical matchup data
         historical_data = self._analyze_historical_matchups(team1_name, team2_name)
         
@@ -249,134 +325,123 @@ class GamePredictor:
         # Get key metrics safely
         team1_adjoe = self._safe_get(team1, 'AdjOE')
         team1_adjde = self._safe_get(team1, 'AdjDE')
-        team1_adjtempo = self._safe_get(team1, 'AdjTempo')
         team2_adjoe = self._safe_get(team2, 'AdjOE')
         team2_adjde = self._safe_get(team2, 'AdjDE')
-        team2_adjtempo = self._safe_get(team2, 'AdjTempo')
         
-        # Determine predicted score using KenPom ratings
-        avg_tempo = (team1_adjtempo + team2_adjtempo) / 2
-        team1_predicted_score = (team1_adjoe * avg_tempo / 100) * (team2_adjde / 100)
-        team2_predicted_score = (team2_adjoe * avg_tempo / 100) * (team1_adjde / 100)
+        # Get tempo
+        team1_tempo = self._safe_get(team1, 'AdjTempo')
+        team2_tempo = self._safe_get(team2, 'AdjTempo')
         
-        # Calculate spread and total
-        spread = team1_predicted_score - team2_predicted_score
-        total = team1_predicted_score + team2_predicted_score
+        # Average of the two tempos (teams play at a pace somewhere in the middle)
+        avg_tempo = (team1_tempo + team2_tempo) / 2
         
-        # Calculate win probability using logistic function based on AdjEM
-        team1_adjem = self._safe_get(team1, 'AdjEM')
-        team2_adjem = self._safe_get(team2, 'AdjEM')
-        rating_diff = team1_adjem - team2_adjem
-        team1_win_prob = 1 / (1 + np.exp(-rating_diff * 0.1))
-        team2_win_prob = 1 - team1_win_prob
+        # Calculate expected points per possession
+        team1_off_ppp = team1_adjoe / 100
+        team2_off_ppp = team2_adjoe / 100
         
-        # Apply historical matchup adjustment if available
-        if historical_data['total_matchups'] > 0:
-            # Calculate historical win rate for team1
-            historical_win_rate = historical_data['team1_wins'] / historical_data['total_matchups']
-            
-            # Factor in historical average margin
-            margin_adjustment = historical_data['avg_margin'] * 0.1  # Scale it down
-            
-            # Adjust the spread
-            spread += margin_adjustment
-            
-            # Adjust win probability using historical data (10% weight)
-            historical_weight = 0.1
-            adjusted_team1_win_prob = (team1_win_prob * (1 - historical_weight)) + (historical_win_rate * historical_weight)
-            
-            # Ensure probability stays within reasonable bounds
-            team1_win_prob = min(max(adjusted_team1_win_prob, 0.05), 0.95)
-            team2_win_prob = 1 - team1_win_prob
+        # Adjust for opponent defense
+        team1_expected_ppp = ((team1_off_ppp * 2) + (team2_adjde / 100)) / 3
+        team2_expected_ppp = ((team2_off_ppp * 2) + (team1_adjde / 100)) / 3
         
-        # Apply adjustments based on key statistics that are available
-        # Start with a base adjustment
-        spread_adjustment = 0
-        total_adjustment = 0
+        # Calculate expected score
+        team1_expected_score = team1_expected_ppp * avg_tempo
+        team2_expected_score = team2_expected_ppp * avg_tempo
         
-        # Offensive efficiency has major impact
-        if 'AdjOE' in self.active_metrics:
-            oe_diff = team1_adjoe - team2_adjoe
-            spread_adjustment += oe_diff * 0.05
-        
-        # Defensive efficiency has major impact (negative because lower is better)
-        if 'AdjDE' in self.active_metrics:
-            de_diff = team2_adjde - team1_adjde
-            spread_adjustment += de_diff * 0.05
-        
-        # Tempo can affect total but not necessarily spread
-        if 'AdjTempo' in self.active_metrics:
-            tempo_diff = team1_adjtempo - team2_adjtempo
-            total_adjustment += abs(tempo_diff) * 0.1
-        
-        # Add supplementary metrics adjustments if available
-        if 'TOR' in self.active_metrics:
-            # Turnover rate affects possession quality
-            to_diff = self._safe_get(team2, 'TOR') - self._safe_get(team1, 'TOR')  # Lower is better
-            spread_adjustment += to_diff * 0.2
-        
-        if 'Three_Pct' in self.active_metrics:
-            # Three-point shooting can create variance
-            three_diff = self._safe_get(team1, 'Three_Pct') - self._safe_get(team2, 'Three_Pct')
-            spread_adjustment += three_diff * 0.3
-        
-        # Apply location-based adjustment
-        location_adjustment = 0
+        # Apply home court advantage if applicable
         if location == 'home_1':
-            location_adjustment = self.home_court_advantage
-            spread += location_adjustment
-            team1_win_prob = self._adjust_win_probability(team1_win_prob, location_adjustment)
+            team1_expected_score += self.home_court_advantage
         elif location == 'home_2':
-            location_adjustment = -self.home_court_advantage
-            spread += location_adjustment
-            team1_win_prob = self._adjust_win_probability(team1_win_prob, location_adjustment)
+            team2_expected_score += self.home_court_advantage
         
-        # Recalculate team2_win_prob based on adjusted team1_win_prob
-        team2_win_prob = 1 - team1_win_prob
+        # Apply tournament prediction adjustment if available
+        tournament_adjustment = 0
+        if team1_tournament_data["championship_pct"] is not None and team2_tournament_data["championship_pct"] is not None:
+            # If one team has a significantly higher championship probability, give them a small boost
+            champ_diff = team1_tournament_data["championship_pct"] - team2_tournament_data["championship_pct"]
+            if abs(champ_diff) > 10:  # Only apply if difference is significant
+                tournament_adjustment = champ_diff / 20  # Scale down the effect
+                team1_expected_score += tournament_adjustment
+                
+        # Apply seed adjustment if available
+        seed_adjustment = 0
+        if team1_tournament_data["seed"] is not None and team2_tournament_data["seed"] is not None:
+            # Lower seeds (better teams) get a boost
+            seed_diff = team2_tournament_data["seed"] - team1_tournament_data["seed"]
+            seed_adjustment = seed_diff / 8  # Scale appropriately
+            team1_expected_score += seed_adjustment
         
-        # Apply other adjustments
-        spread += spread_adjustment
-        total += total_adjustment
+        # Calculate spread (always Team1 - Team2)
+        spread = team1_expected_score - team2_expected_score
         
-        # Create team stats comparison
-        team_stats = []
-        for col in self.active_metrics:
-            stat_name = col.replace('_', ' ')
-            team1_value = self._safe_get(team1, col)
-            team2_value = self._safe_get(team2, col)
+        # Calculate total
+        total = team1_expected_score + team2_expected_score
+        
+        # Calculate win probability using log5 formula
+        team1_raw_wp = 1 / (1 + 10 ** (-(team1_adjoe - team1_adjde - (team2_adjoe - team2_adjde)) / 100))
+        
+        # Adjust win probability for home court if applicable
+        if location == 'home_1':
+            team1_wp = self._adjust_win_probability(team1_raw_wp, self.home_court_advantage)
+        elif location == 'home_2':
+            team1_wp = self._adjust_win_probability(team1_raw_wp, -self.home_court_advantage)
+        else:
+            team1_wp = team1_raw_wp
             
-            team_stats.append({
-                'stat': stat_name,
-                'team1_value': team1_value,
-                'team2_value': team2_value,
-                'difference': team1_value - team2_value
-            })
+        # Apply any tournament model adjustments
+        if tournament_adjustment != 0 or seed_adjustment != 0:
+            total_point_adjustment = tournament_adjustment + seed_adjustment
+            team1_wp = self._adjust_win_probability(team1_wp, total_point_adjustment)
         
-        # Return prediction results with historical matchup data
+        team2_wp = 1 - team1_wp
+        
+        # Calculate key factors for the matchup
+        key_factors = self._calculate_key_factors(team1, team2)
+        
+        # Calculate stat comparisons for display
+        stat_comparisons = []
+        for stat in self.active_metrics:
+            team1_value = self._safe_get(team1, stat)
+            team2_value = self._safe_get(team2, stat)
+            difference = team1_value - team2_value
+            
+            # Determine if higher or lower is better for this stat
+            higher_is_better = True
+            if stat in ['AdjDE', 'EFGD_Pct', 'TOR', 'TORD', 'TwoD_Pct', 'ThreeD_Pct']:
+                higher_is_better = False
+                
+            # Format the display name
+            display_name = stat.replace('_', ' ')
+            
+            stat_comparisons.append({
+                "stat": display_name,
+                "team1_value": team1_value,
+                "team2_value": team2_value,
+                "difference": difference,
+                "advantage": team1_name if (higher_is_better and difference > 0) or (not higher_is_better and difference < 0) else team2_name
+            })
+            
+        # Return the prediction data
         result = {
             "team1": {
                 "name": team1_name,
-                "win_probability": team1_win_prob,
-                "predicted_score": team1_predicted_score
+                "predicted_score": team1_expected_score,
+                "win_probability": team1_wp,
+                "tournament_data": team1_tournament_data
             },
             "team2": {
                 "name": team2_name,
-                "win_probability": team2_win_prob,
-                "predicted_score": team2_predicted_score
+                "predicted_score": team2_expected_score,
+                "win_probability": team2_wp,
+                "tournament_data": team2_tournament_data
             },
             "spread": spread,
             "total": total,
             "location": location,
-            "location_adjustment": location_adjustment,
-            "team_stats": team_stats,
-            "predicted_winner": team1_name if team1_win_prob > team2_win_prob else team2_name,
-            "key_factors": self._calculate_key_factors(team1, team2),
-            "historical_matchups": {
-                "total_matchups": historical_data['total_matchups'],
-                "team1_wins": historical_data['team1_wins'],
-                "team2_wins": historical_data['team2_wins'],
-                "avg_margin": historical_data['avg_margin']
-            }
+            "key_factors": key_factors,
+            "team_stats": stat_comparisons,
+            "historical_matchups": historical_data,
+            "tournament_adjustment": tournament_adjustment,
+            "seed_adjustment": seed_adjustment
         }
         
         return result
