@@ -10,7 +10,7 @@ import traceback
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Import the pages and components
-from dashboard.pages import home, champion_profile, exit_round, combined_model, team_explorer, about, full_bracket, game_predictor, tournament_level_analysis
+from dashboard.pages import home, champion_profile, exit_round, combined_model, team_explorer, about, full_bracket, game_predictor, historical_picks, tournament_level_analysis, saved_predictions
 from dashboard.components import navbar
 from utils.data_loader import DataLoader
 
@@ -71,6 +71,8 @@ def display_page(pathname):
             return tournament_level_analysis.layout(data_loader)
         elif pathname == '/about':
             return about.layout()
+        elif pathname == '/historical_picks':
+            return historical_picks.layout()
         else:
             return home.layout(data_loader)
     except Exception as e:

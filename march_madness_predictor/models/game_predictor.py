@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import os
+import json
 
 class GamePredictor:
     """
@@ -465,7 +466,7 @@ class GamePredictor:
                 if not pd.isna(team1_height_data["bench"]) and not pd.isna(team2_height_data["bench"]):
                     bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
                     if abs(bench_diff) > 4:  # Lowered threshold from 5 to 4 percent
-                        bench_adjustment = bench_diff * 0.08  # Increased from 0.05 to 0.08 points per percentage
+                        bench_adjustment = abs(bench_diff) / 3.0  # Decreased importance (increased divisor from 2.5 to 3.0)
                         team1_expected_score += bench_adjustment
         
         # Add a final check to make sure expected scores are not NaN
@@ -779,7 +780,7 @@ class GamePredictor:
                         factors.append({
                             'factor': 'Bench Depth',
                             'advantage': team1_name if bench_diff > 0 else team2_name,
-                            'magnitude': abs(bench_diff) / 2.5,  # Increased importance (reduced divisor from 3 to 2.5)
+                            'magnitude': abs(bench_diff) / 3.0,  # Decreased importance (increased divisor from 2.5 to 3.0)
                             'description': f"{'Deeper' if bench_diff > 0 else 'Thinner'} bench (by {abs(bench_diff):.1f}% minutes)"
                         })
         
@@ -893,6 +894,39 @@ class GamePredictor:
             'matchups': historical_matchups,
             'avg_margin': avg_margin
         }
+
+    def save_prediction(self, prediction, file_path='historical_picks.json'):
+        """
+        Save the prediction result to a JSON file.
+
+        Parameters:
+        -----------
+        prediction : dict
+            The prediction result to save.
+        file_path : str
+            The path to the JSON file where the prediction will be saved.
+        """
+        try:
+            # Load existing data
+            try:
+                with open(file_path, 'r') as file:
+                    data = json.load(file)
+            except FileNotFoundError:
+                data = []
+
+            # Ensure data is a list
+            if not isinstance(data, list):
+                print("Warning: Data is not a list. Resetting to an empty list.")
+                data = []
+
+            # Append new prediction
+            data.append(prediction)
+
+            # Save back to file
+            with open(file_path, 'w') as file:
+                json.dump(data, file, indent=4)
+        except Exception as e:
+            print(f"Error saving prediction: {e}")
 
 def predict_matchup(team1, team2, data_loader=None, location='neutral'):
     """

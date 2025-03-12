@@ -39,6 +39,7 @@ def create_navbar():
                             dbc.NavItem(dbc.NavLink("Game Predictor", href="/game-predictor", active="exact")),
                             dbc.NavItem(dbc.NavLink("Team Explorer", href="/team-explorer", active="exact")),
                             dbc.NavItem(dbc.NavLink("About", href="/about", active="exact")),
+                            dbc.NavItem(dbc.NavLink("Historical Picks", href="/historical_picks", active="exact")),
                         ],
                         className="ms-auto",
                         navbar=True

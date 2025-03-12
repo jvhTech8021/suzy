@@ -1,0 +1,822 @@
+[
+    {
+        "team1": {
+            "name": "LSU",
+            "predicted_score": 72.26006924933333,
+            "win_probability": 0.44120902262328565,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "team2": {
+            "name": "Mississippi St.",
+            "predicted_score": 76.70211270933333,
+            "win_probability": 0.5587909773767143,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "spread": -4.442043460000008,
+        "total": 148.96218195866666,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Offensive Efficiency",
+                "advantage": "Mississippi St.",
+                "magnitude": 9.367000000000004,
+                "description": "Lower offensive efficiency"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 9.51695,
+                "team2_value": 19.7779,
+                "difference": -10.26095,
+                "advantage": "Mississippi St."
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 109.899,
+                "team2_value": 119.266,
+                "difference": -9.367000000000004,
+                "advantage": "Mississippi St."
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 100.382,
+                "team2_value": 99.4885,
+                "difference": 0.8935000000000031,
+                "advantage": "Mississippi St."
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 67.8588,
+                "team2_value": 67.9316,
+                "difference": -0.07280000000000086,
+                "advantage": "Mississippi St."
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 8,
+            "team2_wins": 6,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 14.7097,
+                    "team2_em": 11.8111,
+                    "diff": 2.8986,
+                    "winner": "LSU"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": -1.56073,
+                    "team2_em": 16.5065,
+                    "diff": -18.06723,
+                    "winner": "Mississippi St."
+                },
+                {
+                    "year": 2011,
+                    "team1_em": -5.89978,
+                    "team2_em": 2.98178,
+                    "diff": -8.88156,
+                    "winner": "Mississippi St."
+                },
+                {
+                    "year": 2012,
+                    "team1_em": 7.87872,
+                    "team2_em": 9.72868,
+                    "diff": -1.8499600000000003,
+                    "winner": "Mississippi St."
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 6.60905,
+                    "team2_em": -7.90935,
+                    "diff": 14.5184,
+                    "winner": "LSU"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 11.4737,
+                    "team2_em": -3.75746,
+                    "diff": 15.23116,
+                    "winner": "LSU"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": 13.9432,
+                    "team2_em": 0.750636,
+                    "diff": 13.192563999999999,
+                    "winner": "LSU"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": 9.78315,
+                    "team2_em": 9.882,
+                    "diff": -0.09885000000000055,
+                    "winner": "Mississippi St."
+                },
+                {
+                    "year": 2017,
+                    "team1_em": -0.496025,
+                    "team2_em": 6.85274,
+                    "diff": -7.348765,
+                    "winner": "Mississippi St."
+                },
+                {
+                    "year": 2018,
+                    "team1_em": 12.4654,
+                    "team2_em": 12.3553,
+                    "diff": 0.11010000000000097,
+                    "winner": "LSU"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": 20.9656,
+                    "team2_em": 20.6776,
+                    "diff": 0.2879999999999967,
+                    "winner": "LSU"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 19.5899,
+                    "team2_em": 11.1857,
+                    "diff": 8.4042,
+                    "winner": "LSU"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 19.0816,
+                    "team2_em": 14.041,
+                    "diff": 5.040600000000001,
+                    "winner": "LSU"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": 8.72032,
+                    "team2_em": 17.9796,
+                    "diff": -9.259280000000002,
+                    "winner": "Mississippi St."
+                }
+            ],
+            "avg_margin": 1.012712785714285
+        },
+        "tournament_adjustment": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0
+    },
+    {
+        "team1": {
+            "name": "Rider",
+            "predicted_score": 70.38676371733334,
+            "win_probability": 0.4469474131688821,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "team2": {
+            "name": "Quinnipiac",
+            "predicted_score": 72.49451143999997,
+            "win_probability": 0.5530525868311179,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "spread": -2.1077477226666304,
+        "total": 142.8812751573333,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "Quinnipiac",
+                "magnitude": 9.305999999999997,
+                "description": "Weaker defensive efficiency"
+            },
+            {
+                "factor": "Tempo",
+                "advantage": "Neutral",
+                "magnitude": 7.065399999999997,
+                "description": "Quinnipiac prefers a faster pace, Rider plays slower"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": -13.1276,
+                "team2_value": -3.8766,
+                "difference": -9.251,
+                "advantage": "Quinnipiac"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 101.091,
+                "team2_value": 101.036,
+                "difference": 0.05499999999999261,
+                "advantage": "Rider"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 114.218,
+                "team2_value": 104.912,
+                "difference": 9.305999999999997,
+                "advantage": "Quinnipiac"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 65.2281,
+                "team2_value": 72.2935,
+                "difference": -7.065399999999997,
+                "advantage": "Quinnipiac"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 9,
+            "team2_wins": 5,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": -0.582382,
+                    "team2_em": -10.791,
+                    "diff": 10.208618000000001,
+                    "winner": "Rider"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": -1.39527,
+                    "team2_em": -1.05597,
+                    "diff": -0.33929999999999993,
+                    "winner": "Quinnipiac"
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 5.09411,
+                    "team2_em": 0.240078,
+                    "diff": 4.854032,
+                    "winner": "Rider"
+                },
+                {
+                    "year": 2012,
+                    "team1_em": -5.25163,
+                    "team2_em": 1.41251,
+                    "diff": -6.66414,
+                    "winner": "Quinnipiac"
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 0.675801,
+                    "team2_em": -3.44598,
+                    "diff": 4.121781,
+                    "winner": "Rider"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": -4.82354,
+                    "team2_em": 1.45538,
+                    "diff": -6.27892,
+                    "winner": "Quinnipiac"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": -0.295372,
+                    "team2_em": -1.4188,
+                    "diff": 1.123428,
+                    "winner": "Rider"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": -4.84247,
+                    "team2_em": -11.3875,
+                    "diff": 6.54503,
+                    "winner": "Rider"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": -3.87895,
+                    "team2_em": -11.6956,
+                    "diff": 7.816650000000001,
+                    "winner": "Rider"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": 2.50668,
+                    "team2_em": -10.2942,
+                    "diff": 12.80088,
+                    "winner": "Rider"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": -4.51028,
+                    "team2_em": -5.97503,
+                    "diff": 1.4647500000000004,
+                    "winner": "Rider"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": -13.9598,
+                    "team2_em": -10.8968,
+                    "diff": -3.062999999999999,
+                    "winner": "Quinnipiac"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": -5.19226,
+                    "team2_em": -5.84319,
+                    "diff": 0.6509299999999998,
+                    "winner": "Rider"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": -4.35751,
+                    "team2_em": -0.355401,
+                    "diff": -4.002109000000001,
+                    "winner": "Quinnipiac"
+                }
+            ],
+            "avg_margin": 2.0884735714285716
+        },
+        "tournament_adjustment": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0
+    },
+    {
+        "team1": {
+            "name": "Vanderbilt",
+            "predicted_score": 76.986223324,
+            "win_probability": 0.500226804616104,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "team2": {
+            "name": "Texas",
+            "predicted_score": 76.37585937,
+            "win_probability": 0.499773195383896,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "spread": 0.6103639539999932,
+        "total": 153.36208269399998,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Offensive Efficiency",
+                "advantage": "Vanderbilt",
+                "magnitude": 2.6340000000000003,
+                "description": "Higher offensive efficiency"
+            },
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "Texas",
+                "magnitude": 2.5946,
+                "description": "Weaker defensive efficiency"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 16.5451,
+                "team2_value": 16.5052,
+                "difference": 0.03990000000000293,
+                "advantage": "Vanderbilt"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 118.78,
+                "team2_value": 116.146,
+                "difference": 2.6340000000000003,
+                "advantage": "Vanderbilt"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 102.235,
+                "team2_value": 99.6404,
+                "difference": 2.5946,
+                "advantage": "Texas"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 69.5613,
+                "team2_value": 67.4247,
+                "difference": 2.1366000000000014,
+                "advantage": "Vanderbilt"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 3,
+            "team2_wins": 11,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 10.0034,
+                    "team2_em": 18.5075,
+                    "diff": -8.504100000000001,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": 17.5253,
+                    "team2_em": 20.6323,
+                    "diff": -3.1069999999999993,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 17.437,
+                    "team2_em": 26.7252,
+                    "diff": -9.2882,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2012,
+                    "team1_em": 20.3275,
+                    "team2_em": 16.5122,
+                    "diff": 3.8153000000000006,
+                    "winner": "Vanderbilt"
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 6.8193,
+                    "team2_em": 7.10682,
+                    "diff": -0.2875199999999998,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 5.11822,
+                    "team2_em": 14.9889,
+                    "diff": -9.87068,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": 14.0696,
+                    "team2_em": 20.1184,
+                    "diff": -6.048800000000002,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": 19.9195,
+                    "team2_em": 17.1061,
+                    "diff": 2.813399999999998,
+                    "winner": "Vanderbilt"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": 16.2376,
+                    "team2_em": 10.1616,
+                    "diff": 6.0760000000000005,
+                    "winner": "Vanderbilt"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": 8.07789,
+                    "team2_em": 15.4577,
+                    "diff": -7.379810000000001,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": 0.791059,
+                    "team2_em": 17.8908,
+                    "diff": -17.099740999999998,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 8.56973,
+                    "team2_em": 20.5822,
+                    "diff": -12.01247,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 12.1042,
+                    "team2_em": 20.4063,
+                    "diff": -8.302100000000001,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": -2.3338,
+                    "team2_em": 18.4035,
+                    "diff": -20.7373,
+                    "winner": "Texas"
+                }
+            ],
+            "avg_margin": -6.423787214285715
+        },
+        "tournament_adjustment": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0,
+        "result": "win"
+    },
+    {
+        "team1": {
+            "name": "Rhode Island",
+            "predicted_score": 77.16733480866668,
+            "win_probability": 0.5484322117177558,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "team2": {
+            "name": "Fordham",
+            "predicted_score": 74.25847972866667,
+            "win_probability": 0.4515677882822442,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "spread": 2.9088550800000093,
+        "total": 151.42581453733334,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "Rhode Island",
+                "magnitude": 4.460000000000008,
+                "description": "Stronger defensive efficiency"
+            },
+            {
+                "factor": "Offensive Efficiency",
+                "advantage": "Rhode Island",
+                "magnitude": 3.980000000000004,
+                "description": "Higher offensive efficiency"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 2.06982,
+                "team2_value": -6.37048,
+                "difference": 8.4403,
+                "advantage": "Rhode Island"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 109.031,
+                "team2_value": 105.051,
+                "difference": 3.980000000000004,
+                "advantage": "Rhode Island"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 106.961,
+                "team2_value": 111.421,
+                "difference": -4.460000000000008,
+                "advantage": "Rhode Island"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 70.5909,
+                "team2_value": 69.9335,
+                "difference": 0.6574000000000098,
+                "advantage": "Rhode Island"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 13,
+            "team2_wins": 1,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 11.8812,
+                    "team2_em": -18.9216,
+                    "diff": 30.8028,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": 12.7605,
+                    "team2_em": -14.5529,
+                    "diff": 27.3134,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 3.91002,
+                    "team2_em": -11.637,
+                    "diff": 15.54702,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2012,
+                    "team1_em": -5.21503,
+                    "team2_em": -9.26917,
+                    "diff": 4.054140000000001,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2013,
+                    "team1_em": -2.35767,
+                    "team2_em": -7.88716,
+                    "diff": 5.529489999999999,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 5.04367,
+                    "team2_em": -2.88267,
+                    "diff": 7.92634,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": 11.9184,
+                    "team2_em": -3.33906,
+                    "diff": 15.25746,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": 9.17293,
+                    "team2_em": 0.30505,
+                    "diff": 8.86788,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": 15.6156,
+                    "team2_em": -2.94574,
+                    "diff": 18.56134,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": 14.3818,
+                    "team2_em": -11.6247,
+                    "diff": 26.006500000000003,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": 2.68032,
+                    "team2_em": -7.84442,
+                    "diff": 10.524740000000001,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 7.79368,
+                    "team2_em": -12.1166,
+                    "diff": 19.91028,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 3.0391,
+                    "team2_em": -0.643445,
+                    "diff": 3.682545,
+                    "winner": "Rhode Island"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": -3.79983,
+                    "team2_em": -2.4391,
+                    "diff": -1.3607300000000002,
+                    "winner": "Fordham"
+                }
+            ],
+            "avg_margin": 13.75880035714286
+        },
+        "tournament_adjustment": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0,
+        "result": "loss"
+    }
+]

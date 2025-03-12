@@ -121,6 +121,19 @@ def layout(data_loader=None):
                         className="mt-4 w-100"
                     )
                 ], className="d-flex align-items-end h-100")
+            ], md=4),
+            
+            # Save prediction button
+            dbc.Col([
+                html.Div([
+                    dbc.Button(
+                        "Save Prediction",
+                        id="save-prediction-button",
+                        color="success",
+                        size="lg",
+                        className="mt-4 w-100"
+                    )
+                ], className="d-flex align-items-end h-100")
             ], md=4)
         ]),
         
@@ -800,3 +813,60 @@ def predict_game(n_clicks, team1, team2, location, vegas_spread, vegas_total):
         # Explanation and confidence section
         explanation_card
     ]) 
+
+# Callback to save the prediction
+@callback(
+    Output("prediction-results", "children", allow_duplicate=True),
+    [Input("save-prediction-button", "n_clicks")],
+    [State("team1-dropdown", "value"),
+     State("team2-dropdown", "value"),
+     State("location-radio", "value")],
+    prevent_initial_call=True
+)
+def save_prediction(n_clicks, team1, team2, location):
+    if not team1 or not team2:
+        return html.Div([
+            html.P("Please select both teams to save a prediction.", className="text-danger")
+        ])
+
+    if team1 == team2:
+        return html.Div([
+            html.P("Please select different teams for the prediction.", className="text-danger")
+        ])
+
+    # Create predictor with data_loader
+    predictor = GamePredictor()
+    prediction = predictor.predict_game(team1, team2, location)
+    predictor.save_prediction(prediction)
+
+    return html.Div([
+        html.P("Prediction saved successfully!", className="text-success")
+    ])
+
+def save_and_predict_game(team1_name, team2_name, location='neutral', data_loader=None):
+    """
+    Predict the outcome of a game and save the prediction.
+
+    Parameters:
+    -----------
+    team1_name : str
+        Name of the first team
+    team2_name : str
+        Name of the second team
+    location : str
+        Game location: 'home_1' (team1 at home), 'home_2' (team2 at home), or 'neutral'
+    data_loader : DataLoader
+        Instance of the DataLoader class to load KenPom data
+
+    Returns:
+    --------
+    dict
+        Dictionary with prediction results
+    """
+    predictor = GamePredictor(data_loader)
+    prediction = predictor.predict_game(team1_name, team2_name, location)
+    predictor.save_prediction(prediction)
+    return prediction
+
+# Example usage
+# prediction = save_and_predict_game('Team A', 'Team B') 
