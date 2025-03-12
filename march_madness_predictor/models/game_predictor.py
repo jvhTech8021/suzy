@@ -456,7 +456,7 @@ class GamePredictor:
                 if not pd.isna(team1_height_data["experience"]) and not pd.isna(team2_height_data["experience"]):
                     exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
                     if abs(exp_diff) > 0.5:  # Only consider significant differences
-                        experience_adjustment = exp_diff * 0.8  # Scale appropriately (0.8 points per year of experience)
+                        experience_adjustment = exp_diff * 0.5  # Reduced from 0.8 to 0.5 points per year of experience
                         team1_expected_score += experience_adjustment
                 
             # Bench utilization can impact tournament games (fresher players)

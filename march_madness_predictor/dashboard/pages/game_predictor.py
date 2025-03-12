@@ -22,116 +22,111 @@ def layout(data_loader=None):
     html.Div
         Layout for the game predictor page
     """
-    # Initialize the game predictor
+    # Get the data loader
+    if data_loader is None:
+        from march_madness_predictor.utils.data_loader import DataLoader
+        data_loader = DataLoader()
+    
+    # Create the game predictor
     predictor = GamePredictor(data_loader)
     
-    # Get available teams for dropdowns
+    # Get the list of teams
     teams = predictor.get_available_teams()
     
-    # Define the layout
-    layout = html.Div([
-        html.H1("NCAA Game Predictor", className="mb-4"),
+    return dbc.Container([
+        html.H1("Game Predictor", className="mt-4 mb-4"),
+        html.P("Select two teams and predict the outcome of a game between them."),
         
-        html.P([
-            "This page allows you to predict the outcome of a game between any two teams using KenPom metrics ",
-            "and tournament prediction data. The model integrates offensive and defensive efficiencies, tempo, ",
-            "championship probabilities, exit round predictions, and seeding to generate comprehensive forecasts."
-        ], className="lead"),
-        
-        html.Hr(),
-        
-        # Team selection
         dbc.Row([
+            # Team 1 selection
             dbc.Col([
-                html.H5("Select Teams for Prediction", className="mb-3"),
-                
-                # Team 1 selection
-                html.Label("Team 1:"),
+                html.H4("Team 1"),
                 dcc.Dropdown(
                     id="team1-dropdown",
                     options=[{"label": team, "value": team} for team in teams],
-                    value=teams[0] if len(teams) > 0 else None,
-                    clearable=False,
+                    placeholder="Select Team 1",
                     className="mb-3"
-                ),
-                
-                # Team 2 selection
-                html.Label("Team 2:"),
+                )
+            ], md=4),
+            
+            # Team 2 selection
+            dbc.Col([
+                html.H4("Team 2"),
                 dcc.Dropdown(
                     id="team2-dropdown",
                     options=[{"label": team, "value": team} for team in teams],
-                    value=teams[1] if len(teams) > 1 else None,
-                    clearable=False,
+                    placeholder="Select Team 2",
                     className="mb-3"
-                ),
-                
-                # Location selection
-                html.Label("Game Location:"),
-                dbc.RadioItems(
+                )
+            ], md=4),
+            
+            # Location selection
+            dbc.Col([
+                html.H4("Location"),
+                dcc.RadioItems(
                     id="location-radio",
                     options=[
-                        {"label": "Neutral Site", "value": "neutral"},
+                        {"label": "Neutral", "value": "neutral"},
                         {"label": "Team 1 Home", "value": "home_1"},
                         {"label": "Team 2 Home", "value": "home_2"}
                     ],
                     value="neutral",
-                    inline=True,
+                    labelStyle={"marginRight": "15px"},
                     className="mb-3"
-                ),
-                
-                # Predict button
-                dbc.Button(
-                    "Predict Game",
-                    id="predict-button",
-                    color="primary",
-                    className="mt-3"
                 )
-            ], md=6, lg=5),
-            
-            dbc.Col([
-                # Information about the predictor
-                dbc.Card([
-                    dbc.CardHeader("About the Game Predictor"),
-                    dbc.CardBody([
-                        html.P([
-                            "The NCAA Game Predictor combines traditional KenPom metrics with ",
-                            "tournament prediction data to forecast game outcomes."
-                        ]),
-                        html.P([
-                            "The model considers various factors, including:"
-                        ]),
-                        html.Ul([
-                            html.Li("Team efficiency ratings (offense and defense)"),
-                            html.Li("Pace of play (tempo)"),
-                            html.Li("Shooting percentages and rebounding rates"),
-                            html.Li("Tournament championship probabilities"),
-                            html.Li("Predicted tournament exit rounds"),
-                            html.Li("Team seeding information"),
-                            html.Li("Team height, experience, and bench depth"),
-                            html.Li("Home court advantage (+3.5 points for home team)")
-                        ]),
-                        html.P([
-                            "When tournament prediction data is available, the model incorporates it ",
-                            "to provide more context-aware game predictions, especially for matchups ",
-                            "in tournament settings."
-                        ]),
-                        html.P([
-                            "The enhanced model now considers physical attributes like team height, ",
-                            "college experience (in years), and bench utilization to provide more ",
-                            "accurate predictions for tournament matchups."
-                        ])
-                    ])
-                ])
-            ], md=6, lg=7)
+            ], md=4)
         ]),
         
-        html.Hr(),
+        # Vegas odds input section
+        dbc.Row([
+            dbc.Col([
+                html.H4("Vegas Odds (Optional)", className="mt-3 mb-2"),
+                html.P("Enter the current spread and total to compare with model predictions.", className="mb-2")
+            ], width=12)
+        ]),
         
-        # Prediction results section
-        html.Div(id="prediction-results")
+        dbc.Row([
+            # Spread input
+            dbc.Col([
+                html.Label("Vegas Spread (+ for Team 1 favored)"),
+                dbc.Input(
+                    id="vegas-spread-input",
+                    type="number",
+                    placeholder="e.g. -3.5",
+                    step=0.5,
+                    className="mb-3"
+                )
+            ], md=4),
+            
+            # Total input
+            dbc.Col([
+                html.Label("Vegas Total"),
+                dbc.Input(
+                    id="vegas-total-input",
+                    type="number",
+                    placeholder="e.g. 140.5",
+                    step=0.5,
+                    className="mb-3"
+                )
+            ], md=4),
+            
+            # Predict button
+            dbc.Col([
+                html.Div([
+                    dbc.Button(
+                        "Predict Game",
+                        id="predict-button",
+                        color="primary",
+                        size="lg",
+                        className="mt-4 w-100"
+                    )
+                ], className="d-flex align-items-end h-100")
+            ], md=4)
+        ]),
+        
+        # Prediction results
+        html.Div(id="prediction-results", className="mt-4")
     ])
-    
-    return layout
 
 # Callback to predict the game and display results
 @callback(
@@ -139,10 +134,12 @@ def layout(data_loader=None):
     [Input("predict-button", "n_clicks")],
     [State("team1-dropdown", "value"),
      State("team2-dropdown", "value"),
-     State("location-radio", "value")],
+     State("location-radio", "value"),
+     State("vegas-spread-input", "value"),
+     State("vegas-total-input", "value")],
     prevent_initial_call=True
 )
-def predict_game(n_clicks, team1, team2, location):
+def predict_game(n_clicks, team1, team2, location, vegas_spread, vegas_total):
     """
     Predict the game and display results
     
@@ -156,6 +153,10 @@ def predict_game(n_clicks, team1, team2, location):
         Name of team 2
     location : str
         Game location (neutral, home_1, or home_2)
+    vegas_spread : float
+        Vegas spread for the game
+    vegas_total : float
+        Vegas total for the game
         
     Returns:
     --------
@@ -579,6 +580,77 @@ def predict_game(n_clicks, team1, team2, location):
                 ], className="mb-4")
             ]
     
+    # Set up Vegas comparison section if provided
+    vegas_comparison = None
+    if vegas_spread is not None or vegas_total is not None:
+        spread_diff = None
+        spread_diff_text = None
+        if vegas_spread is not None and not pd.isna(spread):
+            # Note: Vegas spread is positive when team1 is favored, our spread is team1 - team2
+            spread_diff = spread - vegas_spread
+            spread_diff_text = f"{abs(round(spread_diff, 1))} points {'higher' if spread_diff > 0 else 'lower'}"
+        
+        total_diff = None
+        total_diff_text = None
+        if vegas_total is not None and not pd.isna(total):
+            total_diff = total - vegas_total
+            total_diff_text = f"{abs(round(total_diff, 1))} points {'higher' if total_diff > 0 else 'lower'}"
+        
+        vegas_comparison = dbc.Card([
+            dbc.CardHeader(html.H4("Vegas Odds Comparison", className="mb-0")),
+            dbc.CardBody([
+                html.Div([
+                    html.H5("Spread Comparison"),
+                    html.P([
+                        f"Model Spread: {team1} {spread:+.1f} points",
+                        html.Br(),
+                        f"Vegas Spread: {team1} {vegas_spread:+.1f} points" if vegas_spread is not None else "Vegas Spread: Not provided",
+                        html.Br(),
+                        html.Strong(f"Difference: Model is {spread_diff_text} than Vegas") if spread_diff is not None else None
+                    ])
+                ]) if vegas_spread is not None else None,
+                
+                html.Div([
+                    html.H5("Total Comparison", className="mt-3"),
+                    html.P([
+                        f"Model Total: {total:.1f} points",
+                        html.Br(),
+                        f"Vegas Total: {vegas_total:.1f} points" if vegas_total is not None else "Vegas Total: Not provided",
+                        html.Br(),
+                        html.Strong(f"Difference: Model is {total_diff_text} than Vegas") if total_diff is not None else None
+                    ])
+                ]) if vegas_total is not None else None,
+                
+                html.Div([
+                    html.H5("Betting Analysis", className="mt-3"),
+                    html.P([
+                        html.Strong("Spread: "), 
+                        f"Consider {team1 if spread_diff > 0 else team2}" if spread_diff is not None and abs(spread_diff) > 2 else "No strong edge",
+                        html.Br(),
+                        html.Strong("Total: "), 
+                        f"Consider {'Over' if total_diff > 0 else 'Under'}" if total_diff is not None and abs(total_diff) > 3 else "No strong edge"
+                    ])
+                ]) if (vegas_spread is not None or vegas_total is not None) else None
+            ])
+        ], className="mb-4")
+    
+    # Explanation and confidence section
+    explanation_card = dbc.Card([
+        dbc.CardHeader(html.H4("Explanation & Confidence", className="mb-0")),
+        dbc.CardBody([
+            # ... existing explanation code ...
+            
+            # Add insights about Vegas line comparison if provided
+            html.Div([
+                html.H5("Vegas Comparison Insight", className="mt-3"),
+                html.P([
+                    f"The model {'agrees' if spread_diff is not None and abs(spread_diff) < 2 else 'disagrees'} with the Vegas spread. ",
+                    f"The model {'agrees' if total_diff is not None and abs(total_diff) < 3 else 'disagrees'} with the Vegas total."
+                ]) if vegas_spread is not None or vegas_total is not None else None
+            ])
+        ])
+    ], className="mb-4")
+    
     # Return the prediction results
     return html.Div([
         html.H3("Game Prediction", className="mb-4"),
@@ -720,5 +792,11 @@ def predict_game(n_clicks, team1, team2, location):
                     ]) if prediction['historical_matchups']['total_matchups'] > 0 else html.Div()
                 ])
             ])
-        ]) if 'historical_matchups' in prediction else html.Div()
+        ]) if 'historical_matchups' in prediction else html.Div(),
+        
+        # Add Vegas comparison section to the results if provided
+        vegas_comparison if vegas_comparison is not None else None,
+        
+        # Explanation and confidence section
+        explanation_card
     ]) 
