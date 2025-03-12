@@ -1,0 +1,69 @@
+TeamName,Seed,AdjEM,PredictedExitRound,SimulatedExitRound,ChampionshipProbability,FinalFourProbability,PredictedExit,SimulatedExit
+Duke,1.0,39.666,4,5.421,34.5,69.3,Elite 8,Final Four
+Auburn,1.0,35.8957,4,4.986,19.900000000000002,60.0,Elite 8,Final Four
+Florida,1.0,34.5574,4,5.134,18.9,64.8,Elite 8,Final Four
+Houston,1.0,35.2256,3,4.898,14.899999999999999,56.49999999999999,Sweet 16,Final Four
+Tennessee,2.0,30.8535,3,3.987,3.0,16.7,Sweet 16,Elite 8
+Texas Tech,2.0,28.7008,3,4.116,3.0,24.8,Sweet 16,Elite 8
+Alabama,2.0,29.7921,3,4.066,2.1999999999999997,23.200000000000003,Sweet 16,Elite 8
+Gonzaga,3.0,27.1013,3,3.812,1.0999999999999999,8.0,Sweet 16,Elite 8
+Michigan St.,2.0,27.5187,2,3.93,0.8999999999999999,15.5,Second Round,Elite 8
+Arizona,4.0,24.9317,2,3.632,0.3,4.8,Second Round,Elite 8
+Iowa St.,3.0,26.6606,2,3.741,0.3,7.5,Second Round,Elite 8
+St. John's,4.0,24.9698,2,3.689,0.2,5.3,Second Round,Elite 8
+Kentucky,3.0,25.5785,2,3.793,0.1,7.000000000000001,Second Round,Elite 8
+UCLA,7.0,22.4985,2,3.246,0.1,0.7000000000000001,Second Round,Sweet 16
+Maryland,4.0,25.4662,2,3.626,0.1,2.8000000000000003,Second Round,Elite 8
+Purdue,4.0,25.0844,2,3.639,0.1,3.5000000000000004,Second Round,Elite 8
+Illinois,5.0,24.5311,2,3.568,0.1,3.0,Second Round,Elite 8
+Clemson,5.0,24.3503,2,3.525,0.1,3.4000000000000004,Second Round,Elite 8
+Wisconsin,3.0,25.5226,2,3.749,0.1,7.8,Second Round,Elite 8
+Louisville,6.0,22.9602,2,3.398,0.1,1.7999999999999998,Second Round,Sweet 16
+SMU,13.0,15.5077,1,2.362,0.0,0.0,First Round,Second Round
+West Virginia,13.0,15.758,1,2.291,0.0,0.0,First Round,Second Round
+Colorado St.,13.0,15.7908,1,2.382,0.0,0.0,First Round,Second Round
+Northwestern,12.0,16.3535,1,2.508,0.0,0.1,First Round,Sweet 16
+Boise St.,13.0,15.917,1,2.37,0.0,0.0,First Round,Second Round
+Memphis,12.0,15.9778,1,2.539,0.0,0.1,First Round,Sweet 16
+Texas,12.0,16.5052,1,2.546,0.0,0.0,First Round,Sweet 16
+Vanderbilt,12.0,16.5451,1,2.517,0.0,0.0,First Round,Sweet 16
+Villanova,14.0,15.0467,1,2.198,0.0,0.0,First Round,Second Round
+Utah St.,14.0,15.1587,1,2.148,0.0,0.1,First Round,Second Round
+Liberty,16.0,12.8349,1,1.822,0.0,0.0,First Round,Second Round
+Nebraska,14.0,14.9021,1,2.171,0.0,0.0,First Round,Second Round
+Cincinnati,14.0,14.8931,1,2.173,0.0,0.1,First Round,Second Round
+Drake,15.0,14.1844,1,1.966,0.0,0.0,First Round,Second Round
+Santa Clara,15.0,14.1549,1,2.001,0.0,0.0,First Round,Second Round
+Pittsburgh,15.0,13.9705,1,1.966,0.0,0.0,First Round,Second Round
+Penn St.,15.0,13.7039,1,1.937,0.0,0.0,First Round,Second Round
+McNeese,16.0,13.5852,1,1.857,0.0,0.0,First Round,Second Round
+Iowa,11.0,12.4457,1,2.682261208576998,0.0,0.0,First Round,Sweet 16
+USC,16.0,12.7268,1,1.915,0.0,0.0,First Round,Second Round
+San Francisco,16.0,12.597,1,,0.0,0.0,First Round,Unknown
+UC Irvine,16.0,12.5017,1,1.8376753507014028,0.0,0.0,First Round,Second Round
+North Texas,11.0,11.783,1,2.648870636550308,0.0,0.0,First Round,Sweet 16
+Connecticut,9.0,19.017,1,3.071,0.0,0.2,First Round,Sweet 16
+Indiana,11.0,16.8164,1,,0.0,0.0,First Round,Unknown
+San Diego St.,11.0,16.8537,1,2.725,0.0,0.0,First Round,Sweet 16
+Texas A&M,5.0,24.6624,2,3.46,0.0,1.3,Second Round,Sweet 16
+Missouri,5.0,24.2568,2,3.507,0.0,2.6,Second Round,Elite 8
+Kansas,6.0,23.8765,2,3.367,0.0,0.8999999999999999,Second Round,Sweet 16
+Saint Mary's,6.0,23.374,2,3.408,0.0,1.9,Second Round,Sweet 16
+BYU,6.0,22.7076,2,3.432,0.0,2.6,Second Round,Sweet 16
+Marquette,7.0,22.065,2,3.223,0.0,0.6,Second Round,Sweet 16
+Mississippi,7.0,21.9951,2,3.275,0.0,0.5,Second Round,Sweet 16
+Michigan,7.0,20.5956,2,3.234,0.0,0.8,Second Round,Sweet 16
+Baylor,8.0,20.455,2,3.125,0.0,0.2,Second Round,Sweet 16
+VCU,8.0,20.4497,1,3.126,0.0,0.2,First Round,Sweet 16
+Oregon,8.0,19.9205,1,3.08,0.0,0.2,First Round,Sweet 16
+Mississippi St.,8.0,19.7779,2,3.077,0.0,0.8,Second Round,Sweet 16
+Georgia,9.0,19.6868,1,3.025,0.0,0.0,First Round,Sweet 16
+Ohio St.,9.0,19.0322,1,3.011,0.0,0.1,First Round,Sweet 16
+Creighton,9.0,18.9056,1,3.004,0.0,0.0,First Round,Sweet 16
+North Carolina,10.0,18.335,1,2.867,0.0,0.0,First Round,Sweet 16
+UC San Diego,10.0,17.7323,1,2.859,0.0,0.0,First Round,Sweet 16
+Oklahoma,10.0,17.7316,1,2.826,0.0,0.1,First Round,Sweet 16
+Arkansas,10.0,17.6763,1,2.795,0.0,0.1,First Round,Sweet 16
+New Mexico,11.0,17.5632,1,2.669,0.0,0.0,First Round,Sweet 16
+Xavier,11.0,17.0209,1,2.663,0.0,0.1,First Round,Sweet 16
+Kansas St.,16.0,12.4472,1,1.784431137724551,0.0,0.0,First Round,Second Round

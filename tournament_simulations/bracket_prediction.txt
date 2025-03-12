@@ -1,0 +1,81 @@
+NCAA TOURNAMENT BRACKET PREDICTION
+==================================
+
+FIRST FOUR
+----------
+(16) UC Irvine vs. (16) Kansas St. → East Region
+(11) New Mexico vs. (11) Xavier → West Region
+
+EAST REGION
+-----------
+First Round:
+(1) Duke vs. (2) Tennessee
+(3) Gonzaga vs. (4) Arizona
+(5) Illinois vs. (6) Louisville
+(7) UCLA vs. (8) Baylor
+(9) Connecticut vs. (10) North Carolina
+(11) Iowa vs. (12) Northwestern
+(13) SMU vs. (14) Villanova
+(15) Drake vs. (16) First Four Winner
+
+Regional Winner: (1) Duke
+Final Four Probability: 69.3%
+
+WEST REGION
+-----------
+First Round:
+(1) Auburn vs. (2) Texas Tech
+(3) Iowa St. vs. (4) St. John's
+(5) Clemson vs. (6) Kansas
+(7) Marquette vs. (8) VCU
+(9) Georgia vs. (10) UC San Diego
+(11) First Four Winner vs. (12) Memphis
+(13) West Virginia vs. (14) Utah St.
+(15) Santa Clara vs. (16) Liberty
+
+Regional Winner: (1) Auburn
+Final Four Probability: 60.0%
+
+SOUTH REGION
+------------
+First Round:
+(1) Florida vs. (2) Alabama
+(3) Kentucky vs. (4) Maryland
+(5) Texas A&M vs. (6) Saint Mary's
+(7) Mississippi vs. (8) Oregon
+(9) Ohio St. vs. (10) Oklahoma
+(11) North Texas vs. (12) Texas
+(13) Colorado St. vs. (14) Nebraska
+(15) Pittsburgh vs. (16) McNeese
+
+Regional Winner: (1) Florida
+Final Four Probability: 64.8%
+
+MIDWEST REGION
+--------------
+First Round:
+(1) Houston vs. (2) Michigan St.
+(3) Wisconsin vs. (4) Purdue
+(5) Missouri vs. (6) BYU
+(7) Michigan vs. (8) Mississippi St.
+(9) Creighton vs. (10) Arkansas
+(11) Indiana vs. (12) Vanderbilt
+(13) Boise St. vs. (14) Cincinnati
+(15) Penn St. vs. (16) USC
+
+Regional Winner: (1) Houston
+Final Four Probability: 56.5%
+
+FINAL FOUR
+----------
+(1) Duke vs. (1) Auburn
+(1) Florida vs. (1) Houston
+
+CHAMPIONSHIP GAME
+----------------
+(1) Duke vs. (1) Auburn
+
+CHAMPION
+--------
+(1) Duke
+Championship Probability: 34.5%

@@ -7,13 +7,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
 import tensorflow as tf
+from tensorflow.keras.losses import MeanSquaredError
+from tensorflow.keras.losses import mean_squared_error
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.optimizers import Adam
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, classification_report, mean_squared_error
+from sklearn.metrics import confusion_matrix, classification_report
+import traceback
 
 class TournamentExitPredictor:
     """
@@ -488,54 +491,6 @@ class TournamentExitPredictor:
             'scaler': scaler
         }
     
-    def build_model(self, input_shape):
-        """
-        Build a neural network model for predicting tournament exit rounds
-        
-        Parameters:
-        -----------
-        input_shape : tuple
-            Shape of the input data
-            
-        Returns:
-        --------
-        tensorflow.keras.models.Sequential
-            Neural network model
-        """
-        print("\nBuilding neural network model...")
-        
-        # Create model
-        model = Sequential([
-            # Input layer
-            Dense(128, activation='relu', input_shape=input_shape),
-            BatchNormalization(),
-            Dropout(0.3),
-            
-            # Hidden layers
-            Dense(64, activation='relu'),
-            BatchNormalization(),
-            Dropout(0.2),
-            
-            Dense(32, activation='relu'),
-            BatchNormalization(),
-            Dropout(0.2),
-            
-            # Output layer - regression for exit round (can be fractional)
-            Dense(1)
-        ])
-        
-        # Compile model
-        model.compile(
-            optimizer=Adam(learning_rate=0.001),
-            loss='mse',  # Mean squared error for regression
-            metrics=['accuracy']  # Accuracy metric
-        )
-        
-        # Print model summary
-        model.summary()
-        
-        return model
-    
     def train_model(self, prepared_data, epochs=100, batch_size=32):
         """
         Train the model to predict tournament exit rounds
@@ -556,110 +511,136 @@ class TournamentExitPredictor:
         """
         print("\nTraining tournament exit round prediction model...")
         
-        # Get data from prepared_data
-        X_scaled = prepared_data['X_scaled']
-        y = prepared_data['y']
-        
-        # Split into training and validation sets
-        X_train, X_val, y_train, y_val = train_test_split(
-            X_scaled, y, test_size=0.2, random_state=42, 
-            stratify=y if len(np.unique(y)) > 1 else None
-        )
-        
-        # Build the model
-        model = self.build_model(input_shape=X_train.shape[1])
-        
-        # Set up callbacks
-        callbacks = [
-            EarlyStopping(monitor='val_loss', patience=20, restore_best_weights=True),
-            ModelCheckpoint(
-                filepath=os.path.join(self.model_save_path, 'exit_round_model.h5'),
-                monitor='val_loss',
-                save_best_only=True
-            ),
-        ]
-        
-        # Train the model
-        history = model.fit(
-            X_train, y_train,
-            epochs=epochs,
-            batch_size=batch_size,
-            validation_data=(X_val, y_val),
-            callbacks=callbacks,
-            verbose=1
-        )
-        
-        # Plot training history
-        plt.figure(figsize=(12, 4))
-        
-        plt.subplot(1, 2, 1)
-        plt.plot(history.history['loss'], label='Training Loss')
-        plt.plot(history.history['val_loss'], label='Validation Loss')
-        plt.title('Loss')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
-        plt.legend()
-        
-        plt.subplot(1, 2, 2)
-        plt.plot(history.history['accuracy'], label='Training Accuracy')
-        plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
-        plt.title('Accuracy')
-        plt.xlabel('Epoch')
-        plt.ylabel('Accuracy')
-        plt.legend()
-        
-        plt.tight_layout()
-        plt.savefig(os.path.join(self.model_save_path, 'training_history.png'))
-        
-        # Evaluate the model
-        train_loss, train_acc = model.evaluate(X_train, y_train, verbose=0)
-        val_loss, val_acc = model.evaluate(X_val, y_val, verbose=0)
-        
-        print(f"Training accuracy: {train_acc:.4f}")
-        print(f"Validation accuracy: {val_acc:.4f}")
-        
-        # Calculate feature importance (if using neural network, use permutation importance)
-        if len(prepared_data['feature_cols']) > 0:
-            print("\nFeature importance:")
+        try:
+            # Get data from prepared_data
+            X_scaled = prepared_data['X_scaled']
+            y = prepared_data['y']
             
-            # Simple permutation importance
-            baseline_score = model.evaluate(X_val, y_val, verbose=0)[1]
-            importances = []
+            # Convert to numpy arrays if needed
+            X_scaled = np.array(X_scaled)
+            y = np.array(y)
             
-            for i, feature in enumerate(prepared_data['feature_cols']):
-                # Create a copy of the validation data
-                X_permuted = X_val.copy()
-                
-                # Permute the feature
-                np.random.shuffle(X_permuted[:, i])
-                
-                # Evaluate the model on the permuted data
-                permuted_score = model.evaluate(X_permuted, y_val, verbose=0)[1]
-                
-                # Calculate importance as the decrease in performance
-                importance = baseline_score - permuted_score
-                importances.append(importance)
-                
-                print(f"{feature}: {importance:.4f}")
+            # Split into training and validation sets
+            X_train, X_val, y_train, y_val = train_test_split(
+                X_scaled, y, test_size=0.2, random_state=42, 
+                stratify=y if len(np.unique(y)) > 1 else None
+            )
             
-            # Plot feature importance
-            feature_importance = pd.DataFrame({
-                'Feature': prepared_data['feature_cols'],
-                'Importance': importances
-            })
-            feature_importance = feature_importance.sort_values('Importance', ascending=False)
+            # Build the model
+            input_dim = X_train.shape[1]
+            model = Sequential([
+                # Input layer
+                Dense(128, activation='relu', input_dim=input_dim),
+                BatchNormalization(),
+                Dropout(0.3),
+                
+                # Hidden layers
+                Dense(64, activation='relu'),
+                BatchNormalization(),
+                Dropout(0.2),
+                
+                Dense(32, activation='relu'),
+                BatchNormalization(),
+                Dropout(0.2),
+                
+                # Output layer - regression for exit round (can be fractional)
+                Dense(1)
+            ])
             
-            plt.figure(figsize=(10, 6))
-            plt.barh(feature_importance['Feature'], feature_importance['Importance'])
-            plt.xlabel('Importance (decrease in accuracy when permuted)')
-            plt.title('Feature Importance')
+            # Compile model
+            model.compile(
+                optimizer=Adam(learning_rate=0.001),
+                loss='mse',  # Mean squared error for regression
+                metrics=['accuracy']  # Accuracy metric
+            )
+            
+            # Print model summary
+            model.summary()
+            
+            # Set up callbacks
+            callbacks = [
+                EarlyStopping(monitor='val_loss', patience=20, restore_best_weights=True),
+                ModelCheckpoint(
+                    filepath=os.path.join(self.model_save_path, 'exit_round_model.keras'),
+                    monitor='val_loss',
+                    save_best_only=True
+                ),
+            ]
+            
+            # Train the model
+            history = model.fit(
+                X_train, y_train,
+                epochs=epochs,
+                batch_size=batch_size,
+                validation_data=(X_val, y_val),
+                callbacks=callbacks,
+                verbose=1
+            )
+            
+            # Plot training history
+            plt.figure(figsize=(12, 4))
+            
+            plt.subplot(1, 2, 1)
+            plt.plot(history.history['loss'], label='Training Loss')
+            plt.plot(history.history['val_loss'], label='Validation Loss')
+            plt.title('Loss')
+            plt.xlabel('Epoch')
+            plt.ylabel('Loss')
+            plt.legend()
+            
+            plt.subplot(1, 2, 2)
+            plt.plot(history.history['accuracy'], label='Training Accuracy')
+            plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+            plt.title('Accuracy')
+            plt.xlabel('Epoch')
+            plt.ylabel('Accuracy')
+            plt.legend()
+            
             plt.tight_layout()
-            plt.savefig(os.path.join(self.model_save_path, 'feature_importance.png'))
-        
-        # Save the model
-        model.save(os.path.join(self.model_save_path, 'exit_round_model.h5'))
-        
-        return model
+            plt.savefig(os.path.join(self.model_save_path, 'training_history.png'))
+            
+            # Evaluate the model
+            train_loss, train_acc = model.evaluate(X_train, y_train, verbose=0)
+            val_loss, val_acc = model.evaluate(X_val, y_val, verbose=0)
+            
+            print(f"Training accuracy: {train_acc:.4f}")
+            print(f"Validation accuracy: {val_acc:.4f}")
+            
+            # Calculate feature importance (if using neural network, use permutation importance)
+            if len(prepared_data['feature_cols']) > 0:
+                print("\nFeature importance:")
+                
+                # Simple permutation importance
+                baseline_score = model.evaluate(X_val, y_val, verbose=0)[1]
+                importances = []
+                
+                for i, feature in enumerate(prepared_data['feature_cols']):
+                    # Create a copy of the validation data
+                    X_val_copy = X_val.copy()
+                    
+                    # Shuffle the feature values
+                    np.random.shuffle(X_val_copy[:, i])
+                    
+                    # Evaluate the model on the shuffled data
+                    score = model.evaluate(X_val_copy, y_val, verbose=0)[1]
+                    
+                    # Calculate importance
+                    importance = baseline_score - score
+                    importances.append(importance)
+                    
+                    print(f"{feature}: {importance:.4f}")
+                
+            # Save the model
+            model_save_path = os.path.join(self.model_save_path, 'exit_round_model.keras')
+            model.save(model_save_path)
+            print(f"Model saved to {model_save_path}")
+            
+            return model
+            
+        except Exception as e:
+            print(f"Error in model training: {e}")
+            traceback.print_exc()
+            return None
     
     def load_trained_model(self):
         """
