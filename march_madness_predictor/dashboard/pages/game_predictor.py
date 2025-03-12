@@ -460,87 +460,93 @@ def predict_game(n_clicks, team1, team2, location):
         height_rows = []
         
         # Overall Size
-        height_rows.append(
-            html.Tr([
-                html.Td("Overall Size"),
-                html.Td(f"{team1_height_data['size']:.1f}"),
-                html.Td(f"{team2_height_data['size']:.1f}")
-            ])
-        )
+        if team1_height_data['size'] is not None and team2_height_data['size'] is not None:
+            height_rows.append(
+                html.Tr([
+                    html.Td("Overall Size"),
+                    html.Td(f"{team1_height_data['size']:.1f}"),
+                    html.Td(f"{team2_height_data['size']:.1f}")
+                ])
+            )
         
         # Average Height
-        height_rows.append(
-            html.Tr([
-                html.Td("Starting 5 Height"),
-                html.Td(f"{team1_height_data['hgt5']:.1f}\""),
-                html.Td(f"{team2_height_data['hgt5']:.1f}\"")
-            ])
-        )
+        if team1_height_data['hgt5'] is not None and team2_height_data['hgt5'] is not None:
+            height_rows.append(
+                html.Tr([
+                    html.Td("Starting 5 Height"),
+                    html.Td(f"{team1_height_data['hgt5']:.1f}\""),
+                    html.Td(f"{team2_height_data['hgt5']:.1f}\"")
+                ])
+            )
         
         # Effective Height
-        height_rows.append(
-            html.Tr([
-                html.Td("Effective Height"),
-                html.Td(f"{team1_height_data['effhgt']:.1f}\""),
-                html.Td(f"{team2_height_data['effhgt']:.1f}\"")
-            ])
-        )
+        if team1_height_data['effhgt'] is not None and team2_height_data['effhgt'] is not None:
+            height_rows.append(
+                html.Tr([
+                    html.Td("Effective Height"),
+                    html.Td(f"{team1_height_data['effhgt']:.1f}\""),
+                    html.Td(f"{team2_height_data['effhgt']:.1f}\"")
+                ])
+            )
         
         # Experience
-        height_rows.append(
-            html.Tr([
-                html.Td("Experience"),
-                html.Td(f"{team1_height_data['experience']:.2f} years"),
-                html.Td(f"{team2_height_data['experience']:.2f} years")
-            ])
-        )
+        if team1_height_data['experience'] is not None and team2_height_data['experience'] is not None:
+            height_rows.append(
+                html.Tr([
+                    html.Td("Experience"),
+                    html.Td(f"{team1_height_data['experience']:.2f} years"),
+                    html.Td(f"{team2_height_data['experience']:.2f} years")
+                ])
+            )
         
         # Bench Minutes
-        height_rows.append(
-            html.Tr([
-                html.Td("Bench Minutes"),
-                html.Td(f"{team1_height_data['bench']:.1f}%"),
-                html.Td(f"{team2_height_data['bench']:.1f}%")
-            ])
-        )
+        if team1_height_data['bench'] is not None and team2_height_data['bench'] is not None:
+            height_rows.append(
+                html.Tr([
+                    html.Td("Bench Minutes"),
+                    html.Td(f"{team1_height_data['bench']:.1f}%"),
+                    html.Td(f"{team2_height_data['bench']:.1f}%")
+                ])
+            )
         
         # Create the height data section
-        height_data_section = [
-            dbc.Row([
-                dbc.Col([
-                    html.H4("Height and Experience Data", className="mb-3"),
-                    dbc.Table([
-                        html.Thead(
-                            html.Tr([
-                                html.Th("Metric"),
-                                html.Th(team1),
-                                html.Th(team2)
-                            ])
-                        ),
-                        html.Tbody(height_rows)
-                    ], bordered=True, hover=True, striped=True),
-                    
-                    # Add info about how these factors affected the prediction
-                    html.Div([
-                        html.P([
-                            "Height and experience impact on this matchup:"
-                        ], className="mt-3 mb-2"),
-                        html.Ul([
-                            html.Li([
-                                "Height adjustment: ",
-                                html.Strong(f"{prediction.get('height_adjustment', 0):.2f} points") 
-                                if prediction.get('height_adjustment', 0) != 0 else "None"
-                            ]),
-                            html.Li([
-                                "Experience adjustment: ",
-                                html.Strong(f"{prediction.get('experience_adjustment', 0):.2f} points")
-                                if prediction.get('experience_adjustment', 0) != 0 else "None"
+        if height_rows:  # Only show the section if we have at least one row
+            height_data_section = [
+                dbc.Row([
+                    dbc.Col([
+                        html.H4("Height and Experience Data", className="mb-3"),
+                        dbc.Table([
+                            html.Thead(
+                                html.Tr([
+                                    html.Th("Metric"),
+                                    html.Th(team1),
+                                    html.Th(team2)
+                                ])
+                            ),
+                            html.Tbody(height_rows)
+                        ], bordered=True, hover=True, striped=True),
+                        
+                        # Add info about how these factors affected the prediction
+                        html.Div([
+                            html.P([
+                                "Height and experience impact on this matchup:"
+                            ], className="mt-3 mb-2"),
+                            html.Ul([
+                                html.Li([
+                                    "Height adjustment: ",
+                                    html.Strong(f"{prediction.get('height_adjustment', 0):.2f} points") 
+                                    if prediction.get('height_adjustment', 0) != 0 else "None"
+                                ]),
+                                html.Li([
+                                    "Experience adjustment: ",
+                                    html.Strong(f"{prediction.get('experience_adjustment', 0):.2f} points")
+                                    if prediction.get('experience_adjustment', 0) != 0 else "None"
+                                ])
                             ])
                         ])
                     ])
-                ])
-            ], className="mb-4")
-        ]
+                ], className="mb-4")
+            ]
     
     # Return the prediction results
     return html.Div([
