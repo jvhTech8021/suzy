@@ -104,27 +104,27 @@ def layout(data_loader):
                 font=dict(size=10, color="gray"),
             )
         
-        # Create a table of the top 100 teams (instead of top 15)
-        top_100_df = tournament_teams.sort_values('ChampionshipPct', ascending=False).head(100)[
+        # Create a table of the top 200 teams (instead of 100)
+        top_200_df = tournament_teams.sort_values('ChampionshipPct', ascending=False).head(200)[
             ['TeamName', 'Seed', 'ChampionshipPct', 'FinalFourPct', 'PredictedExit', 
              'AdjEM', 'AdjOE', 'AdjDE', 'RankAdjEM']
         ]
         
         # Format the columns
-        top_100_df['ChampionshipPct'] = top_100_df['ChampionshipPct'].round(1)
-        top_100_df['FinalFourPct'] = top_100_df['FinalFourPct'].round(1)
-        top_100_df['AdjEM'] = top_100_df['AdjEM'].round(1)
-        top_100_df['AdjOE'] = top_100_df['AdjOE'].round(1)
-        top_100_df['AdjDE'] = top_100_df['AdjDE'].round(1)
+        top_200_df['ChampionshipPct'] = top_200_df['ChampionshipPct'].round(1)
+        top_200_df['FinalFourPct'] = top_200_df['FinalFourPct'].round(1)
+        top_200_df['AdjEM'] = top_200_df['AdjEM'].round(1)
+        top_200_df['AdjOE'] = top_200_df['AdjOE'].round(1)
+        top_200_df['AdjDE'] = top_200_df['AdjDE'].round(1)
         
         # Rename columns for display
-        top_100_df.columns = ['Team', 'Seed', 'Champion (%)', 'Final Four (%)', 'Predicted Exit', 
+        top_200_df.columns = ['Team', 'Seed', 'Champion (%)', 'Final Four (%)', 'Predicted Exit', 
                             'Adj EM', 'Off Eff', 'Def Eff', 'Nat Rank']
         
-        top_100_table = dash_table.DataTable(
-            id='top-100-championship-table',
-            columns=[{"name": i, "id": i} for i in top_100_df.columns],
-            data=top_100_df.to_dict('records'),
+        top_200_table = dash_table.DataTable(
+            id='top-200-championship-table',
+            columns=[{"name": i, "id": i} for i in top_200_df.columns],
+            data=top_200_df.to_dict('records'),
             style_header={
                 'backgroundColor': 'rgb(230, 230, 230)',
                 'fontWeight': 'bold'
@@ -147,9 +147,13 @@ def layout(data_loader):
                     'backgroundColor': '#FFFFCC'
                 }
             ],
+            style_table={
+                'height': '600px',  # Set a fixed height to enable scrolling
+                'overflowY': 'auto'  # Enable vertical scrolling
+            },
             sort_action='native',
             filter_action='native',
-            page_size=20,  # Increase page size for more teams per page
+            page_size=200,  # Show all 200 teams on one page with scrolling
         )
         
         # Create a histogram of predicted exit rounds
@@ -261,13 +265,13 @@ def layout(data_loader):
             ]),
             
             dbc.Card([
-                dbc.CardHeader("Top 100 Teams by Championship Probability"),
+                dbc.CardHeader("Top 200 Teams by Championship Probability"),
                 dbc.CardBody([
                     html.P(
-                        "This table shows the top 100 teams with the highest predicted championship probability. "
+                        "This table shows the top 200 teams with the highest predicted championship probability. "
                         "The predictions are based on a deep learning model trained on historical tournament data."
                     ),
-                    top_100_table
+                    top_200_table
                 ])
             ], className="mb-4"),
             
