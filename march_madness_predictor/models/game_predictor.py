@@ -40,7 +40,7 @@ class GamePredictor:
         
         # Define height and experience metrics
         self.height_metrics = [
-            'Size', 'Hgt5', 'EffHgt', 'Exp', 'Bench', 'GT10'
+            'Size', 'Hgt5', 'HgtEff', 'Exp', 'Bench', 'Continuity'
         ]
         
         # Define alternate column names that might be in the data
@@ -331,10 +331,10 @@ class GamePredictor:
         result["has_height_data"] = True
         result["size"] = team_row.get('Size', None)
         result["hgt5"] = team_row.get('Hgt5', None)
-        result["effhgt"] = team_row.get('EffHgt', None)
+        result["effhgt"] = team_row.get('HgtEff', None)
         result["experience"] = team_row.get('Exp', None)
         result["bench"] = team_row.get('Bench', None)
-        result["gt10"] = team_row.get('GT10', None)
+        result["gt10"] = None
         
         return result
     
@@ -438,24 +438,26 @@ class GamePredictor:
         experience_adjustment = 0
         
         if team1_height_data["has_height_data"] and team2_height_data["has_height_data"]:
-            # Height adjustment: taller teams tend to have an advantage
-            # EffHgt is effective height, which considers the frontcourt height weighted by minutes played
-            effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
-            if abs(effhgt_diff) > 1.0:  # Only apply if difference is significant (> 1 inch)
-                height_adjustment = effhgt_diff * 0.5  # Scale appropriately (0.5 points per inch)
-                team1_expected_score += height_adjustment
+            # Height advantage
+            if team1_height_data["effhgt"] is not None and team2_height_data["effhgt"] is not None:
+                effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
+                if abs(effhgt_diff) > 1.0:  # Only consider significant differences
+                    height_adjustment = effhgt_diff * 0.5  # Scale appropriately (0.5 points per inch)
+                    team1_expected_score += height_adjustment
             
-            # Experience adjustment: more experienced teams tend to perform better in close games
-            exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
-            if abs(exp_diff) > 0.5:  # Only apply if difference is significant (> 0.5 years)
-                experience_adjustment = exp_diff * 0.8  # Scale appropriately (0.8 points per year of experience)
-                team1_expected_score += experience_adjustment
+            # Experience advantage
+            if team1_height_data["experience"] is not None and team2_height_data["experience"] is not None:
+                exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
+                if abs(exp_diff) > 0.5:  # Only consider significant differences
+                    experience_adjustment = exp_diff * 0.8  # Scale appropriately (0.8 points per year of experience)
+                    team1_expected_score += experience_adjustment
                 
             # Bench utilization can impact tournament games (fresher players)
-            bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
-            if abs(bench_diff) > 5:  # Only apply if difference is significant (> 5% bench minutes)
-                bench_adjustment = bench_diff * 0.05  # Scale appropriately
-                team1_expected_score += bench_adjustment
+            if team1_height_data["bench"] is not None and team2_height_data["bench"] is not None:
+                bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
+                if abs(bench_diff) > 5:  # Only apply if difference is significant (> 5% bench minutes)
+                    bench_adjustment = bench_diff * 0.05  # Scale appropriately
+                    team1_expected_score += bench_adjustment
         
         # Calculate spread (always Team1 - Team2)
         spread = team1_expected_score - team2_expected_score
@@ -720,34 +722,37 @@ class GamePredictor:
         
         if team1_height_data["has_height_data"] and team2_height_data["has_height_data"]:
             # Height advantage
-            effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
-            if abs(effhgt_diff) > 1.0:  # Only consider significant differences
-                factors.append({
-                    'factor': 'Height',
-                    'advantage': team1_name if effhgt_diff > 0 else team2_name,
-                    'magnitude': abs(effhgt_diff) * 2,  # Weight height more heavily
-                    'description': f"{'Taller' if effhgt_diff > 0 else 'Shorter'} team (by {abs(effhgt_diff):.1f}\")"
-                })
+            if team1_height_data["effhgt"] is not None and team2_height_data["effhgt"] is not None:
+                effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
+                if abs(effhgt_diff) > 1.0:  # Only consider significant differences
+                    factors.append({
+                        'factor': 'Height',
+                        'advantage': team1_name if effhgt_diff > 0 else team2_name,
+                        'magnitude': abs(effhgt_diff) * 2,  # Weight height more heavily
+                        'description': f"{'Taller' if effhgt_diff > 0 else 'Shorter'} team (by {abs(effhgt_diff):.1f}\")"
+                    })
             
             # Experience advantage
-            exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
-            if abs(exp_diff) > 0.5:  # Only consider significant differences
-                factors.append({
-                    'factor': 'Experience',
-                    'advantage': team1_name if exp_diff > 0 else team2_name,
-                    'magnitude': abs(exp_diff) * 3,  # Weight experience heavily
-                    'description': f"{'More' if exp_diff > 0 else 'Less'} experienced (by {abs(exp_diff):.1f} years)"
-                })
+            if team1_height_data["experience"] is not None and team2_height_data["experience"] is not None:
+                exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
+                if abs(exp_diff) > 0.5:  # Only consider significant differences
+                    factors.append({
+                        'factor': 'Experience',
+                        'advantage': team1_name if exp_diff > 0 else team2_name,
+                        'magnitude': abs(exp_diff) * 3,  # Weight experience heavily
+                        'description': f"{'More' if exp_diff > 0 else 'Less'} experienced (by {abs(exp_diff):.1f} years)"
+                    })
             
             # Bench depth
-            bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
-            if abs(bench_diff) > 5:  # Only consider significant differences
-                factors.append({
-                    'factor': 'Bench Depth',
-                    'advantage': team1_name if bench_diff > 0 else team2_name,
-                    'magnitude': abs(bench_diff) / 3,
-                    'description': f"{'Deeper' if bench_diff > 0 else 'Thinner'} bench (by {abs(bench_diff):.1f}% minutes)"
-                })
+            if team1_height_data["bench"] is not None and team2_height_data["bench"] is not None:
+                bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
+                if abs(bench_diff) > 5:  # Only consider significant differences
+                    factors.append({
+                        'factor': 'Bench Depth',
+                        'advantage': team1_name if bench_diff > 0 else team2_name,
+                        'magnitude': abs(bench_diff) / 3,
+                        'description': f"{'Deeper' if bench_diff > 0 else 'Thinner'} bench (by {abs(bench_diff):.1f}% minutes)"
+                    })
         
         # Sort factors by magnitude
         factors.sort(key=lambda x: x['magnitude'], reverse=True)
