@@ -206,70 +206,101 @@ def predict_game(n_clicks, team1, team2, location):
         loser_name = team1
     
     # Format scores and spread
-    team1_score = round(prediction["team1"]["predicted_score"])
-    team2_score = round(prediction["team2"]["predicted_score"])
-    spread = abs(round(prediction["spread"], 1))
-    total = round(prediction["total"])
+    # Add checks for NaN values before rounding
+    team1_score = round(prediction["team1"]["predicted_score"]) if not pd.isna(prediction["team1"]["predicted_score"]) else "N/A"
+    team2_score = round(prediction["team2"]["predicted_score"]) if not pd.isna(prediction["team2"]["predicted_score"]) else "N/A"
+    spread = abs(round(prediction["spread"], 1)) if not pd.isna(prediction["spread"]) else "N/A"
+    total = round(prediction["total"]) if not pd.isna(prediction["total"]) else "N/A"
     
     # Determine the spread text
-    if team1_score > team2_score:
-        spread_text = f"{team1} by {spread}"
+    if isinstance(team1_score, int) and isinstance(team2_score, int):
+        if team1_score > team2_score:
+            spread_text = f"{team1} by {spread}"
+        else:
+            spread_text = f"{team2} by {spread}"
     else:
-        spread_text = f"{team2} by {spread}"
+        spread_text = "Unable to calculate"
     
     # Create spread gauge
-    spread_fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=abs(spread),
-        title={"text": f"Predicted Spread ({spread_text})"},
-        gauge={
-            "axis": {"range": [0, 30]},
-            "bar": {"color": "darkblue"},
-            "steps": [
-                {"range": [0, 5], "color": "lightgray"},
-                {"range": [5, 15], "color": "gray"},
-                {"range": [15, 30], "color": "lightblue"}
-            ],
-            "threshold": {
-                "line": {"color": "red", "width": 4},
-                "thickness": 0.75,
-                "value": 10
-            }
-        },
-        number={"font": {"size": 26}}
-    ))
-    
-    spread_fig.update_layout(
-        height=300,
-        margin=dict(l=50, r=50, t=80, b=30)
-    )
+    if not isinstance(spread, str):  # Only create gauge if spread is numeric
+        spread_fig = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=abs(spread),
+            title={"text": f"Predicted Spread ({spread_text})"},
+            gauge={
+                "axis": {"range": [0, 30]},
+                "bar": {"color": "darkblue"},
+                "steps": [
+                    {"range": [0, 5], "color": "lightgray"},
+                    {"range": [5, 15], "color": "gray"},
+                    {"range": [15, 30], "color": "lightblue"}
+                ],
+                "threshold": {
+                    "line": {"color": "red", "width": 4},
+                    "thickness": 0.75,
+                    "value": 10
+                }
+            },
+            number={"font": {"size": 26}}
+        ))
+        
+        spread_fig.update_layout(
+            height=300,
+            margin=dict(l=50, r=50, t=80, b=30)
+        )
+    else:
+        # Create an empty figure with a text message
+        spread_fig = go.Figure()
+        spread_fig.add_annotation(
+            text="Spread calculation not available",
+            showarrow=False,
+            font=dict(size=16)
+        )
+        spread_fig.update_layout(
+            height=300,
+            margin=dict(l=50, r=50, t=80, b=30)
+        )
     
     # Create win probability gauge
-    win_prob_fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=winner["win_probability"] * 100,
-        title={"text": f"{winner_name} Win Probability"},
-        gauge={
-            "axis": {"range": [0, 100]},
-            "bar": {"color": "darkblue"},
-            "steps": [
-                {"range": [0, 60], "color": "lightgray"},
-                {"range": [60, 80], "color": "gray"},
-                {"range": [80, 100], "color": "lightblue"}
-            ],
-            "threshold": {
-                "line": {"color": "red", "width": 4},
-                "thickness": 0.75,
-                "value": 70
-            }
-        },
-        number={"suffix": "%", "font": {"size": 26}}
-    ))
-    
-    win_prob_fig.update_layout(
-        height=300,
-        margin=dict(l=50, r=50, t=80, b=30)
-    )
+    if not pd.isna(winner["win_probability"]):  # Only create gauge if win probability is not NaN
+        win_prob_value = winner["win_probability"] * 100
+        win_prob_fig = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=win_prob_value,
+            title={"text": f"{winner_name} Win Probability"},
+            gauge={
+                "axis": {"range": [0, 100]},
+                "bar": {"color": "darkblue"},
+                "steps": [
+                    {"range": [0, 60], "color": "lightgray"},
+                    {"range": [60, 80], "color": "gray"},
+                    {"range": [80, 100], "color": "lightblue"}
+                ],
+                "threshold": {
+                    "line": {"color": "red", "width": 4},
+                    "thickness": 0.75,
+                    "value": 70
+                }
+            },
+            number={"suffix": "%", "font": {"size": 26}}
+        ))
+        
+        win_prob_fig.update_layout(
+            height=300,
+            margin=dict(l=50, r=50, t=80, b=30)
+        )
+    else:
+        # Create an empty figure with a text message
+        win_prob_fig = go.Figure()
+        win_prob_fig.add_annotation(
+            text="Win probability calculation not available",
+            showarrow=False,
+            font=dict(size=16)
+        )
+        win_prob_fig.update_layout(
+            height=300,
+            margin=dict(l=50, r=50, t=80, b=30)
+        )
     
     # Create key stats comparison
     stats_comparison = []
@@ -404,9 +435,9 @@ def predict_game(n_clicks, team1, team2, location):
             team1_seed = team1_tournament_data["seed"] if team1_tournament_data["seed"] is not None else "N/A"
             team2_seed = team2_tournament_data["seed"] if team2_tournament_data["seed"] is not None else "N/A"
             
-            if isinstance(team1_seed, (int, float)):
+            if isinstance(team1_seed, (int, float)) and not pd.isna(team1_seed):
                 team1_seed = f"{int(team1_seed)}"
-            if isinstance(team2_seed, (int, float)):
+            if isinstance(team2_seed, (int, float)) and not pd.isna(team2_seed):
                 team2_seed = f"{int(team2_seed)}"
                 
             tournament_rows.append(
@@ -563,16 +594,16 @@ def predict_game(n_clicks, team1, team2, location):
                     dbc.CardBody([
                         html.H2([
                             html.Span(team1, className="text-primary"),
-                            f" {team1_score} - {team2_score} ",
+                            f" {team1_score} - {team2_score} " if isinstance(team1_score, (int, float)) and isinstance(team2_score, (int, float)) else " Score unavailable ",
                             html.Span(team2, className="text-danger")
                         ], className="text-center"),
                         html.H4([
                             f"Predicted Spread: ",
                             html.Strong(spread_text)
-                        ], className="text-center mt-3"),
+                        ], className="text-center mt-3") if spread_text != "Unable to calculate" else html.H4("Spread unavailable", className="text-center mt-3"),
                         html.P([
                             f"Over/Under: {total} points"
-                        ], className="text-center")
+                        ], className="text-center") if isinstance(total, (int, float)) else html.P("Total unavailable", className="text-center")
                     ])
                 ], className="mb-4")
             ], md=12, lg=4),
@@ -634,14 +665,14 @@ def predict_game(n_clicks, team1, team2, location):
                     html.Strong(winner_name), 
                     f" is predicted to defeat ", 
                     html.Strong(loser_name), 
-                    f" with a {round(winner['win_probability'] * 100)}% probability. ",
-                    f"The projected score is {team1_score}-{team2_score}, with a point spread of {spread} ",
-                    f"in favor of {winner_name}."
+                    f" with a {round(winner['win_probability'] * 100)}% probability. " if not pd.isna(winner['win_probability']) else ". Win probability calculation unavailable. ",
+                    f"The projected score is {team1_score}-{team2_score}" if isinstance(team1_score, (int, float)) and isinstance(team2_score, (int, float)) else "Score projection unavailable",
+                    f", with a point spread of {spread} in favor of {winner_name}." if isinstance(spread, (int, float)) else "."
                 ]),
                 html.P([
                     "Key advantages for the predicted winner include: ",
                     ", ".join([f"{factor['factor']}" for factor in prediction["key_factors"] 
-                            if factor['advantage'] == winner_name])
+                            if factor['advantage'] == winner_name]) if any(factor['advantage'] == winner_name for factor in prediction["key_factors"]) else "None identified"
                 ])
             ])
         ]),
@@ -663,25 +694,28 @@ def predict_game(n_clicks, team1, team2, location):
                             f"In those seasons, based on efficiency metrics, ",
                             html.Strong(f"{team1}"), f" would have won ",
                             html.Strong(f"{prediction['historical_matchups']['team1_wins']}"),
-                            f" times ({round(prediction['historical_matchups']['team1_wins'] / prediction['historical_matchups']['total_matchups'] * 100)}%), and ",
+                            f" times ({round(prediction['historical_matchups']['team1_wins'] / prediction['historical_matchups']['total_matchups'] * 100) if not pd.isna(prediction['historical_matchups']['team1_wins']) and prediction['historical_matchups']['total_matchups'] > 0 else 0}%), and ",
                             html.Strong(f"{team2}"), f" would have won ",
                             html.Strong(f"{prediction['historical_matchups']['team2_wins']}"),
-                            f" times ({round(prediction['historical_matchups']['team2_wins'] / prediction['historical_matchups']['total_matchups'] * 100)}%)."
+                            f" times ({round(prediction['historical_matchups']['team2_wins'] / prediction['historical_matchups']['total_matchups'] * 100) if not pd.isna(prediction['historical_matchups']['team2_wins']) and prediction['historical_matchups']['total_matchups'] > 0 else 0}%)."
                         ]),
                         
                         # Show the average margin
                         html.P([
                             f"The average adjusted efficiency margin between the teams was ",
-                            html.Strong(f"{abs(round(prediction['historical_matchups']['avg_margin'], 1))}"),
+                            html.Strong(f"{abs(round(prediction['historical_matchups']['avg_margin'], 1)) if not pd.isna(prediction['historical_matchups']['avg_margin']) else 0}"),
                             f" points in favor of ",
-                            html.Strong(f"{team1 if prediction['historical_matchups']['avg_margin'] > 0 else team2}"), "."
+                            html.Strong(f"{team1 if prediction['historical_matchups']['avg_margin'] > 0 else team2}" if not pd.isna(prediction['historical_matchups']['avg_margin']) else "neither team"), "."
                         ]),
                         
                         # Explain how this impacted the prediction
                         html.P([
                             "These historical matchups were factored into the final prediction with a 10% weight, ",
-                            f"{'strengthening' if (prediction['historical_matchups']['team1_wins'] / prediction['historical_matchups']['total_matchups'] > 0.5) == (prediction['team1']['win_probability'] > 0.5) else 'tempering'} ",
-                            "the statistical model's conclusion."
+                            "strengthening" if not pd.isna(prediction['historical_matchups']['team1_wins']) and prediction['historical_matchups']['total_matchups'] > 0 and 
+                                              not pd.isna(prediction['team1']['win_probability']) and 
+                                              (prediction['historical_matchups']['team1_wins'] / prediction['historical_matchups']['total_matchups'] > 0.5) == (prediction['team1']['win_probability'] > 0.5) 
+                                           else "tempering",
+                            " the statistical model's conclusion."
                         ], className="text-muted")
                     ]) if prediction['historical_matchups']['total_matchups'] > 0 else html.Div()
                 ])
