@@ -424,22 +424,25 @@ class GamePredictor:
         if team1_tournament_data["championship_pct"] is not None and team2_tournament_data["championship_pct"] is not None:
             # Calculate adjustments based on each team's championship probability
             # Using a scaling factor to convert championship percentage to point adjustment
-            scaling_factor = 0.3  # This means 1% championship probability = 1 point
+            scaling_factor = 0.1  # Can be tuned - this means 10% championship probability = 1 point
             
-            # Apply boost to both teams based on their probabilities (without threshold check)
+            # Apply boost to both teams based on their probabilities
             tournament_adjustment_team1 = team1_tournament_data["championship_pct"] * scaling_factor
             tournament_adjustment_team2 = team2_tournament_data["championship_pct"] * scaling_factor
             
-            # Always apply the adjustments to affect the spread
-            team1_expected_score += tournament_adjustment_team1
-            team2_expected_score += tournament_adjustment_team2
+            # Only apply if the probability is significant (optional threshold)
+            if team1_tournament_data["championship_pct"] > 1:
+                team1_expected_score += tournament_adjustment_team1
+            
+            if team2_tournament_data["championship_pct"] > 1:
+                team2_expected_score += tournament_adjustment_team2
         
         # Apply seed adjustment if available
         seed_adjustment = 0
         if team1_tournament_data["seed"] is not None and team2_tournament_data["seed"] is not None:
             # Lower seeds (better teams) get a boost
             seed_diff = team2_tournament_data["seed"] - team1_tournament_data["seed"]
-            seed_adjustment = seed_diff / 7  # Scale appropriately
+            seed_adjustment = seed_diff / 8  # Scale appropriately
             team1_expected_score += seed_adjustment
         
         # Apply height and experience adjustments if available
@@ -509,7 +512,7 @@ class GamePredictor:
             
         # Apply any tournament model adjustments
         if tournament_adjustment_team1 != 0 or tournament_adjustment_team2 != 0:
-            total_point_adjustment = tournament_adjustment_team1 - tournament_adjustment_team2
+            total_point_adjustment = tournament_adjustment_team1 + tournament_adjustment_team2
             team1_wp = self._adjust_win_probability(team1_wp, total_point_adjustment)
         
         team2_wp = 1 - team1_wp
