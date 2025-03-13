@@ -818,5 +818,732 @@
         "experience_adjustment": 0,
         "bench_adjustment": 0,
         "result": "loss"
+    },
+    {
+        "team1": {
+            "name": "USC",
+            "predicted_score": 77.44964321833334,
+            "win_probability": 0.5095833366749691,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "team2": {
+            "name": "Rutgers",
+            "predicted_score": 76.81824968166664,
+            "win_probability": 0.49041666332503087,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "spread": 0.6313935366666925,
+        "total": 154.2678929,
+        "location": "neutral",
+        "key_factors": [],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 12.7268,
+                "team2_value": 11.0611,
+                "difference": 1.665700000000001,
+                "advantage": "USC"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 116.821,
+                "team2_value": 115.728,
+                "difference": 1.0930000000000035,
+                "advantage": "USC"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 104.095,
+                "team2_value": 104.667,
+                "difference": -0.5720000000000027,
+                "advantage": "USC"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 68.5377,
+                "team2_value": 68.8213,
+                "difference": -0.28359999999999275,
+                "advantage": "Rutgers"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 12,
+            "team2_wins": 2,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 17.6587,
+                    "team2_em": 1.00869,
+                    "diff": 16.650009999999998,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": 10.9371,
+                    "team2_em": 1.83436,
+                    "diff": 9.102739999999999,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 14.3669,
+                    "team2_em": 9.66959,
+                    "diff": 4.69731,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2012,
+                    "team1_em": -5.43172,
+                    "team2_em": 4.90274,
+                    "diff": -10.33446,
+                    "winner": "Rutgers"
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 6.34696,
+                    "team2_em": 6.09171,
+                    "diff": 0.2552500000000002,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 1.89645,
+                    "team2_em": -0.698444,
+                    "diff": 2.594894,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": 1.30229,
+                    "team2_em": -2.46838,
+                    "diff": 3.77067,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": 14.7848,
+                    "team2_em": -10.5151,
+                    "diff": 25.2999,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": 12.3407,
+                    "team2_em": 2.28626,
+                    "diff": 10.05444,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": 15.2876,
+                    "team2_em": 2.9428,
+                    "diff": 12.3448,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": 7.64821,
+                    "team2_em": 9.31314,
+                    "diff": -1.664930000000001,
+                    "winner": "Rutgers"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 22.2245,
+                    "team2_em": 18.1428,
+                    "diff": 4.081699999999998,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 14.4494,
+                    "team2_em": 10.8648,
+                    "diff": 3.5846,
+                    "winner": "USC"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": 9.41746,
+                    "team2_em": 7.4856,
+                    "diff": 1.9318600000000004,
+                    "winner": "USC"
+                }
+            ],
+            "avg_margin": 5.88348457142857
+        },
+        "tournament_adjustment": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0
+    },
+    {
+        "team1": {
+            "name": "Utah Tech",
+            "predicted_score": 69.72260243899998,
+            "win_probability": 0.41107997522688416,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "team2": {
+            "name": "Utah Valley",
+            "predicted_score": 74.049504721,
+            "win_probability": 0.5889200247731159,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "spread": -4.32690228200002,
+        "total": 143.77210716,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "Utah Valley",
+                "magnitude": 12.077999999999989,
+                "description": "Weaker defensive efficiency"
+            },
+            {
+                "factor": "Offensive Efficiency",
+                "advantage": "Utah Valley",
+                "magnitude": 3.535000000000011,
+                "description": "Lower offensive efficiency"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": -11.7711,
+                "team2_value": 3.84189,
+                "difference": -15.61299,
+                "advantage": "Utah Valley"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 102.951,
+                "team2_value": 106.486,
+                "difference": -3.535000000000011,
+                "advantage": "Utah Valley"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 114.722,
+                "team2_value": 102.644,
+                "difference": 12.077999999999989,
+                "advantage": "Utah Valley"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 67.3549,
+                "team2_value": 68.228,
+                "difference": -0.8730999999999938,
+                "advantage": "Utah Valley"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 0,
+            "team2_wins": 1,
+            "total_matchups": 1,
+            "matchups": [
+                {
+                    "year": 2024,
+                    "team1_em": -9.27529,
+                    "team2_em": -0.582975,
+                    "diff": -8.692315,
+                    "winner": "Utah Valley"
+                }
+            ],
+            "avg_margin": -8.692315
+        },
+        "tournament_adjustment": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0,
+        "vegas_spread": -12.5,
+        "vegas_total": 142.5
+    },
+    {
+        "team1": {
+            "name": "UTEP",
+            "predicted_score": 69.33529588103333,
+            "win_probability": 0.4283265656533191,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "team2": {
+            "name": "Liberty",
+            "predicted_score": 73.36385997799998,
+            "win_probability": 0.5716734343466809,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "spread": -4.028564096966647,
+        "total": 142.6991558590333,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "Liberty",
+                "magnitude": 7.150300000000001,
+                "description": "Weaker defensive efficiency"
+            },
+            {
+                "factor": "Offensive Efficiency",
+                "advantage": "Liberty",
+                "magnitude": 5.3870000000000005,
+                "description": "Lower offensive efficiency"
+            },
+            {
+                "factor": "Tempo",
+                "advantage": "Neutral",
+                "magnitude": 3.2894000000000005,
+                "description": "UTEP prefers a faster pace, Liberty plays slower"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 0.297555,
+                "team2_value": 12.8349,
+                "difference": -12.537344999999998,
+                "advantage": "Liberty"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 105.314,
+                "team2_value": 110.701,
+                "difference": -5.3870000000000005,
+                "advantage": "Liberty"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 105.016,
+                "team2_value": 97.8657,
+                "difference": 7.150300000000001,
+                "advantage": "Liberty"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 69.071,
+                "team2_value": 65.7816,
+                "difference": 3.2894000000000005,
+                "advantage": "UTEP"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 9,
+            "team2_wins": 5,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 10.3485,
+                    "team2_em": -2.04254,
+                    "diff": 12.39104,
+                    "winner": "UTEP"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": 17.5793,
+                    "team2_em": -11.5221,
+                    "diff": 29.101399999999998,
+                    "winner": "UTEP"
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 10.8769,
+                    "team2_em": -5.35219,
+                    "diff": 16.22909,
+                    "winner": "UTEP"
+                },
+                {
+                    "year": 2012,
+                    "team1_em": 2.92204,
+                    "team2_em": -10.9914,
+                    "diff": 13.913440000000001,
+                    "winner": "UTEP"
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 5.17881,
+                    "team2_em": -9.51521,
+                    "diff": 14.69402,
+                    "winner": "UTEP"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 6.56851,
+                    "team2_em": -11.8442,
+                    "diff": 18.41271,
+                    "winner": "UTEP"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": 7.16747,
+                    "team2_em": -19.3403,
+                    "diff": 26.50777,
+                    "winner": "UTEP"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": -5.14085,
+                    "team2_em": -11.7059,
+                    "diff": 6.565049999999999,
+                    "winner": "UTEP"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": -2.98917,
+                    "team2_em": -3.90954,
+                    "diff": 0.9203699999999997,
+                    "winner": "UTEP"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": -7.20619,
+                    "team2_em": -0.931358,
+                    "diff": -6.274832,
+                    "winner": "Liberty"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": -11.224,
+                    "team2_em": 10.8215,
+                    "diff": -22.0455,
+                    "winner": "Liberty"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 2.76678,
+                    "team2_em": 8.37002,
+                    "diff": -5.60324,
+                    "winner": "Liberty"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 0.358266,
+                    "team2_em": 3.84155,
+                    "diff": -3.483284,
+                    "winner": "Liberty"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": -1.18629,
+                    "team2_em": 2.71212,
+                    "diff": -3.89841,
+                    "winner": "Liberty"
+                }
+            ],
+            "avg_margin": 6.959258857142857
+        },
+        "tournament_adjustment": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0,
+        "vegas_spread": -7.5,
+        "vegas_total": 135.5,
+        "spread_bet_result": "loss"
+    },
+    {
+        "team1": {
+            "name": "Iowa",
+            "predicted_score": 77.14411475676665,
+            "win_probability": 0.46215241278261054,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "team2": {
+            "name": "Ohio St.",
+            "predicted_score": 78.48505744650001,
+            "win_probability": 0.5378475872173895,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            }
+        },
+        "spread": -1.3409426897333532,
+        "total": 155.62917220326665,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "Ohio St.",
+                "magnitude": 7.308400000000006,
+                "description": "Weaker defensive efficiency"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 12.4457,
+                "team2_value": 19.0322,
+                "difference": -6.586499999999999,
+                "advantage": "Ohio St."
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 119.082,
+                "team2_value": 118.361,
+                "difference": 0.7209999999999894,
+                "advantage": "Iowa"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 106.637,
+                "team2_value": 99.3286,
+                "difference": 7.308400000000006,
+                "advantage": "Ohio St."
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 69.8277,
+                "team2_value": 67.3204,
+                "difference": 2.5072999999999865,
+                "advantage": "Iowa"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 5,
+            "team2_wins": 9,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 8.2476,
+                    "team2_em": 16.4647,
+                    "diff": -8.2171,
+                    "winner": "Ohio St."
+                },
+                {
+                    "year": 2010,
+                    "team1_em": -0.0533603,
+                    "team2_em": 25.4713,
+                    "diff": -25.5246603,
+                    "winner": "Ohio St."
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 6.55564,
+                    "team2_em": 32.232,
+                    "diff": -25.67636,
+                    "winner": "Ohio St."
+                },
+                {
+                    "year": 2012,
+                    "team1_em": 6.89056,
+                    "team2_em": 29.9016,
+                    "diff": -23.011039999999998,
+                    "winner": "Ohio St."
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 16.7028,
+                    "team2_em": 25.1682,
+                    "diff": -8.465399999999999,
+                    "winner": "Ohio St."
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 21.0299,
+                    "team2_em": 21.6743,
+                    "diff": -0.6443999999999974,
+                    "winner": "Ohio St."
+                },
+                {
+                    "year": 2015,
+                    "team1_em": 18.251,
+                    "team2_em": 21.0066,
+                    "diff": -2.7555999999999976,
+                    "winner": "Ohio St."
+                },
+                {
+                    "year": 2016,
+                    "team1_em": 21.3563,
+                    "team2_em": 10.5728,
+                    "diff": 10.7835,
+                    "winner": "Iowa"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": 10.6067,
+                    "team2_em": 10.3199,
+                    "diff": 0.2867999999999995,
+                    "winner": "Iowa"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": 7.92445,
+                    "team2_em": 21.1094,
+                    "diff": -13.18495,
+                    "winner": "Ohio St."
+                },
+                {
+                    "year": 2019,
+                    "team1_em": 15.9555,
+                    "team2_em": 15.0781,
+                    "diff": 0.8774000000000015,
+                    "winner": "Iowa"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 28.9031,
+                    "team2_em": 25.4253,
+                    "diff": 3.4777999999999984,
+                    "winner": "Iowa"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 23.5269,
+                    "team2_em": 15.8224,
+                    "diff": 7.704500000000001,
+                    "winner": "Iowa"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": 14.0188,
+                    "team2_em": 15.5892,
+                    "diff": -1.5703999999999994,
+                    "winner": "Ohio St."
+                }
+            ],
+            "avg_margin": -6.13713645
+        },
+        "tournament_adjustment": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0,
+        "vegas_spread": -5.5,
+        "spread_bet_result": "win"
     }
 ]

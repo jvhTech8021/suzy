@@ -820,10 +820,12 @@ def predict_game(n_clicks, team1, team2, location, vegas_spread, vegas_total):
     [Input("save-prediction-button", "n_clicks")],
     [State("team1-dropdown", "value"),
      State("team2-dropdown", "value"),
-     State("location-radio", "value")],
+     State("location-radio", "value"),
+     State("vegas-spread-input", "value"),
+     State("vegas-total-input", "value")],
     prevent_initial_call=True
 )
-def save_prediction(n_clicks, team1, team2, location):
+def save_prediction(n_clicks, team1, team2, location, vegas_spread, vegas_total):
     if not team1 or not team2:
         return html.Div([
             html.P("Please select both teams to save a prediction.", className="text-danger")
@@ -837,6 +839,13 @@ def save_prediction(n_clicks, team1, team2, location):
     # Create predictor with data_loader
     predictor = GamePredictor()
     prediction = predictor.predict_game(team1, team2, location)
+    
+    # Add Vegas odds information
+    if vegas_spread is not None:
+        prediction['vegas_spread'] = vegas_spread
+    if vegas_total is not None:
+        prediction['vegas_total'] = vegas_total
+        
     predictor.save_prediction(prediction)
 
     return html.Div([
