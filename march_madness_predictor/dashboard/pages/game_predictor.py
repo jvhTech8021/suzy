@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 
 from models.game_predictor import GamePredictor
+from app_components.tournament_breakdown import tournament_adjustment_breakdown
 
 def layout(data_loader=None):
     """
@@ -431,6 +432,62 @@ def predict_game(n_clicks, team1, team2, location, vegas_spread, vegas_total):
                 ])
             )
         
+        # Elite Eight probability row
+        if team1_tournament_data.get("elite_eight_pct") is not None or team2_tournament_data.get("elite_eight_pct") is not None:
+            team1_e8 = team1_tournament_data.get("elite_eight_pct") if team1_tournament_data.get("elite_eight_pct") is not None else "N/A"
+            team2_e8 = team2_tournament_data.get("elite_eight_pct") if team2_tournament_data.get("elite_eight_pct") is not None else "N/A"
+            
+            if isinstance(team1_e8, (int, float)):
+                team1_e8 = f"{team1_e8:.1f}%"
+            if isinstance(team2_e8, (int, float)):
+                team2_e8 = f"{team2_e8:.1f}%"
+                
+            tournament_rows.append(
+                html.Tr([
+                    html.Td("Elite Eight Probability"),
+                    html.Td(team1_e8),
+                    html.Td(team2_e8)
+                ])
+            )
+        
+        # Sweet Sixteen probability row
+        print(team1_tournament_data)
+        print(team2_tournament_data)
+        if team1_tournament_data.get("sweet_sixteen_pct") is not None or team2_tournament_data.get("sweet_sixteen_pct") is not None:
+            team1_s16 = team1_tournament_data.get("sweet_sixteen_pct") if team1_tournament_data.get("sweet_sixteen_pct") is not None else "N/A"
+            team2_s16 = team2_tournament_data.get("sweet_sixteen_pct") if team2_tournament_data.get("sweet_sixteen_pct") is not None else "N/A"
+            
+            if isinstance(team1_s16, (int, float)):
+                team1_s16 = f"{team1_s16:.1f}%"
+            if isinstance(team2_s16, (int, float)):
+                team2_s16 = f"{team2_s16:.1f}%"
+                
+            tournament_rows.append(
+                html.Tr([
+                    html.Td("Sweet Sixteen Probability"),
+                    html.Td(team1_s16),
+                    html.Td(team2_s16)
+                ])
+            )
+        
+        # Round of 32 probability row
+        if team1_tournament_data.get("round_32_pct") is not None or team2_tournament_data.get("round_32_pct") is not None:
+            team1_r32 = team1_tournament_data.get("round_32_pct") if team1_tournament_data.get("round_32_pct") is not None else "N/A"
+            team2_r32 = team2_tournament_data.get("round_32_pct") if team2_tournament_data.get("round_32_pct") is not None else "N/A"
+            
+            if isinstance(team1_r32, (int, float)):
+                team1_r32 = f"{team1_r32:.1f}%"
+            if isinstance(team2_r32, (int, float)):
+                team2_r32 = f"{team2_r32:.1f}%"
+                
+            tournament_rows.append(
+                html.Tr([
+                    html.Td("Round of 32 Probability"),
+                    html.Td(team1_r32),
+                    html.Td(team2_r32)
+                ])
+            )
+        
         # Predicted Exit round
         if team1_tournament_data["predicted_exit"] is not None or team2_tournament_data["predicted_exit"] is not None:
             team1_exit = team1_tournament_data["predicted_exit"] if team1_tournament_data["predicted_exit"] is not None else "N/A"
@@ -485,7 +542,7 @@ def predict_game(n_clicks, team1, team2, location, vegas_spread, vegas_total):
                         ], className="mt-3 mb-2"),
                         html.Ul([
                             html.Li([
-                                "Championship probability adjustment: ",
+                                "Net tournament adjustment: ",
                                 html.Strong(f"{prediction['tournament_adjustment']:.2f} points") if prediction['tournament_adjustment'] != 0 else "None"
                             ]),
                             html.Li([
@@ -495,7 +552,10 @@ def predict_game(n_clicks, team1, team2, location, vegas_spread, vegas_total):
                         ])
                     ]) if prediction['tournament_adjustment'] != 0 or prediction['seed_adjustment'] != 0 else html.Div()
                 ])
-            ], className="mb-4")
+            ], className="mb-4"),
+            
+            # Add the detailed tournament adjustment breakdown
+            tournament_adjustment_breakdown(prediction) if prediction['tournament_adjustment'] != 0 else html.Div()
         ]
     
     # Generate height and experience data display

@@ -149,6 +149,9 @@ class GamePredictor:
             "has_champion_profile_data": False,
             "championship_pct": None,
             "final_four_pct": None,
+            "elite_eight_pct": None,    # Added Elite Eight
+            "sweet_sixteen_pct": None,  # Added Sweet Sixteen
+            "round_32_pct": None,       # Added Round of 32
             "predicted_exit": None,
             "similarity_pct": None,
             "seed": None
@@ -163,6 +166,61 @@ class GamePredictor:
                 result["final_four_pct"] = team_data.iloc[0].get('FinalFourPct', None)
                 result["predicted_exit"] = team_data.iloc[0].get('PredictedExit', None)
                 result["seed"] = team_data.iloc[0].get('Seed', None)
+                
+                # Estimate probabilities for other rounds based on the available data
+                # Only if they're not already provided in the dataset
+                if result["championship_pct"] is not None and result["final_four_pct"] is not None:
+                    # Estimate Elite Eight (only if not directly in the data)
+                    if result["elite_eight_pct"] is None and result["final_four_pct"] > 0:
+                        # Elite Eight is typically higher than Final Four
+                        result["elite_eight_pct"] = min(100, result["final_four_pct"] * 1.8)  # ~1.8x Final Four chance
+                    
+                    # Estimate Sweet Sixteen (only if not directly in the data)
+                    if result["sweet_sixteen_pct"] is None and (result["elite_eight_pct"] or 0) > 0:
+                        # Sweet Sixteen is typically higher than Elite Eight
+                        result["sweet_sixteen_pct"] = min(100, result["elite_eight_pct"] * 1.6)  # ~1.6x Elite Eight chance
+                    
+                    # Estimate Round of 32 (only if not directly in the data)
+                    if result["round_32_pct"] is None and (result["sweet_sixteen_pct"] or 0) > 0:
+                        # Round of 32 is typically higher than Sweet Sixteen
+                        result["round_32_pct"] = min(100, result["sweet_sixteen_pct"] * 1.5)  # ~1.5x Sweet Sixteen chance
+                
+                # Apply penalty for rounds beyond predicted exit round (instead of setting to 0%)
+                # Reduce probability by 5% for each round beyond predicted exit
+                if result["predicted_exit"] is not None:
+                    exit_round_map = {
+                        "Did Not Make Tournament": 0,
+                        "Round of 64": 1,
+                        "Round of 32": 2,
+                        "Sweet 16": 3,
+                        "Elite 8": 4,
+                        "Final Four": 5,
+                        "Championship": 6
+                    }
+                    
+                    # Only apply if exit round is in our map
+                    if result["predicted_exit"] in exit_round_map:
+                        exit_round = exit_round_map[result["predicted_exit"]]
+                        
+                        # Apply to Round of 32 (if needed)
+                        if exit_round < 2 and result["round_32_pct"] is not None:
+                            result["round_32_pct"] = max(0, result["round_32_pct"] - 5)
+                            
+                        # Apply to Sweet 16
+                        if exit_round < 3 and result["sweet_sixteen_pct"] is not None:
+                            result["sweet_sixteen_pct"] = max(0, result["sweet_sixteen_pct"] - 5)
+                            
+                        # Apply to Elite 8
+                        if exit_round < 4 and result["elite_eight_pct"] is not None:
+                            result["elite_eight_pct"] = max(0, result["elite_eight_pct"] - 5)
+                            
+                        # Apply to Final Four
+                        if exit_round < 5 and result["final_four_pct"] is not None:
+                            result["final_four_pct"] = max(0, result["final_four_pct"] - 5)
+                            
+                        # Apply to Championship
+                        if exit_round < 6 and result["championship_pct"] is not None:
+                            result["championship_pct"] = max(0, result["championship_pct"] - 5)
         
         # Get champion profile data if available
         if self.champion_profile_data is not None:
@@ -175,6 +233,21 @@ class GamePredictor:
                 if result["final_four_pct"] is None:
                     result["final_four_pct"] = team_data.iloc[0].get('FinalFourPct', None)
                 result["similarity_pct"] = team_data.iloc[0].get('SimilarityPct', None)
+                
+                # If we have championship and final four percentages from champion profile
+                # but no other round percentages, estimate them
+                if result["championship_pct"] is not None and result["final_four_pct"] is not None:
+                    # Estimate Elite Eight (only if not already set)
+                    if result["elite_eight_pct"] is None and result["final_four_pct"] > 0:
+                        result["elite_eight_pct"] = min(100, result["final_four_pct"] * 1.8)
+                    
+                    # Estimate Sweet Sixteen (only if not already set)
+                    if result["sweet_sixteen_pct"] is None and (result["elite_eight_pct"] or 0) > 0:
+                        result["sweet_sixteen_pct"] = min(100, result["elite_eight_pct"] * 1.6)
+                    
+                    # Estimate Round of 32 (only if not already set)
+                    if result["round_32_pct"] is None and (result["sweet_sixteen_pct"] or 0) > 0:
+                        result["round_32_pct"] = min(100, result["sweet_sixteen_pct"] * 1.5)
         
         return result
     
@@ -420,17 +493,54 @@ class GamePredictor:
         # Apply tournament prediction adjustment if available
         tournament_adjustment_team1 = 0
         tournament_adjustment_team2 = 0
+        # Track detailed adjustment breakdowns
+        tournament_adjustment_detail_team1 = {}
+        tournament_adjustment_detail_team2 = {}
         
         if team1_tournament_data["championship_pct"] is not None and team2_tournament_data["championship_pct"] is not None:
-            # Calculate adjustments based on each team's championship probability
-            # Using a scaling factor to convert championship percentage to point adjustment
-            scaling_factor = 0.3  # This means 1% championship probability = 1 point
+            # Define scaling factors for different tournament rounds
+            # Later rounds get larger scaling factors
+            scaling_factors = {
+                "championship_pct": 0.075,  # Championship round: 0.075 points per percentage (reduced from 0.15)
+                "final_four_pct": 0.05,     # Final Four round: 0.05 points per percentage (reduced from 0.1)
+                "elite_eight_pct": 0.04,    # Elite Eight round: 0.04 points per percentage (reduced from 0.08)
+                "sweet_sixteen_pct": 0.025, # Sweet Sixteen round: 0.025 points per percentage (reduced from 0.05)
+                "round_32_pct": 0.0125,     # Round of 32: 0.0125 points per percentage (reduced from 0.025)
+            }
             
-            # Apply boost to both teams based on their probabilities (without threshold check)
-            tournament_adjustment_team1 = team1_tournament_data["championship_pct"] * scaling_factor
-            tournament_adjustment_team2 = team2_tournament_data["championship_pct"] * scaling_factor
+            # Initialize adjustments
+            team1_total_adjustment = 0
+            team2_total_adjustment = 0
             
-            # Always apply the adjustments to affect the spread
+            # Apply adjustments for each tournament round if data is available
+            for round_key, scaling_factor in scaling_factors.items():
+                # Team 1 adjustment for this round
+                if round_key in team1_tournament_data and team1_tournament_data[round_key] is not None:
+                    round_adjustment = team1_tournament_data[round_key] * scaling_factor
+                    team1_total_adjustment += round_adjustment
+                    # Store the detailed breakdown
+                    tournament_adjustment_detail_team1[round_key] = {
+                        "percentage": team1_tournament_data[round_key],
+                        "factor": scaling_factor,
+                        "points": round_adjustment
+                    }
+                
+                # Team 2 adjustment for this round
+                if round_key in team2_tournament_data and team2_tournament_data[round_key] is not None:
+                    round_adjustment = team2_tournament_data[round_key] * scaling_factor
+                    team2_total_adjustment += round_adjustment
+                    # Store the detailed breakdown
+                    tournament_adjustment_detail_team2[round_key] = {
+                        "percentage": team2_tournament_data[round_key],
+                        "factor": scaling_factor,
+                        "points": round_adjustment
+                    }
+            
+            # Store the final calculated adjustments
+            tournament_adjustment_team1 = team1_total_adjustment
+            tournament_adjustment_team2 = team2_total_adjustment
+            
+            # Apply the adjustments to the expected scores
             team1_expected_score += tournament_adjustment_team1
             team2_expected_score += tournament_adjustment_team2
         
@@ -473,8 +583,8 @@ class GamePredictor:
                 # Make sure both values are not NaN before calculation
                 if not pd.isna(team1_height_data["bench"]) and not pd.isna(team2_height_data["bench"]):
                     bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
-                    if abs(bench_diff) > 4:  # Lowered threshold from 5 to 4 percent
-                        bench_adjustment = abs(bench_diff) / 3.0  # Decreased importance (increased divisor from 2.5 to 3.0)
+                    if abs(bench_diff) > 6:  # Increased threshold from 4 to 6 percent
+                        bench_adjustment = abs(bench_diff) / 5.0  # Decreased importance (increased divisor from 3.0 to 5.0)
                         team1_expected_score += bench_adjustment
         
         # Add a final check to make sure expected scores are not NaN
@@ -547,14 +657,16 @@ class GamePredictor:
                 "predicted_score": team1_expected_score,
                 "win_probability": team1_wp,
                 "tournament_data": team1_tournament_data,
-                "height_data": team1_height_data
+                "height_data": team1_height_data,
+                "tournament_adjustment_detail": tournament_adjustment_detail_team1
             },
             "team2": {
                 "name": team2_name,
                 "predicted_score": team2_expected_score,
                 "win_probability": team2_wp,
                 "tournament_data": team2_tournament_data,
-                "height_data": team2_height_data
+                "height_data": team2_height_data,
+                "tournament_adjustment_detail": tournament_adjustment_detail_team2
             },
             "spread": spread,
             "total": total,
@@ -568,7 +680,9 @@ class GamePredictor:
             "seed_adjustment": seed_adjustment,
             "height_adjustment": height_adjustment,
             "experience_adjustment": experience_adjustment,
-            "bench_adjustment": bench_adjustment
+            "bench_adjustment": bench_adjustment,
+            "tournament_adjustment_detail_team1": tournament_adjustment_detail_team1,
+            "tournament_adjustment_detail_team2": tournament_adjustment_detail_team2
         }
         
         return result
@@ -786,11 +900,11 @@ class GamePredictor:
                 # Make sure both values are not NaN before calculation
                 if not pd.isna(team1_height_data["bench"]) and not pd.isna(team2_height_data["bench"]):
                     bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
-                    if abs(bench_diff) > 4:  # Lowered threshold from 5 to 4 percent
+                    if abs(bench_diff) > 6:  # Increased threshold from 4 to 6 percent
                         factors.append({
                             'factor': 'Bench Depth',
                             'advantage': team1_name if bench_diff > 0 else team2_name,
-                            'magnitude': abs(bench_diff) / 3.0,  # Decreased importance (increased divisor from 2.5 to 3.0)
+                            'magnitude': abs(bench_diff) / 5.0,  # Decreased importance (increased divisor from 3.0 to 5.0)
                             'description': f"{'Deeper' if bench_diff > 0 else 'Thinner'} bench (by {abs(bench_diff):.1f}% minutes)"
                         })
         
