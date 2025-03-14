@@ -222,6 +222,7 @@ def predict_game(n_clicks, team1, team2, location, vegas_spread, vegas_total):
     
     # Format scores and spread
     # Add checks for NaN values before rounding
+    # Use the full scores (WITH tournament adjustments) for display to match the spread calculation
     team1_score = round(prediction["team1"]["predicted_score"]) if not pd.isna(prediction["team1"]["predicted_score"]) else "N/A"
     team2_score = round(prediction["team2"]["predicted_score"]) if not pd.isna(prediction["team2"]["predicted_score"]) else "N/A"
     spread = abs(round(prediction["spread"], 1)) if not pd.isna(prediction["spread"]) else "N/A"
@@ -555,7 +556,7 @@ def predict_game(n_clicks, team1, team2, location, vegas_spread, vegas_total):
             ], className="mb-4"),
             
             # Add the detailed tournament adjustment breakdown
-            tournament_adjustment_breakdown(prediction) if prediction['tournament_adjustment'] != 0 else html.Div()
+            tournament_adjustment_breakdown(prediction) if has_tournament_data else html.Div()
         ]
     
     # Generate height and experience data display
@@ -748,7 +749,10 @@ def predict_game(n_clicks, team1, team2, location, vegas_spread, vegas_total):
                         ], className="text-center mt-3") if spread_text != "Unable to calculate" else html.H4("Spread unavailable", className="text-center mt-3"),
                         html.P([
                             f"Over/Under: {total} points"
-                        ], className="text-center") if isinstance(total, (int, float)) else html.P("Total unavailable", className="text-center")
+                        ], className="text-center"),
+                        html.P([
+                            "Note: Scores include tournament probability adjustments"
+                        ], className="text-center text-muted small mt-2") if prediction['tournament_adjustment'] != 0 else html.Div()
                     ])
                 ], className="mb-4")
             ], md=12, lg=4),

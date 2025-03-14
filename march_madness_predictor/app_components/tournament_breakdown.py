@@ -135,7 +135,8 @@ def tournament_adjustment_breakdown(prediction_result):
             html.H5("Net Impact on Spread"),
             html.P([
                 html.Strong(f"{abs(prediction_result['tournament_adjustment']):.2f} points "),
-                f"in favor of {team1_name if prediction_result['tournament_adjustment'] > 0 else team2_name}"
+                f"in favor of {team1_name if prediction_result['tournament_adjustment'] > 0 else team2_name}" 
+                if prediction_result['tournament_adjustment'] != 0 else "No impact on spread"
             ])
         ], className="mt-4 alert alert-info")
     ], className="mt-4") 

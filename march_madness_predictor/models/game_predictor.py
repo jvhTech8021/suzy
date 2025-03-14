@@ -9,6 +9,17 @@ class GamePredictor:
     Focuses on statistical analysis rather than historical tournament round data.
     """
     
+    # Tournament round scaling factors - moved from local variable to class property
+    # These can be modified directly to adjust tournament predictions without code changes
+    # Example: predictor.TOURNAMENT_SCALING_FACTORS["championship_pct"] = 0.15
+    TOURNAMENT_SCALING_FACTORS = {
+        "championship_pct": 0.15,  # Championship: 0.075 points per percentage point
+        "final_four_pct": 0.10,     # Final Four: 0.05 points per percentage point
+        "elite_eight_pct": 0.07,    # Elite Eight: 0.04 points per percentage point
+        "sweet_sixteen_pct": 0.030, # Sweet Sixteen: 0.025 points per percentage point
+        "round_32_pct": 0.015,     # Round of 32: 0.0125 points per percentage point
+    }
+    
     def __init__(self, data_loader=None):
         """
         Initialize the game predictor with data from the data loader
@@ -498,15 +509,8 @@ class GamePredictor:
         tournament_adjustment_detail_team2 = {}
         
         if team1_tournament_data["championship_pct"] is not None and team2_tournament_data["championship_pct"] is not None:
-            # Define scaling factors for different tournament rounds
-            # Later rounds get larger scaling factors
-            scaling_factors = {
-                "championship_pct": 0.075,  # Championship round: 0.075 points per percentage (reduced from 0.15)
-                "final_four_pct": 0.05,     # Final Four round: 0.05 points per percentage (reduced from 0.1)
-                "elite_eight_pct": 0.04,    # Elite Eight round: 0.04 points per percentage (reduced from 0.08)
-                "sweet_sixteen_pct": 0.025, # Sweet Sixteen round: 0.025 points per percentage (reduced from 0.05)
-                "round_32_pct": 0.0125,     # Round of 32: 0.0125 points per percentage (reduced from 0.025)
-            }
+            # Use the class property for scaling factors
+            scaling_factors = self.TOURNAMENT_SCALING_FACTORS
             
             # Initialize adjustments
             team1_total_adjustment = 0
@@ -681,8 +685,6 @@ class GamePredictor:
             "height_adjustment": height_adjustment,
             "experience_adjustment": experience_adjustment,
             "bench_adjustment": bench_adjustment,
-            "tournament_adjustment_detail_team1": tournament_adjustment_detail_team1,
-            "tournament_adjustment_detail_team2": tournament_adjustment_detail_team2
         }
         
         return result
