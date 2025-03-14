@@ -1,0 +1,438 @@
+[
+    {
+        "team1": {
+            "name": "Akron",
+            "predicted_score": 80.16822165216666,
+            "win_probability": 0.5708201659611706,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "elite_eight_pct": null,
+                "sweet_sixteen_pct": null,
+                "round_32_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            },
+            "tournament_adjustment_detail": {}
+        },
+        "team2": {
+            "name": "Toledo",
+            "predicted_score": 77.09957935516667,
+            "win_probability": 0.4291798340388294,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "elite_eight_pct": null,
+                "sweet_sixteen_pct": null,
+                "round_32_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            },
+            "tournament_adjustment_detail": {}
+        },
+        "spread": 3.0686422969999967,
+        "total": 157.26780100733333,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "Akron",
+                "magnitude": 11.626000000000005,
+                "description": "Stronger defensive efficiency"
+            },
+            {
+                "factor": "Tempo",
+                "advantage": "Neutral",
+                "magnitude": 3.6987000000000023,
+                "description": "Akron prefers a faster pace, Toledo plays slower"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 5.99298,
+                "team2_value": -6.39291,
+                "difference": 12.38589,
+                "advantage": "Akron"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 112.602,
+                "team2_value": 111.842,
+                "difference": 0.7600000000000051,
+                "advantage": "Akron"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 106.609,
+                "team2_value": 118.235,
+                "difference": -11.626000000000005,
+                "advantage": "Akron"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 71.8777,
+                "team2_value": 68.179,
+                "difference": 3.6987000000000023,
+                "advantage": "Akron"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 8,
+            "team2_wins": 6,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 6.9826,
+                    "team2_em": -13.3527,
+                    "diff": 20.3353,
+                    "winner": "Akron"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": 5.464,
+                    "team2_em": -19.7609,
+                    "diff": 25.224899999999998,
+                    "winner": "Akron"
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 3.75741,
+                    "team2_em": -20.8939,
+                    "diff": 24.65131,
+                    "winner": "Akron"
+                },
+                {
+                    "year": 2012,
+                    "team1_em": 10.6552,
+                    "team2_em": -2.89232,
+                    "diff": 13.54752,
+                    "winner": "Akron"
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 13.7427,
+                    "team2_em": -1.15579,
+                    "diff": 14.898489999999999,
+                    "winner": "Akron"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 2.61676,
+                    "team2_em": 6.4625,
+                    "diff": -3.84574,
+                    "winner": "Toledo"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": 6.1982,
+                    "team2_em": 7.74376,
+                    "diff": -1.54556,
+                    "winner": "Toledo"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": 8.888,
+                    "team2_em": 4.02583,
+                    "diff": 4.86217,
+                    "winner": "Akron"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": 5.92696,
+                    "team2_em": 2.6879,
+                    "diff": 3.2390600000000003,
+                    "winner": "Akron"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": -8.29336,
+                    "team2_em": 4.94139,
+                    "diff": -13.23475,
+                    "winner": "Toledo"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": 6.09084,
+                    "team2_em": 11.9973,
+                    "diff": -5.906459999999999,
+                    "winner": "Toledo"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 8.26765,
+                    "team2_em": 13.19,
+                    "diff": -4.92235,
+                    "winner": "Toledo"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 3.48951,
+                    "team2_em": 9.32881,
+                    "diff": -5.839300000000001,
+                    "winner": "Toledo"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": 4.93477,
+                    "team2_em": 2.68731,
+                    "diff": 2.2474600000000002,
+                    "winner": "Akron"
+                }
+            ],
+            "avg_margin": 5.265146428571429
+        },
+        "tournament_adjustment": 0,
+        "tournament_adjustment_team1": 0,
+        "tournament_adjustment_team2": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0,
+        "vegas_spread": 8.5,
+        "vegas_total": 155
+    },
+    {
+        "team1": {
+            "name": "George Mason",
+            "predicted_score": 68.43320428050002,
+            "win_probability": 0.5219083003094834,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "elite_eight_pct": null,
+                "sweet_sixteen_pct": null,
+                "round_32_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            },
+            "tournament_adjustment_detail": {}
+        },
+        "team2": {
+            "name": "George Washington",
+            "predicted_score": 68.07967230361668,
+            "win_probability": 0.47809169969051657,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "elite_eight_pct": null,
+                "sweet_sixteen_pct": null,
+                "round_32_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            },
+            "tournament_adjustment_detail": {}
+        },
+        "spread": 0.35353197688334603,
+        "total": 136.5128765841167,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "George Mason",
+                "magnitude": 6.004300000000001,
+                "description": "Stronger defensive efficiency"
+            },
+            {
+                "factor": "Offensive Efficiency",
+                "advantage": "George Washington",
+                "magnitude": 2.195999999999998,
+                "description": "Lower offensive efficiency"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 8.96831,
+                "team2_value": 5.16017,
+                "difference": 3.8081400000000007,
+                "advantage": "George Mason"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 105.019,
+                "team2_value": 107.215,
+                "difference": -2.195999999999998,
+                "advantage": "George Washington"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 96.0507,
+                "team2_value": 102.055,
+                "difference": -6.004300000000001,
+                "advantage": "George Mason"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 64.5403,
+                "team2_value": 67.0228,
+                "difference": -2.4825000000000017,
+                "advantage": "George Washington"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 8,
+            "team2_wins": 6,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 7.40753,
+                    "team2_em": -2.2715,
+                    "diff": 9.679030000000001,
+                    "winner": "George Mason"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": 1.19621,
+                    "team2_em": 5.1572,
+                    "diff": -3.96099,
+                    "winner": "George Washington"
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 18.3096,
+                    "team2_em": -0.573889,
+                    "diff": 18.883489,
+                    "winner": "George Mason"
+                },
+                {
+                    "year": 2012,
+                    "team1_em": 6.00332,
+                    "team2_em": -0.647289,
+                    "diff": 6.650609,
+                    "winner": "George Mason"
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 2.49357,
+                    "team2_em": 5.25512,
+                    "diff": -2.7615499999999997,
+                    "winner": "George Washington"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 2.74139,
+                    "team2_em": 14.2297,
+                    "diff": -11.488309999999998,
+                    "winner": "George Washington"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": -2.80614,
+                    "team2_em": 10.3727,
+                    "diff": -13.178840000000001,
+                    "winner": "George Washington"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": -3.62954,
+                    "team2_em": 10.6658,
+                    "diff": -14.295340000000001,
+                    "winner": "George Washington"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": 4.57872,
+                    "team2_em": 3.17548,
+                    "diff": 1.4032399999999998,
+                    "winner": "George Mason"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": -5.15972,
+                    "team2_em": -2.69404,
+                    "diff": -2.46568,
+                    "winner": "George Washington"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": 0.688087,
+                    "team2_em": -10.6769,
+                    "diff": 11.364987,
+                    "winner": "George Mason"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 3.55891,
+                    "team2_em": -5.44445,
+                    "diff": 9.00336,
+                    "winner": "George Mason"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 4.70439,
+                    "team2_em": -4.53962,
+                    "diff": 9.24401,
+                    "winner": "George Mason"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": 8.17669,
+                    "team2_em": -3.35921,
+                    "diff": 11.535900000000002,
+                    "winner": "George Mason"
+                }
+            ],
+            "avg_margin": 2.115279642857143
+        },
+        "tournament_adjustment": 0,
+        "tournament_adjustment_team1": 0,
+        "tournament_adjustment_team2": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0,
+        "vegas_spread": 4.0,
+        "vegas_total": 130
+    }
+]

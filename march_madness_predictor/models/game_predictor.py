@@ -13,12 +13,26 @@ class GamePredictor:
     # These can be modified directly to adjust tournament predictions without code changes
     # Example: predictor.TOURNAMENT_SCALING_FACTORS["championship_pct"] = 0.15
     TOURNAMENT_SCALING_FACTORS = {
-        "championship_pct": 0.15,  # Championship: 0.075 points per percentage point
-        "final_four_pct": 0.10,     # Final Four: 0.05 points per percentage point
-        "elite_eight_pct": 0.07,    # Elite Eight: 0.04 points per percentage point
-        "sweet_sixteen_pct": 0.030, # Sweet Sixteen: 0.025 points per percentage point
-        "round_32_pct": 0.015,     # Round of 32: 0.0125 points per percentage point
+        "championship_pct": 0.15,  # Championship: 0.15 points per percentage point
+        "final_four_pct": 0.10,     # Final Four: 0.10 points per percentage point
+        "elite_eight_pct": 0.07,    # Elite Eight: 0.07 points per percentage point
+        "sweet_sixteen_pct": 0.030, # Sweet Sixteen: 0.030 points per percentage point
+        "round_32_pct": 0.015,     # Round of 32: 0.015 points per percentage point
     }
+    
+    # Baseline expectations for tournament appearance
+    # Teams below these baselines will be penalized
+    TOURNAMENT_BASELINE_EXPECTATIONS = {
+        "championship_pct": 0.5,    # Expected to have at least 0.5% championship chance
+        "final_four_pct": 2.0,      # Expected to have at least 2% Final Four chance
+        "elite_eight_pct": 5.0,     # Expected to have at least 5% Elite Eight chance
+        "sweet_sixteen_pct": 10.0,  # Expected to have at least 10% Sweet Sixteen chance
+        "round_32_pct": 20.0,       # Expected to have at least 20% Round of 32 chance
+    }
+    
+    # Penalty factor for teams below baseline (as a proportion of the scaling factor)
+    # A value of 1.0 means penalties are equally as strong as bonuses
+    TOURNAMENT_PENALTY_FACTOR = 1.5
     
     def __init__(self, data_loader=None):
         """
@@ -511,6 +525,8 @@ class GamePredictor:
         if team1_tournament_data["championship_pct"] is not None and team2_tournament_data["championship_pct"] is not None:
             # Use the class property for scaling factors
             scaling_factors = self.TOURNAMENT_SCALING_FACTORS
+            baseline_expectations = self.TOURNAMENT_BASELINE_EXPECTATIONS
+            penalty_factor = self.TOURNAMENT_PENALTY_FACTOR
             
             # Initialize adjustments
             team1_total_adjustment = 0
@@ -518,26 +534,58 @@ class GamePredictor:
             
             # Apply adjustments for each tournament round if data is available
             for round_key, scaling_factor in scaling_factors.items():
+                baseline = baseline_expectations.get(round_key, 0)
+                
                 # Team 1 adjustment for this round
                 if round_key in team1_tournament_data and team1_tournament_data[round_key] is not None:
-                    round_adjustment = team1_tournament_data[round_key] * scaling_factor
+                    team1_pct = team1_tournament_data[round_key]
+                    
+                    # If above baseline, apply bonus
+                    if team1_pct >= baseline:
+                        round_adjustment = team1_pct * scaling_factor
+                        adjustment_type = "bonus"
+                    # If below baseline, apply penalty
+                    else:
+                        # Calculate the shortfall from the baseline
+                        shortfall = baseline - team1_pct
+                        # Apply penalty (with potentially different scaling)
+                        round_adjustment = -1 * shortfall * scaling_factor * penalty_factor
+                        adjustment_type = "penalty"
+                    
                     team1_total_adjustment += round_adjustment
                     # Store the detailed breakdown
                     tournament_adjustment_detail_team1[round_key] = {
-                        "percentage": team1_tournament_data[round_key],
+                        "percentage": team1_pct,
+                        "baseline": baseline,
                         "factor": scaling_factor,
-                        "points": round_adjustment
+                        "points": round_adjustment,
+                        "type": adjustment_type
                     }
                 
                 # Team 2 adjustment for this round
                 if round_key in team2_tournament_data and team2_tournament_data[round_key] is not None:
-                    round_adjustment = team2_tournament_data[round_key] * scaling_factor
+                    team2_pct = team2_tournament_data[round_key]
+                    
+                    # If above baseline, apply bonus
+                    if team2_pct >= baseline:
+                        round_adjustment = team2_pct * scaling_factor
+                        adjustment_type = "bonus"
+                    # If below baseline, apply penalty
+                    else:
+                        # Calculate the shortfall from the baseline
+                        shortfall = baseline - team2_pct
+                        # Apply penalty (with potentially different scaling)
+                        round_adjustment = -1 * shortfall * scaling_factor * penalty_factor
+                        adjustment_type = "penalty"
+                    
                     team2_total_adjustment += round_adjustment
                     # Store the detailed breakdown
                     tournament_adjustment_detail_team2[round_key] = {
-                        "percentage": team2_tournament_data[round_key],
+                        "percentage": team2_pct,
+                        "baseline": baseline,
                         "factor": scaling_factor,
-                        "points": round_adjustment
+                        "points": round_adjustment,
+                        "type": adjustment_type
                     }
             
             # Store the final calculated adjustments
@@ -551,10 +599,15 @@ class GamePredictor:
         # Apply seed adjustment if available
         seed_adjustment = 0
         if team1_tournament_data["seed"] is not None and team2_tournament_data["seed"] is not None:
-            # Lower seeds (better teams) get a boost
-            seed_diff = team2_tournament_data["seed"] - team1_tournament_data["seed"]
-            seed_adjustment = seed_diff / 7  # Scale appropriately
-            team1_expected_score += seed_adjustment
+            # Make sure seed values are valid numbers before calculation
+            seed1 = team1_tournament_data["seed"]
+            seed2 = team2_tournament_data["seed"]
+            
+            if isinstance(seed1, (int, float)) and isinstance(seed2, (int, float)) and not pd.isna(seed1) and not pd.isna(seed2):
+                # Lower seeds (better teams) get a boost
+                seed_diff = seed2 - seed1
+                seed_adjustment = seed_diff / 7  # Scale appropriately
+                team1_expected_score += seed_adjustment
         
         # Apply height and experience adjustments if available
         height_adjustment = 0
@@ -562,7 +615,6 @@ class GamePredictor:
         bench_adjustment = 0  # Define this variable to avoid undefined errors
         
         # Only apply height and experience adjustments if valid data is available for both teams
-        # But ensure this doesn't affect the base prediction
         if team1_height_data["has_height_data"] and team2_height_data["has_height_data"]:
             # Height advantage
             if team1_height_data["effhgt"] is not None and team2_height_data["effhgt"] is not None:
@@ -588,11 +640,12 @@ class GamePredictor:
                 if not pd.isna(team1_height_data["bench"]) and not pd.isna(team2_height_data["bench"]):
                     bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
                     if abs(bench_diff) > 6:  # Increased threshold from 4 to 6 percent
-                        bench_adjustment = abs(bench_diff) / 5.0  # Decreased importance (increased divisor from 3.0 to 5.0)
+                        bench_adjustment = bench_diff / 5.0  # Decreased importance
                         team1_expected_score += bench_adjustment
         
         # Add a final check to make sure expected scores are not NaN
         if pd.isna(team1_expected_score) or pd.isna(team2_expected_score):
+            print("WARNING: NaN scores detected, recalculating base scores without adjustments")
             # If we somehow got NaN values, recalculate without the adjustments
             # This is a fallback to ensure we always have a prediction
             team1_expected_score = team1_expected_ppp * avg_tempo
@@ -603,6 +656,13 @@ class GamePredictor:
                 team1_expected_score += self.home_court_advantage
             elif location == 'home_2':
                 team2_expected_score += self.home_court_advantage
+            
+            # Try to re-apply at least the tournament adjustments safely
+            if tournament_adjustment_team1 != 0 and not pd.isna(tournament_adjustment_team1):
+                team1_expected_score += tournament_adjustment_team1
+            
+            if tournament_adjustment_team2 != 0 and not pd.isna(tournament_adjustment_team2):
+                team2_expected_score += tournament_adjustment_team2
         
         # Calculate spread (always Team1 - Team2)
         spread = team1_expected_score - team2_expected_score
