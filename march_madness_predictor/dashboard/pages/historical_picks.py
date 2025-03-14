@@ -151,8 +151,8 @@ def layout(data_loader=None):
             # Create spread analysis components
             betting_analysis_children.extend([
                 html.Div([
-                    html.Span(f"Model: {pick['team1']['name']} {model_spread:+.1f}, "),
-                    html.Span(f"Vegas: {pick['team1']['name']} {vegas_spread:+.1f}")
+                    html.Span(f"Model: {pick['team1']['name']} {'-' if model_spread > 0 else '+'}{abs(model_spread):.1f}, "),
+                    html.Span(f"Vegas: {pick['team1']['name']} {'-' if vegas_spread > 0 else '+'}{abs(vegas_spread):.1f}")
                 ]),
                 html.Div(f"Diff: {abs(spread_diff):.1f} pts {'higher' if spread_diff > 0 else 'lower'}"),
             ])
@@ -160,9 +160,17 @@ def layout(data_loader=None):
             # Recommended bet based on spread
             if abs(spread_diff) > 2:
                 team_to_bet = pick['team1']['name'] if spread_diff > 0 else pick['team2']['name']
+                # Determine if the team to bet is getting or giving points
+                if team_to_bet == pick['team1']['name']:
+                    # Team1 is the reference team in the display
+                    bet_spread = f"{'+' if vegas_spread < 0 else '-'}{abs(vegas_spread)}"
+                else:
+                    # Team2 is getting points if team1 is favored
+                    bet_spread = f"{'+' if vegas_spread > 0 else '-'}{abs(vegas_spread)}"
+                
                 betting_analysis_children.append(html.Div([
                     html.Span("Spread "),
-                    html.Strong(f"Bet: {team_to_bet}")
+                    html.Strong(f"Bet: {team_to_bet} {bet_spread}")
                 ]))
                 
                 # Add buttons for tracking spread bet outcomes

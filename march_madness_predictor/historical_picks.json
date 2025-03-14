@@ -434,5 +434,450 @@
         "bench_adjustment": 0,
         "vegas_spread": 4.0,
         "vegas_total": 130
+    },
+    {
+        "team1": {
+            "name": "Tennessee",
+            "predicted_score": 73.93479449600001,
+            "win_probability": 0.5818500349941994,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "elite_eight_pct": null,
+                "sweet_sixteen_pct": null,
+                "round_32_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            },
+            "tournament_adjustment_detail": {}
+        },
+        "team2": {
+            "name": "Texas",
+            "predicted_score": 70.13048896125,
+            "win_probability": 0.4181499650058006,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "elite_eight_pct": null,
+                "sweet_sixteen_pct": null,
+                "round_32_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            },
+            "tournament_adjustment_detail": {}
+        },
+        "spread": 3.8043055347500143,
+        "total": 144.06528345725002,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "Tennessee",
+                "magnitude": 11.302899999999994,
+                "description": "Stronger defensive efficiency"
+            },
+            {
+                "factor": "Tempo",
+                "advantage": "Neutral",
+                "magnitude": 3.6129000000000033,
+                "description": "Texas prefers a faster pace, Tennessee plays slower"
+            },
+            {
+                "factor": "Offensive Efficiency",
+                "advantage": "Tennessee",
+                "magnitude": 3.0450000000000017,
+                "description": "Higher offensive efficiency"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 30.8535,
+                "team2_value": 16.5052,
+                "difference": 14.348300000000002,
+                "advantage": "Tennessee"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 119.191,
+                "team2_value": 116.146,
+                "difference": 3.0450000000000017,
+                "advantage": "Tennessee"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 88.3375,
+                "team2_value": 99.6404,
+                "difference": -11.302899999999994,
+                "advantage": "Tennessee"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 63.8118,
+                "team2_value": 67.4247,
+                "difference": -3.6129000000000033,
+                "advantage": "Texas"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 8,
+            "team2_wins": 6,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 16.5817,
+                    "team2_em": 18.5075,
+                    "diff": -1.9257999999999988,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": 17.3928,
+                    "team2_em": 20.6323,
+                    "diff": -3.2394999999999996,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 13.3636,
+                    "team2_em": 26.7252,
+                    "diff": -13.361600000000001,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2012,
+                    "team1_em": 11.679,
+                    "team2_em": 16.5122,
+                    "diff": -4.8332,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 11.4779,
+                    "team2_em": 7.10682,
+                    "diff": 4.37108,
+                    "winner": "Tennessee"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 21.7438,
+                    "team2_em": 14.9889,
+                    "diff": 6.754900000000001,
+                    "winner": "Tennessee"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": 7.33439,
+                    "team2_em": 20.1184,
+                    "diff": -12.784010000000002,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": 7.45703,
+                    "team2_em": 17.1061,
+                    "diff": -9.649070000000002,
+                    "winner": "Texas"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": 12.1202,
+                    "team2_em": 10.1616,
+                    "diff": 1.9586000000000006,
+                    "winner": "Tennessee"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": 22.1486,
+                    "team2_em": 15.4577,
+                    "diff": 6.690899999999997,
+                    "winner": "Tennessee"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": 26.98,
+                    "team2_em": 17.8908,
+                    "diff": 9.089200000000002,
+                    "winner": "Tennessee"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 21.0624,
+                    "team2_em": 20.5822,
+                    "diff": 0.48019999999999996,
+                    "winner": "Tennessee"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 25.2399,
+                    "team2_em": 20.4063,
+                    "diff": 4.833599999999997,
+                    "winner": "Tennessee"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": 25.9708,
+                    "team2_em": 18.4035,
+                    "diff": 7.5672999999999995,
+                    "winner": "Tennessee"
+                }
+            ],
+            "avg_margin": -0.28910000000000047
+        },
+        "tournament_adjustment": 0,
+        "tournament_adjustment_team1": 0,
+        "tournament_adjustment_team2": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0,
+        "vegas_spread": 10.0,
+        "vegas_total": 136.5,
+        "spread_bet_result": "win",
+        "total_bet_result": "win",
+        "result": "win"
+    },
+    {
+        "team1": {
+            "name": "Wisconsin",
+            "predicted_score": 75.33731885689998,
+            "win_probability": 0.5174005135400956,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "elite_eight_pct": null,
+                "sweet_sixteen_pct": null,
+                "round_32_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            },
+            "tournament_adjustment_detail": {}
+        },
+        "team2": {
+            "name": "UCLA",
+            "predicted_score": 73.33845820723332,
+            "win_probability": 0.48259948645990436,
+            "tournament_data": {
+                "has_exit_round_data": false,
+                "has_champion_profile_data": false,
+                "championship_pct": null,
+                "final_four_pct": null,
+                "elite_eight_pct": null,
+                "sweet_sixteen_pct": null,
+                "round_32_pct": null,
+                "predicted_exit": null,
+                "similarity_pct": null,
+                "seed": null
+            },
+            "height_data": {
+                "has_height_data": false,
+                "size": null,
+                "hgt5": null,
+                "effhgt": null,
+                "experience": null,
+                "bench": null,
+                "gt10": null
+            },
+            "tournament_adjustment_detail": {}
+        },
+        "spread": 1.9988606496666677,
+        "total": 148.67577706413329,
+        "location": "neutral",
+        "key_factors": [
+            {
+                "factor": "Offensive Efficiency",
+                "advantage": "Wisconsin",
+                "magnitude": 6.01400000000001,
+                "description": "Higher offensive efficiency"
+            },
+            {
+                "factor": "Defensive Efficiency",
+                "advantage": "UCLA",
+                "magnitude": 2.989999999999995,
+                "description": "Weaker defensive efficiency"
+            }
+        ],
+        "team_stats": [
+            {
+                "stat": "AdjEM",
+                "team1_value": 25.5226,
+                "team2_value": 22.4985,
+                "difference": 3.0241000000000007,
+                "advantage": "Wisconsin"
+            },
+            {
+                "stat": "AdjOE",
+                "team1_value": 123.052,
+                "team2_value": 117.038,
+                "difference": 6.01400000000001,
+                "advantage": "Wisconsin"
+            },
+            {
+                "stat": "AdjDE",
+                "team1_value": 97.5294,
+                "team2_value": 94.5394,
+                "difference": 2.989999999999995,
+                "advantage": "UCLA"
+            },
+            {
+                "stat": "AdjTempo",
+                "team1_value": 67.7289,
+                "team2_value": 64.9682,
+                "difference": 2.7607,
+                "advantage": "Wisconsin"
+            }
+        ],
+        "historical_matchups": {
+            "team1_wins": 10,
+            "team2_wins": 4,
+            "total_matchups": 14,
+            "matchups": [
+                {
+                    "year": 2009,
+                    "team1_em": 17.9651,
+                    "team2_em": 25.1136,
+                    "diff": -7.148500000000002,
+                    "winner": "UCLA"
+                },
+                {
+                    "year": 2010,
+                    "team1_em": 25.564,
+                    "team2_em": 5.8018,
+                    "diff": 19.7622,
+                    "winner": "Wisconsin"
+                },
+                {
+                    "year": 2011,
+                    "team1_em": 25.5977,
+                    "team2_em": 13.7419,
+                    "diff": 11.8558,
+                    "winner": "Wisconsin"
+                },
+                {
+                    "year": 2012,
+                    "team1_em": 23.2991,
+                    "team2_em": 11.04,
+                    "diff": 12.2591,
+                    "winner": "Wisconsin"
+                },
+                {
+                    "year": 2013,
+                    "team1_em": 23.008,
+                    "team2_em": 15.1624,
+                    "diff": 7.845599999999999,
+                    "winner": "Wisconsin"
+                },
+                {
+                    "year": 2014,
+                    "team1_em": 23.8262,
+                    "team2_em": 22.2575,
+                    "diff": 1.5686999999999998,
+                    "winner": "Wisconsin"
+                },
+                {
+                    "year": 2015,
+                    "team1_em": 33.5251,
+                    "team2_em": 14.1346,
+                    "diff": 19.390500000000003,
+                    "winner": "Wisconsin"
+                },
+                {
+                    "year": 2016,
+                    "team1_em": 16.3651,
+                    "team2_em": 11.1017,
+                    "diff": 5.2634000000000025,
+                    "winner": "Wisconsin"
+                },
+                {
+                    "year": 2017,
+                    "team1_em": 22.2926,
+                    "team2_em": 22.9515,
+                    "diff": -0.6588999999999992,
+                    "winner": "UCLA"
+                },
+                {
+                    "year": 2018,
+                    "team1_em": 10.6155,
+                    "team2_em": 14.3834,
+                    "diff": -3.767899999999999,
+                    "winner": "UCLA"
+                },
+                {
+                    "year": 2019,
+                    "team1_em": 23.675,
+                    "team2_em": 5.88337,
+                    "diff": 17.79163,
+                    "winner": "Wisconsin"
+                },
+                {
+                    "year": 2021,
+                    "team1_em": 22.6545,
+                    "team2_em": 15.9175,
+                    "diff": 6.736999999999998,
+                    "winner": "Wisconsin"
+                },
+                {
+                    "year": 2022,
+                    "team1_em": 15.5839,
+                    "team2_em": 24.8472,
+                    "diff": -9.263300000000001,
+                    "winner": "UCLA"
+                },
+                {
+                    "year": 2024,
+                    "team1_em": 20.6008,
+                    "team2_em": 7.70822,
+                    "diff": 12.892579999999999,
+                    "winner": "Wisconsin"
+                }
+            ],
+            "avg_margin": 6.751993571428571
+        },
+        "tournament_adjustment": 0,
+        "tournament_adjustment_team1": 0,
+        "tournament_adjustment_team2": 0,
+        "seed_adjustment": 0,
+        "height_adjustment": 0,
+        "experience_adjustment": 0,
+        "bench_adjustment": 0,
+        "vegas_spread": 2.0,
+        "vegas_total": 142
     }
 ]
