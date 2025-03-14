@@ -238,13 +238,20 @@ def layout(data_loader=None):
             dbc.Button("Loss", id={"type": "loss-button", "index": i}, color="danger", size="sm")
         ]) if pick.get('result') == 'Not marked' or not pick.get('result') else html.Div(pick.get('result', 'Not marked'), className=f"text-{'success' if pick.get('result') == 'win' else 'danger'}")
         
+        # Create management buttons (edit and delete)
+        management_buttons = html.Div([
+            dbc.Button("Edit", id={"type": "edit-button", "index": i}, color="primary", size="sm", className="me-2"),
+            dbc.Button("Delete", id={"type": "delete-button", "index": i}, color="danger", size="sm")
+        ])
+        
         # Create table row
         table_rows.append(
             html.Tr([
                 html.Td(f"{pick['team1']['name']} vs {pick['team2']['name']}", className="align-middle"),
                 html.Td(f"{predicted_winner} ({team1_score}-{team2_score})", className="align-middle"),
                 html.Td(betting_div, className="align-middle"),
-                html.Td(action_buttons, className="align-middle")
+                html.Td(action_buttons, className="align-middle"),
+                html.Td(management_buttons, className="align-middle")
             ])
         )
     
@@ -253,15 +260,31 @@ def layout(data_loader=None):
         stats_cards,
         betting_stats_cards,
         html.Div(id="result-update-status"),
+        # Add modal for editing picks
+        dbc.Modal([
+            dbc.ModalHeader("Edit Pick"),
+            dbc.ModalBody([
+                dbc.Label("Vegas Spread:"),
+                dbc.Input(id="edit-vegas-spread", type="number", step=0.5, placeholder="Enter new Vegas spread"),
+                dbc.FormText("Enter a positive number. The spread is applied to the first team listed."),
+                html.Div(id="edit-pick-info", className="mt-3")
+            ]),
+            dbc.ModalFooter([
+                dbc.Button("Cancel", id="edit-cancel", className="me-2"),
+                dbc.Button("Save Changes", id="edit-save", color="primary")
+            ])
+        ], id="edit-modal"),
         dbc.Table(
             # Table header
-            [html.Thead(html.Tr([html.Th("Game"), html.Th("Predicted Winner"), html.Th("Betting Analysis"), html.Th("Result")]))] +
+            [html.Thead(html.Tr([html.Th("Game"), html.Th("Predicted Winner"), html.Th("Betting Analysis"), html.Th("Result"), html.Th("Actions")]))] +
             # Table body
             [html.Tbody(table_rows)],
             bordered=True,
             hover=True,
             striped=True
-        )
+        ),
+        # Store the index of the pick being edited
+        dcc.Store(id="edited-pick-index")
     ])
 
 # Callback to mark predictions as wins or losses
@@ -272,10 +295,11 @@ def layout(data_loader=None):
      Input({"type": "spread-win-button", "index": dash.ALL}, "n_clicks"),
      Input({"type": "spread-loss-button", "index": dash.ALL}, "n_clicks"),
      Input({"type": "total-win-button", "index": dash.ALL}, "n_clicks"),
-     Input({"type": "total-loss-button", "index": dash.ALL}, "n_clicks")],
+     Input({"type": "total-loss-button", "index": dash.ALL}, "n_clicks"),
+     Input({"type": "delete-button", "index": dash.ALL}, "n_clicks")],
     prevent_initial_call=True
 )
-def update_result(win_clicks, loss_clicks, spread_win_clicks, spread_loss_clicks, total_win_clicks, total_loss_clicks):
+def update_result(win_clicks, loss_clicks, spread_win_clicks, spread_loss_clicks, total_win_clicks, total_loss_clicks, delete_clicks):
     ctx = dash.callback_context
     if not ctx.triggered:
         return ""
@@ -304,6 +328,16 @@ def update_result(win_clicks, loss_clicks, spread_win_clicks, spread_loss_clicks
             result = "win" if button_type == "total-win-button" else "loss"
             display_text = f"Total bet for prediction #{index+1} marked as {result}!"
             
+        elif button_type == "delete-button":
+            # Handle deletion
+            picks = load_historical_picks()
+            if index < len(picks):
+                deleted_pick = picks.pop(index)  # Remove the pick at the specified index
+                save_historical_picks(picks)
+                return html.P(f"Deleted prediction: {deleted_pick['team1']['name']} vs {deleted_pick['team2']['name']}", 
+                             className="text-danger alert alert-danger")
+            return html.P("Error deleting prediction", className="text-danger")
+            
         else:
             return html.P("Unknown button type", className="text-danger")
             
@@ -317,4 +351,53 @@ def update_result(win_clicks, loss_clicks, spread_win_clicks, spread_loss_clicks
         save_historical_picks(picks)
         return html.P(display_text, className="text-success")
     
-    return html.P("Error updating prediction result", className="text-danger") 
+    return html.P("Error updating prediction result", className="text-danger")
+
+# Callbacks for the edit modal
+@callback(
+    [Output("edit-modal", "is_open"),
+     Output("edited-pick-index", "data"),
+     Output("edit-vegas-spread", "value"),
+     Output("edit-pick-info", "children")],
+    [Input({"type": "edit-button", "index": dash.ALL}, "n_clicks"),
+     Input("edit-cancel", "n_clicks"),
+     Input("edit-save", "n_clicks")],
+    [State("edit-modal", "is_open"),
+     State("edited-pick-index", "data"),
+     State("edit-vegas-spread", "value")],
+    prevent_initial_call=True
+)
+def toggle_edit_modal(edit_clicks, cancel_clicks, save_clicks, is_open, current_index, new_vegas_spread):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        return is_open, current_index, None, ""
+    
+    trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    
+    if "edit-button" in trigger_id:
+        # Parse the button ID to get the index
+        button_dict = json.loads(trigger_id)
+        index = button_dict["index"]
+        
+        # Load the current pick data
+        picks = load_historical_picks()
+        if index < len(picks):
+            pick = picks[index]
+            current_vegas_spread = pick.get('vegas_spread')
+            team1_name = pick['team1']['name']
+            team2_name = pick['team2']['name']
+            info_text = f"Editing: {team1_name} vs {team2_name}"
+            return True, index, current_vegas_spread, info_text
+    
+    elif trigger_id == "edit-save" and current_index is not None:
+        # Save the changes
+        picks = load_historical_picks()
+        if current_index < len(picks) and new_vegas_spread is not None:
+            picks[current_index]['vegas_spread'] = new_vegas_spread
+            save_historical_picks(picks)
+        return False, None, None, ""
+    
+    elif trigger_id == "edit-cancel":
+        return False, None, None, ""
+    
+    return is_open, current_index, None, "" 
