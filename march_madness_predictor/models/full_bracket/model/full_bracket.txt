@@ -1,4 +1,4 @@
-NCAA TOURNAMENT BRACKET - FULL SIMULATION
+NCAA TOURNAMENT BRACKET - OFFICIAL 2025 SIMULATION
 ================================================================================
 
 Generated on: 2025-03-16 21:53:10
@@ -7,127 +7,127 @@ EAST REGION
 ----------------------------------------
 
 FIRST ROUND:
-(1) Marquette vs. (16) West Virginia --> Marquette
-(8) North Carolina vs. (9) Boise St. --> North Carolina
-(5) Oregon vs. (12) Nebraska --> Nebraska
-(4) Purdue vs. (13) Texas A&M --> Purdue
-(6) Creighton vs. (11) Santa Clara --> Creighton
-(3) Gonzaga vs. (14) Mississippi St. --> Gonzaga
-(7) Mississippi vs. (10) Pittsburgh --> Mississippi
-(2) Houston vs. (15) SMU --> Houston
+(1) Duke vs. (16) Mount St. Mary's --> Duke
+(8) Mississippi St. vs. (9) Baylor --> Mississippi St.
+(5) Oregon vs. (12) Liberty --> Oregon
+(4) Arizona vs. (13) Akron --> Arizona
+(6) BYU vs. (11) VCU --> BYU
+(3) Wisconsin vs. (14) Montana --> Wisconsin
+(7) Saint Mary's vs. (10) Vanderbilt --> Saint Mary's
+(2) Alabama vs. (15) Robert Morris --> Alabama
 
 SECOND ROUND:
-(1) Marquette vs. (8) North Carolina --> Marquette
-(12) Nebraska vs. (4) Purdue --> Purdue
-(6) Creighton vs. (3) Gonzaga --> Gonzaga
-(7) Mississippi vs. (2) Houston --> Houston
+(1) Duke vs. (8) Mississippi St. --> Duke
+(5) Oregon vs. (4) Arizona --> Oregon
+(6) BYU vs. (3) Wisconsin --> Wisconsin
+(7) Saint Mary's vs. (2) Alabama --> Alabama
 
 SWEET 16:
-(1) Marquette vs. (4) Purdue --> Marquette
-(3) Gonzaga vs. (2) Houston --> Houston
+(1) Duke vs. (5) Oregon --> Duke
+(3) Wisconsin vs. (2) Alabama --> Alabama
 
 ELITE 8:
-(1) Marquette vs. (2) Houston --> Marquette
+(1) Duke vs. (2) Alabama --> Duke
 
-REGION WINNER: Marquette
+REGION WINNER: Duke
 ========================================
 
 WEST REGION
 ----------------------------------------
 
 FIRST ROUND:
-(1) Tennessee vs. (16) Drake --> Tennessee
-(8) Baylor vs. (9) Indiana --> Baylor
-(5) Maryland vs. (12) San Francisco --> San Francisco
-(4) Iowa St. vs. (13) Missouri --> Missouri
-(6) Ohio St. vs. (11) San Diego St. --> Ohio St.
-(3) Auburn vs. (14) Vanderbilt --> Auburn
-(7) Saint Mary's vs. (10) UCF --> UCF
-(2) Connecticut vs. (15) Iowa --> Connecticut
+(1) Florida vs. (16) Norfolk St. --> Florida
+(8) UConn vs. (9) Oklahoma --> UConn
+(5) Memphis vs. (12) Colorado St. --> Memphis
+(4) Maryland vs. (13) Grand Canyon --> Maryland
+(6) Missouri vs. (11) Drake --> Missouri
+(3) Texas Tech vs. (14) UNC Wilmington --> Texas Tech
+(7) Kansas vs. (10) Arkansas --> Kansas
+(2) St. John's vs. (15) Omaha --> St. John's
 
 SECOND ROUND:
-(1) Tennessee vs. (8) Baylor --> Tennessee
-(12) San Francisco vs. (13) Missouri --> San Francisco
-(6) Ohio St. vs. (3) Auburn --> Auburn
-(10) UCF vs. (2) Connecticut --> Connecticut
+(1) Florida vs. (8) UConn --> Florida
+(5) Memphis vs. (4) Maryland --> Memphis
+(6) Missouri vs. (3) Texas Tech --> Texas Tech
+(7) Kansas vs. (2) St. John's --> St. John's
 
 SWEET 16:
-(1) Tennessee vs. (12) San Francisco --> Tennessee
-(3) Auburn vs. (2) Connecticut --> Connecticut
+(1) Florida vs. (5) Memphis --> Florida
+(3) Texas Tech vs. (2) St. John's --> Texas Tech
 
 ELITE 8:
-(1) Tennessee vs. (2) Connecticut --> Tennessee
+(1) Florida vs. (3) Texas Tech --> Florida
 
-REGION WINNER: Tennessee
+REGION WINNER: Florida
 ========================================
 
 SOUTH REGION
 ----------------------------------------
 
 FIRST ROUND:
-(1) Duke vs. (16) New Mexico --> Duke
-(8) Illinois vs. (9) Cincinnati --> Illinois
-(5) Kentucky vs. (12) Kansas St. --> Kentucky
-(4) Texas Tech vs. (13) Northwestern --> Texas Tech
-(6) Kansas vs. (11) Arkansas --> Kansas
-(3) Oklahoma vs. (14) Grand Canyon --> Oklahoma
-(7) Michigan vs. (10) UCLA --> Michigan
-(2) Florida vs. (15) Utah St. --> Florida
+(1) Auburn vs. (16) Alabama St. --> Auburn
+(8) Louisville vs. (9) Creighton --> Louisville
+(5) Michigan vs. (12) UC San Diego --> Michigan
+(4) Texas A&M vs. (13) Yale --> Texas A&M
+(6) Ole Miss vs. (11) San Diego St. --> Ole Miss
+(3) Iowa St. vs. (14) Lipscomb --> Iowa St.
+(7) Marquette vs. (10) New Mexico --> Marquette
+(2) Michigan St. vs. (15) Bryant --> Michigan St.
 
 SECOND ROUND:
-(1) Duke vs. (8) Illinois --> Duke
-(5) Kentucky vs. (4) Texas Tech --> Texas Tech
-(6) Kansas vs. (3) Oklahoma --> Oklahoma
-(7) Michigan vs. (2) Florida --> Florida
+(1) Auburn vs. (8) Louisville --> Auburn
+(5) Michigan vs. (4) Texas A&M --> Michigan
+(6) Ole Miss vs. (3) Iowa St. --> Iowa St.
+(7) Marquette vs. (2) Michigan St. --> Michigan St.
 
 SWEET 16:
-(1) Duke vs. (4) Texas Tech --> Duke
-(3) Oklahoma vs. (2) Florida --> Florida
+(1) Auburn vs. (5) Michigan --> Auburn
+(3) Iowa St. vs. (2) Michigan St. --> Michigan St.
 
 ELITE 8:
-(1) Duke vs. (2) Florida --> Duke
+(1) Auburn vs. (2) Michigan St. --> Auburn
 
-REGION WINNER: Duke
+REGION WINNER: Auburn
 ========================================
 
 MIDWEST REGION
 ----------------------------------------
 
 FIRST ROUND:
-(1) Michigan St. vs. (16) UC Irvine --> Michigan St.
-(8) Arizona vs. (9) Clemson --> Clemson
-(5) Memphis vs. (12) USC --> Memphis
-(4) Wisconsin vs. (13) Villanova --> Wisconsin
-(6) Texas vs. (11) Penn St. --> Texas
-(3) St. John's vs. (14) Georgia --> St. John's
-(7) BYU vs. (10) Colorado St. --> BYU
-(2) Alabama vs. (15) Xavier --> Alabama
+(1) Houston vs. (16) SIU Edwardsville --> Houston
+(8) Gonzaga vs. (9) Georgia --> Gonzaga
+(5) Clemson vs. (12) McNeese --> Clemson
+(4) Purdue vs. (13) High Point --> Purdue
+(6) Illinois vs. (11) Texas --> Illinois
+(3) Kentucky vs. (14) Troy --> Kentucky
+(7) UCLA vs. (10) Utah St. --> UCLA
+(2) Tennessee vs. (15) Wofford --> Tennessee
 
 SECOND ROUND:
-(1) Michigan St. vs. (9) Clemson --> Michigan St.
-(5) Memphis vs. (4) Wisconsin --> Wisconsin
-(6) Texas vs. (3) St. John's --> St. John's
-(7) BYU vs. (2) Alabama --> Alabama
+(1) Houston vs. (8) Gonzaga --> Houston
+(5) Clemson vs. (4) Purdue --> Purdue
+(6) Illinois vs. (3) Kentucky --> Kentucky
+(7) UCLA vs. (2) Tennessee --> Tennessee
 
 SWEET 16:
-(1) Michigan St. vs. (4) Wisconsin --> Michigan St.
-(3) St. John's vs. (2) Alabama --> Alabama
+(1) Houston vs. (4) Purdue --> Houston
+(3) Kentucky vs. (2) Tennessee --> Tennessee
 
 ELITE 8:
-(1) Michigan St. vs. (2) Alabama --> Michigan St.
+(1) Houston vs. (2) Tennessee --> Houston
 
-REGION WINNER: Michigan St.
+REGION WINNER: Houston
 ========================================
 
 FINAL FOUR
 ----------------------------------------
 
-SEMIFINAL 1: (1) Marquette vs. (1) Tennessee --> Marquette
+SEMIFINAL 1: (1) Duke vs. (1) Houston --> Houston
 
-SEMIFINAL 2: (1) Duke vs. (1) Michigan St. --> Duke
+SEMIFINAL 2: (1) Florida vs. (1) Auburn --> Florida
 
-CHAMPIONSHIP: (1) Marquette vs. (1) Duke --> Marquette
+CHAMPIONSHIP: (1) Houston vs. (1) Florida --> Houston
 
 ========================================
 
-NCAA TOURNAMENT CHAMPION: Marquette
+NCAA TOURNAMENT CHAMPION: Houston

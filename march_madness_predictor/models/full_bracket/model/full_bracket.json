@@ -2,12 +2,12 @@
   "East": {
     "1": [
       {
-        "name": "Marquette",
+        "name": "Duke",
         "seed": 1,
-        "similarity": 70.72550363282059,
-        "championship_pct": 10.0,
-        "combined_score": 34.29020145312823,
-        "predicted_exit_round": 3.0
+        "similarity": 79.81500494114705,
+        "championship_pct": 15.0,
+        "combined_score": 31.92600197645882,
+        "predicted_exit_round": 6.0
       }
     ],
     "2": [
@@ -152,7 +152,7 @@
     ],
     "16": [
       {
-        "name": "West Virginia",
+        "name": "Mount St. Mary's",
         "seed": 16,
         "similarity": 0.0,
         "championship_pct": 0.1,
@@ -330,12 +330,12 @@
     ],
     "9": [
       {
-        "name": "Indiana",
+        "name": "Oklahoma",
         "seed": 9,
         "similarity": 0.0,
-        "championship_pct": 0.1,
-        "combined_score": 0.06,
-        "predicted_exit_round": 2.0
+        "championship_pct": 1.0,
+        "combined_score": 0.6,
+        "predicted_exit_round": 1.0
       }
     ],
     "10": [
@@ -417,7 +417,7 @@
         },
         {
           "team1": "Baylor",
-          "team2": "Indiana",
+          "team2": "Oklahoma",
           "winner": "Baylor"
         },
         {
@@ -428,7 +428,7 @@
         {
           "team1": "Iowa St.",
           "team2": "Missouri",
-          "winner": "Missouri"
+          "winner": "Iowa St."
         },
         {
           "team1": "Ohio St.",
@@ -482,7 +482,7 @@
         {
           "team1": "Auburn",
           "team2": "Connecticut",
-          "winner": "Connecticut"
+          "winner": "Auburn"
         }
       ],
       "elite_8": [
@@ -498,12 +498,12 @@
   "South": {
     "1": [
       {
-        "name": "Duke",
+        "name": "Auburn",
         "seed": 1,
-        "similarity": 26.807065156482764,
-        "championship_pct": 20.0,
-        "combined_score": 22.722826062593107,
-        "predicted_exit_round": 5.0
+        "similarity": 63.6004792874961,
+        "championship_pct": 10.0,
+        "combined_score": 25.44019171499844,
+        "predicted_exit_round": 7.0
       }
     ],
     "2": [
@@ -538,77 +538,77 @@
     ],
     "5": [
       {
-        "name": "Kentucky",
+        "name": "Michigan",
         "seed": 5,
         "similarity": 0.0,
-        "championship_pct": 1.0,
-        "combined_score": 0.6,
-        "predicted_exit_round": 2.0
+        "championship_pct": 3.0,
+        "combined_score": 1.8,
+        "predicted_exit_round": 3.0
       }
     ],
     "6": [
       {
-        "name": "Kansas",
+        "name": "Ole Miss",
         "seed": 6,
         "similarity": 0.0,
-        "championship_pct": 1.0,
-        "combined_score": 0.6,
+        "championship_pct": 2.0,
+        "combined_score": 1.2,
         "predicted_exit_round": 2.0
       }
     ],
     "7": [
       {
-        "name": "Michigan",
+        "name": "Marquette",
         "seed": 7,
         "similarity": 0.0,
-        "championship_pct": 1.0,
-        "combined_score": 0.6,
-        "predicted_exit_round": 1.0
+        "championship_pct": 3.0,
+        "combined_score": 1.8,
+        "predicted_exit_round": 2.0
       }
     ],
     "8": [
       {
-        "name": "Illinois",
+        "name": "Louisville",
         "seed": 8,
         "similarity": 0.0,
-        "championship_pct": 1.0,
-        "combined_score": 0.6,
-        "predicted_exit_round": 1.0
+        "championship_pct": 2.5,
+        "combined_score": 1.5,
+        "predicted_exit_round": 2.0
       }
     ],
     "9": [
       {
-        "name": "Cincinnati",
+        "name": "Creighton",
         "seed": 9,
         "similarity": 0.0,
-        "championship_pct": 0.1,
-        "combined_score": 0.06,
-        "predicted_exit_round": 1.0
+        "championship_pct": 1.5,
+        "combined_score": 0.9,
+        "predicted_exit_round": 2.0
       }
     ],
     "10": [
       {
-        "name": "UCLA",
+        "name": "New Mexico",
         "seed": 10,
         "similarity": 0.0,
-        "championship_pct": 0.1,
-        "combined_score": 0.06,
+        "championship_pct": 1.0,
+        "combined_score": 0.6,
         "predicted_exit_round": 1.0
       }
     ],
     "11": [
       {
-        "name": "Arkansas",
+        "name": "San Diego St.",
         "seed": 11,
         "similarity": 0.0,
-        "championship_pct": 0.1,
-        "combined_score": 0.06,
+        "championship_pct": 1.0,
+        "combined_score": 0.6,
         "predicted_exit_round": 2.0
       }
     ],
     "12": [
       {
-        "name": "Kansas St.",
+        "name": "UC San Diego",
         "seed": 12,
         "similarity": 0.0,
         "championship_pct": 0.1,
@@ -618,17 +618,17 @@
     ],
     "13": [
       {
-        "name": "Northwestern",
+        "name": "Yale",
         "seed": 13,
         "similarity": 0.0,
         "championship_pct": 0.1,
         "combined_score": 0.06,
-        "predicted_exit_round": 3.0
+        "predicted_exit_round": 1.0
       }
     ],
     "14": [
       {
-        "name": "Grand Canyon",
+        "name": "Lipscomb",
         "seed": 14,
         "similarity": 0.0,
         "championship_pct": 0.1,
@@ -638,7 +638,7 @@
     ],
     "15": [
       {
-        "name": "Utah St.",
+        "name": "Bryant",
         "seed": 15,
         "similarity": 0.0,
         "championship_pct": 0.1,
@@ -648,7 +648,7 @@
     ],
     "16": [
       {
-        "name": "New Mexico",
+        "name": "Alabama St.",
         "seed": 16,
         "similarity": 0.0,
         "championship_pct": 0.1,
@@ -664,79 +664,79 @@
           "winner": "Duke"
         },
         {
-          "team1": "Illinois",
-          "team2": "Cincinnati",
-          "winner": "Illinois"
-        },
-        {
-          "team1": "Kentucky",
-          "team2": "Kansas St.",
-          "winner": "Kentucky"
-        },
-        {
-          "team1": "Texas Tech",
-          "team2": "Northwestern",
-          "winner": "Texas Tech"
-        },
-        {
-          "team1": "Kansas",
-          "team2": "Arkansas",
-          "winner": "Kansas"
-        },
-        {
-          "team1": "Oklahoma",
-          "team2": "Grand Canyon",
-          "winner": "Oklahoma"
+          "team1": "Louisville",
+          "team2": "Creighton",
+          "winner": "Louisville"
         },
         {
           "team1": "Michigan",
-          "team2": "UCLA",
+          "team2": "San Diego St.",
           "winner": "Michigan"
         },
         {
-          "team1": "Florida",
-          "team2": "Utah St.",
-          "winner": "Florida"
+          "team1": "Texas Tech",
+          "team2": "Lipscomb",
+          "winner": "Texas Tech"
+        },
+        {
+          "team1": "Ole Miss",
+          "team2": "Bryant",
+          "winner": "Ole Miss"
+        },
+        {
+          "team1": "Oklahoma",
+          "team2": "Alabama St.",
+          "winner": "Oklahoma"
+        },
+        {
+          "team1": "Marquette",
+          "team2": "UC San Diego",
+          "winner": "Marquette"
+        },
+        {
+          "team1": "Yale",
+          "team2": "Florida",
+          "winner": "Yale"
         }
       ],
       "round_32": [
         {
           "team1": "Duke",
-          "team2": "Illinois",
+          "team2": "Louisville",
           "winner": "Duke"
         },
         {
-          "team1": "Kentucky",
-          "team2": "Texas Tech",
-          "winner": "Texas Tech"
-        },
-        {
-          "team1": "Kansas",
-          "team2": "Oklahoma",
-          "winner": "Oklahoma"
-        },
-        {
           "team1": "Michigan",
+          "team2": "Texas Tech",
+          "winner": "Michigan"
+        },
+        {
+          "team1": "Ole Miss",
+          "team2": "Oklahoma",
+          "winner": "Ole Miss"
+        },
+        {
+          "team1": "Yale",
           "team2": "Florida",
-          "winner": "Florida"
+          "winner": "Yale"
         }
       ],
       "sweet_16": [
         {
           "team1": "Duke",
-          "team2": "Texas Tech",
+          "team2": "Michigan",
           "winner": "Duke"
         },
         {
-          "team1": "Oklahoma",
-          "team2": "Florida",
-          "winner": "Florida"
+          "team1": "Ole Miss",
+          "team2": "Yale",
+          "winner": "Ole Miss"
         }
       ],
       "elite_8": [
         {
           "team1": "Duke",
-          "team2": "Florida",
+          "team2": "Ole Miss",
           "winner": "Duke"
         }
       ],
@@ -746,12 +746,12 @@
   "Midwest": {
     "1": [
       {
-        "name": "Michigan St.",
+        "name": "Houston",
         "seed": 1,
-        "similarity": 8.316241072111353,
+        "similarity": 75.72749723500004,
         "championship_pct": 20.0,
-        "combined_score": 15.32649642884454,
-        "predicted_exit_round": 5.0
+        "combined_score": 38.29099889400002,
+        "predicted_exit_round": 7.0
       }
     ],
     "2": [
@@ -786,51 +786,51 @@
     ],
     "5": [
       {
-        "name": "Memphis",
+        "name": "Clemson",
         "seed": 5,
         "similarity": 0.0,
-        "championship_pct": 1.0,
-        "combined_score": 0.6,
+        "championship_pct": 2.0,
+        "combined_score": 1.2,
         "predicted_exit_round": 2.0
       }
     ],
     "6": [
       {
-        "name": "Texas",
+        "name": "Illinois",
         "seed": 6,
         "similarity": 0.0,
-        "championship_pct": 1.0,
-        "combined_score": 0.6,
-        "predicted_exit_round": 1.0
+        "championship_pct": 2.0,
+        "combined_score": 1.2,
+        "predicted_exit_round": 2.0
       }
     ],
     "7": [
       {
-        "name": "BYU",
+        "name": "UCLA",
         "seed": 7,
         "similarity": 0.0,
-        "championship_pct": 1.0,
-        "combined_score": 0.6,
-        "predicted_exit_round": 1.0
+        "championship_pct": 3.0,
+        "combined_score": 1.8,
+        "predicted_exit_round": 2.0
       }
     ],
     "8": [
       {
-        "name": "Arizona",
+        "name": "Gonzaga",
         "seed": 8,
-        "similarity": 0.0,
-        "championship_pct": 1.0,
-        "combined_score": 0.6,
+        "similarity": 72.92002100647048,
+        "championship_pct": 5.0,
+        "combined_score": 22.16800840258819,
         "predicted_exit_round": 3.0
       }
     ],
     "9": [
       {
-        "name": "Clemson",
+        "name": "Georgia",
         "seed": 9,
         "similarity": 0.0,
-        "championship_pct": 0.1,
-        "combined_score": 0.06,
+        "championship_pct": 1.0,
+        "combined_score": 0.6,
         "predicted_exit_round": 1.0
       }
     ],
@@ -846,27 +846,27 @@
     ],
     "11": [
       {
-        "name": "Penn St.",
+        "name": "Texas",
         "seed": 11,
         "similarity": 0.0,
-        "championship_pct": 0.1,
-        "combined_score": 0.06,
-        "predicted_exit_round": 2.0
+        "championship_pct": 1.0,
+        "combined_score": 0.6,
+        "predicted_exit_round": 1.0
       }
     ],
     "12": [
       {
-        "name": "USC",
+        "name": "McNeese",
         "seed": 12,
         "similarity": 0.0,
-        "championship_pct": 0.1,
-        "combined_score": 0.06,
+        "championship_pct": 0.5,
+        "combined_score": 0.3,
         "predicted_exit_round": 1.0
       }
     ],
     "13": [
       {
-        "name": "Villanova",
+        "name": "High Point",
         "seed": 13,
         "similarity": 0.0,
         "championship_pct": 0.1,
@@ -876,7 +876,7 @@
     ],
     "14": [
       {
-        "name": "Georgia",
+        "name": "Troy",
         "seed": 14,
         "similarity": 0.0,
         "championship_pct": 0.1,
@@ -886,7 +886,7 @@
     ],
     "15": [
       {
-        "name": "Xavier",
+        "name": "Wofford",
         "seed": 15,
         "similarity": 0.0,
         "championship_pct": 0.1,
@@ -896,7 +896,7 @@
     ],
     "16": [
       {
-        "name": "UC Irvine",
+        "name": "SIU Edwardsville",
         "seed": 16,
         "similarity": 0.0,
         "championship_pct": 0.1,
@@ -907,107 +907,179 @@
     "matchups": {
       "round_64": [
         {
-          "team1": "Michigan St.",
-          "team2": "UC Irvine",
-          "winner": "Michigan St."
+          "team1": "Houston",
+          "team2": "SIU Edwardsville",
+          "winner": "Houston"
         },
         {
-          "team1": "Arizona",
-          "team2": "Clemson",
+          "team1": "Gonzaga",
+          "team2": "Georgia",
+          "winner": "Gonzaga"
+        },
+        {
+          "team1": "Clemson",
+          "team2": "High Point",
           "winner": "Clemson"
         },
         {
-          "team1": "Memphis",
-          "team2": "USC",
-          "winner": "Memphis"
-        },
-        {
           "team1": "Wisconsin",
-          "team2": "Villanova",
+          "team2": "Troy",
           "winner": "Wisconsin"
         },
         {
           "team1": "Texas",
-          "team2": "Penn St.",
+          "team2": "McNeese",
           "winner": "Texas"
         },
         {
           "team1": "St. John's",
-          "team2": "Georgia",
+          "team2": "Illinois",
           "winner": "St. John's"
         },
         {
-          "team1": "BYU",
+          "team1": "UCLA",
           "team2": "Colorado St.",
-          "winner": "BYU"
+          "winner": "UCLA"
         },
         {
           "team1": "Alabama",
-          "team2": "Xavier",
+          "team2": "Wofford",
           "winner": "Alabama"
         }
       ],
       "round_32": [
         {
-          "team1": "Michigan St.",
-          "team2": "Clemson",
-          "winner": "Michigan St."
+          "team1": "Houston",
+          "team2": "Gonzaga",
+          "winner": "Houston"
         },
         {
-          "team1": "Memphis",
+          "team1": "Clemson",
           "team2": "Wisconsin",
-          "winner": "Wisconsin"
+          "winner": "Clemson"
         },
         {
           "team1": "Texas",
           "team2": "St. John's",
-          "winner": "St. John's"
+          "winner": "Texas"
         },
         {
-          "team1": "BYU",
-          "team2": "Alabama",
+          "team1": "Alabama",
+          "team2": "UCLA",
           "winner": "Alabama"
         }
       ],
       "sweet_16": [
         {
-          "team1": "Michigan St.",
-          "team2": "Wisconsin",
-          "winner": "Michigan St."
+          "team1": "Houston",
+          "team2": "Clemson",
+          "winner": "Houston"
         },
         {
-          "team1": "St. John's",
+          "team1": "Texas",
           "team2": "Alabama",
-          "winner": "Alabama"
+          "winner": "Texas"
         }
       ],
       "elite_8": [
         {
-          "team1": "Michigan St.",
-          "team2": "Alabama",
-          "winner": "Michigan St."
+          "team1": "Houston",
+          "team2": "Texas",
+          "winner": "Houston"
         }
       ],
-      "region_winner": "Michigan St."
+      "region_winner": "Houston"
     }
   },
-  "final_four": {
-    "matchups": [
+  "matchups": {
+    "final_four": [
       {
-        "team1": "Marquette",
-        "team2": "Tennessee",
-        "winner": "Marquette"
+        "team1": {
+          "name": "Houston",
+          "seed": 1,
+          "region": "Midwest",
+          "similarity": 75.72749723500004,
+          "championship_pct": 20.0,
+          "combined_score": 38.29099889400002,
+          "predicted_exit_round": 7.0
+        },
+        "team2": {
+          "name": "Duke",
+          "seed": 1,
+          "region": "East",
+          "similarity": 79.81500494114705,
+          "championship_pct": 15.0,
+          "combined_score": 31.92600197645882,
+          "predicted_exit_round": 6.0
+        },
+        "winner": {
+          "name": "Houston",
+          "seed": 1,
+          "region": "Midwest",
+          "similarity": 75.72749723500004,
+          "championship_pct": 20.0,
+          "combined_score": 38.29099889400002,
+          "predicted_exit_round": 7.0
+        }
       },
       {
-        "team1": "Duke",
-        "team2": "Michigan St.",
-        "winner": "Duke"
+        "team1": {
+          "name": "Florida",
+          "seed": 1,
+          "region": "West",
+          "similarity": 83.80507926015072,
+          "championship_pct": 15.0,
+          "combined_score": 33.5220317040603,
+          "predicted_exit_round": 6.0
+        },
+        "team2": {
+          "name": "Ole Miss",
+          "seed": 1,
+          "region": "South",
+          "similarity": 63.6004792874961,
+          "championship_pct": 10.0,
+          "combined_score": 25.44019171499844,
+          "predicted_exit_round": 7.0
+        },
+        "winner": {
+          "name": "Florida",
+          "seed": 1,
+          "region": "West",
+          "similarity": 83.80507926015072,
+          "championship_pct": 15.0,
+          "combined_score": 33.5220317040603,
+          "predicted_exit_round": 6.0
+        }
       }
     ],
     "championship": {
-      "team1": "{'name': 'Marquette', 'seed': 1, 'similarity': 70.72550363282059, 'championship_pct': 10.0, 'combined_score': 34.29020145312823, 'predicted_exit_round': 3.0}",
-      "team2": "{'name': 'Duke', 'seed': 1, 'similarity': 26.807065156482764, 'championship_pct': 20.0, 'combined_score': 22.722826062593107, 'predicted_exit_round': 5.0}",
-      "winner": "{'name': 'Marquette', 'seed': 1, 'similarity': 70.72550363282059, 'championship_pct': 10.0, 'combined_score': 34.29020145312823, 'predicted_exit_round': 3.0}"
+      "team1": {
+        "name": "Houston",
+        "seed": 1,
+        "region": "Midwest",
+        "similarity": 75.72749723500004,
+        "championship_pct": 20.0,
+        "combined_score": 38.29099889400002,
+        "predicted_exit_round": 7.0
+      },
+      "team2": {
+        "name": "Florida",
+        "seed": 1,
+        "region": "West",
+        "similarity": 83.80507926015072,
+        "championship_pct": 15.0,
+        "combined_score": 33.5220317040603,
+        "predicted_exit_round": 6.0
+      },
+      "winner": {
+        "name": "Houston",
+        "seed": 1,
+        "region": "Midwest",
+        "similarity": 75.72749723500004,
+        "championship_pct": 20.0,
+        "combined_score": 38.29099889400002,
+        "predicted_exit_round": 7.0
+      }
     }
   }
 }
