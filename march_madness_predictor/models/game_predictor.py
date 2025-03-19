@@ -44,6 +44,14 @@ class GamePredictor:
     # A value of 1.0 means penalties are equally as strong as bonuses
     TOURNAMENT_PENALTY_FACTOR = 1.5
     
+    # Thresholds for identifying potential "under" games
+    UNDER_STRONG_DEFENSE_PERCENTILE = 75  # Teams above the 75th percentile in defense are "strong defensive teams"
+    UNDER_SLOW_TEMPO_PERCENTILE = 25      # Teams below the 25th percentile in tempo are "slow-paced teams"
+    UNDER_PROBABILITY_THRESHOLD = 0.65    # 65% confidence to recommend an under
+    
+    # Offensive vs defensive weighting ratio - now balanced 1:1 (was 2:1)
+    OFF_DEF_WEIGHT_RATIO = 1.0
+    
     def __init__(self, data_loader=None):
         """
         Initialize the game predictor with data from the data loader
@@ -87,6 +95,10 @@ class GamePredictor:
             'Size', 'Hgt5', 'HgtEff', 'Exp', 'Bench', 'Continuity'
         ]
         
+        # Cache for percentile calculations
+        self.defensive_percentiles = None
+        self.tempo_percentiles = None
+        
         # Define alternate column names that might be in the data
         self.column_mapping = {
             'EFG_Pct': ['EFG_Pct', 'eFG%', 'EFG%', 'Effective FG%', 'eFGPct'],
@@ -122,6 +134,7 @@ class GamePredictor:
         self.active_metrics = self._get_active_metrics()
         self._load_tournament_prediction_data()
         self._initialize_bart_historical_model()  # Initialize historical model
+        self._calculate_percentiles()  # Calculate percentiles for defense and tempo
     
     def _initialize_bart_historical_model(self):
         """Initialize the BART historical model for enhanced predictions"""
@@ -678,6 +691,139 @@ class GamePredictor:
         # Cap the adjustment at +/- 3 points
         return max(-3.0, min(3.0, adjustment))
     
+    def _calculate_percentiles(self):
+        """
+        Calculate percentiles for defensive efficiency and tempo
+        """
+        if self.current_data is None:
+            return
+        
+        # Calculate defensive percentiles (lower AdjDE is better defense)
+        # We invert the values so that higher percentile = better defense
+        if 'AdjDE' in self.current_data.columns:
+            self.defensive_percentiles = {}
+            # Invert values so higher percentile = better defense
+            inverted_defense = self.current_data['AdjDE'].max() - self.current_data['AdjDE']
+            for i, row in self.current_data.iterrows():
+                team_name = row['TeamName']
+                inverted_value = inverted_defense.iloc[i]
+                percentile = (inverted_value >= inverted_defense).mean() * 100
+                self.defensive_percentiles[team_name] = percentile
+        
+        # Calculate tempo percentiles (lower = slower)
+        if 'AdjTempo' in self.current_data.columns:
+            self.tempo_percentiles = {}
+            for i, row in self.current_data.iterrows():
+                team_name = row['TeamName']
+                tempo_value = row['AdjTempo']
+                percentile = (tempo_value >= self.current_data['AdjTempo']).mean() * 100
+                self.tempo_percentiles[team_name] = percentile
+    
+    def _calculate_tempo_control_factor(self, team1, team2):
+        """
+        Calculate which team is likely to control the tempo and how much
+        
+        Parameters:
+        -----------
+        team1 : pd.Series
+            Statistics for team 1
+        team2 : pd.Series
+            Statistics for team 2
+            
+        Returns:
+        --------
+        tuple
+            (team that controls tempo, control factor 0-1)
+        """
+        team1_tempo = self._safe_get(team1, 'AdjTempo')
+        team2_tempo = self._safe_get(team2, 'AdjTempo')
+        
+        # Get the difference in tempo
+        tempo_diff = abs(team1_tempo - team2_tempo)
+        
+        # Calculate control factor (how much one team controls tempo)
+        # Max control is 0.8 (80% control for one team), min is 0.5 (50/50 control)
+        control_factor = min(0.8, 0.5 + (tempo_diff / 20) * 0.3)
+        
+        # Determine which team will control tempo more
+        # Teams with extreme tempos tend to control games more
+        team1_name = team1['TeamName'] if 'TeamName' in team1.index else 'Team 1'
+        team2_name = team2['TeamName'] if 'TeamName' in team2.index else 'Team 2'
+        
+        # Check if either team has an extreme tempo (very fast or very slow)
+        team1_is_extreme = False
+        team2_is_extreme = False
+        
+        if self.tempo_percentiles:
+            team1_tempo_pct = self.tempo_percentiles.get(team1_name, 50)
+            team2_tempo_pct = self.tempo_percentiles.get(team2_name, 50)
+            
+            # Teams below 20th percentile (very slow) or above 80th percentile (very fast)
+            # tend to control tempo more
+            team1_is_extreme = team1_tempo_pct <= 20 or team1_tempo_pct >= 80
+            team2_is_extreme = team2_tempo_pct <= 20 or team2_tempo_pct >= 80
+        
+        # If one team has extreme tempo and the other doesn't, they control the tempo
+        if team1_is_extreme and not team2_is_extreme:
+            return (team1_name, control_factor)
+        elif team2_is_extreme and not team1_is_extreme:
+            return (team2_name, control_factor)
+        
+        # If both or neither have extreme tempos, the team with better tempo consistency controls more
+        # For now, use a basic approach (could be enhanced with BART historical data)
+        if team1_tempo > team2_tempo:
+            return (team1_name, control_factor)
+        else:
+            return (team2_name, control_factor)
+    
+    def _calculate_defensive_matchup_strength(self, team1, team2):
+        """
+        Calculate the strength of the defensive matchup between teams
+        
+        Parameters:
+        -----------
+        team1 : pd.Series
+            Statistics for team 1
+        team2 : pd.Series
+            Statistics for team 2
+            
+        Returns:
+        --------
+        float
+            Defensive matchup score (higher means stronger defensive matchup)
+        """
+        team1_offense = self._safe_get(team1, 'AdjOE')
+        team1_defense = self._safe_get(team1, 'AdjDE')
+        team2_offense = self._safe_get(team2, 'AdjOE')
+        team2_defense = self._safe_get(team2, 'AdjDE')
+        
+        # Get team names
+        team1_name = team1['TeamName'] if 'TeamName' in team1.index else 'Team 1'
+        team2_name = team2['TeamName'] if 'TeamName' in team2.index else 'Team 2'
+        
+        # Basic defensive strength (lower AdjDE is better defense)
+        defensive_strength = (200 - team1_defense - team2_defense) / 2
+        
+        # Both teams having good defense increases the defensive matchup strength
+        both_good_defense = 0
+        if self.defensive_percentiles:
+            team1_def_pct = self.defensive_percentiles.get(team1_name, 50)
+            team2_def_pct = self.defensive_percentiles.get(team2_name, 50)
+            
+            # Bonus if both teams have strong defense (above 70th percentile)
+            if team1_def_pct > 70 and team2_def_pct > 70:
+                both_good_defense = (team1_def_pct + team2_def_pct) / 20
+        
+        # Offensive vs. defensive strength mismatch
+        # If teams have much better defense than offense, it's a stronger defensive matchup
+        offense_defense_mismatch = ((team1_defense / team1_offense) + (team2_defense / team2_offense)) / 2
+        offense_defense_mismatch = max(0, 2 - offense_defense_mismatch) * 5
+        
+        # Combine factors with weights
+        matchup_score = defensive_strength * 0.5 + both_good_defense * 0.3 + offense_defense_mismatch * 0.2
+        
+        return matchup_score
+    
     def predict_game(self, team1_name, team2_name, location='neutral'):
         """
         Predict the outcome of a game between two teams using KenPom metrics
@@ -739,20 +885,39 @@ class GamePredictor:
         team1_tempo = self._safe_get(team1, 'AdjTempo')
         team2_tempo = self._safe_get(team2, 'AdjTempo')
         
-        # Average of the two tempos (teams play at a pace somewhere in the middle)
-        avg_tempo = (team1_tempo + team2_tempo) / 2
+        # Calculate tempo control (which team controls pace and by how much)
+        controlling_team, control_factor = self._calculate_tempo_control_factor(team1, team2)
+        
+        # Calculate the expected tempo based on control factor
+        if controlling_team == team1_name:
+            # Team 1 controls more
+            avg_tempo = (team1_tempo * control_factor) + (team2_tempo * (1 - control_factor))
+        else:
+            # Team 2 controls more
+            avg_tempo = (team1_tempo * (1 - control_factor)) + (team2_tempo * control_factor)
         
         # Calculate expected points per possession
         team1_off_ppp = team1_adjoe / 100
         team2_off_ppp = team2_adjoe / 100
         
-        # Adjust for opponent defense
-        team1_expected_ppp = ((team1_off_ppp * 2) + (team2_adjde / 100)) / 3
-        team2_expected_ppp = ((team2_off_ppp * 2) + (team1_adjde / 100)) / 3
+        # Adjusted based on balanced offensive-defensive weighting (now 1:1 instead of 2:1)
+        team1_expected_ppp = ((team1_off_ppp * self.OFF_DEF_WEIGHT_RATIO) + (team2_adjde / 100)) / (self.OFF_DEF_WEIGHT_RATIO + 1)
+        team2_expected_ppp = ((team2_off_ppp * self.OFF_DEF_WEIGHT_RATIO) + (team1_adjde / 100)) / (self.OFF_DEF_WEIGHT_RATIO + 1)
         
         # Calculate expected score
         team1_expected_score = team1_expected_ppp * avg_tempo
         team2_expected_score = team2_expected_ppp * avg_tempo
+        
+        # Calculate defensive matchup strength
+        defensive_matchup_score = self._calculate_defensive_matchup_strength(team1, team2)
+        
+        # Apply defensive matchup adjustment
+        # Strong defensive matchups tend to reduce scoring
+        # Scale: 0-100, with higher values meaning stronger defense
+        if defensive_matchup_score > 50:
+            defensive_adjustment = (defensive_matchup_score - 50) * 0.10
+            team1_expected_score -= defensive_adjustment
+            team2_expected_score -= defensive_adjustment
         
         # Apply home court advantage if applicable
         if location == 'home_1':
@@ -875,6 +1040,11 @@ class GamePredictor:
         # Calculate total
         total = team1_expected_score + team2_expected_score
         
+        # Analyze if this is a potential under game
+        under_analysis = self._analyze_potential_under(team1, team2, team1_name, team2_name, 
+                                                      total, defensive_matchup_score, 
+                                                      control_factor, controlling_team)
+        
         # Calculate win probability using log5 formula
         team1_raw_wp = 1 / (1 + 10 ** (-(team1_adjoe - team1_adjde - (team2_adjoe - team2_adjde)) / 100))
         
@@ -935,10 +1105,126 @@ class GamePredictor:
             "tournament_adjustment_team2": tournament_adjustment_team2,
             "bart_adjustment": bart_adjustment,
             "wab_adjustment": wab_adjustment,
-            "barthag_win_prob": barthag_win_prob
+            "barthag_win_prob": barthag_win_prob,
+            "tempo_control": {
+                "controlling_team": controlling_team,
+                "control_factor": control_factor
+            },
+            "defensive_matchup": {
+                "score": defensive_matchup_score
+            },
+            "total_analysis": under_analysis
         }
         
         return result
+    
+    def _analyze_potential_under(self, team1, team2, team1_name, team2_name, 
+                                predicted_total, defensive_matchup_score, 
+                                control_factor, controlling_team):
+        """
+        Analyze if this is likely to be an "under" game
+        
+        Parameters:
+        -----------
+        team1, team2 : pd.Series
+            Statistics for both teams
+        team1_name, team2_name : str
+            Team names
+        predicted_total : float
+            Predicted total score
+        defensive_matchup_score : float
+            Score for the defensive matchup strength
+        control_factor : float
+            How much the controlling team controls the pace (0.5-0.8)
+        controlling_team : str
+            Name of the team controlling the pace
+            
+        Returns:
+        --------
+        dict
+            Dictionary with under analysis results
+        """
+        # Initialize factors that contribute to under potential
+        factors = []
+        factor_weights = []
+        
+        # Check if either team has strong defense
+        team1_defense_strong = False
+        team2_defense_strong = False
+        
+        if self.defensive_percentiles:
+            team1_def_pct = self.defensive_percentiles.get(team1_name, 50)
+            team2_def_pct = self.defensive_percentiles.get(team2_name, 50)
+            
+            team1_defense_strong = team1_def_pct >= self.UNDER_STRONG_DEFENSE_PERCENTILE
+            team2_defense_strong = team2_def_pct >= self.UNDER_STRONG_DEFENSE_PERCENTILE
+            
+            # Factor 1: Both teams have strong defense
+            if team1_defense_strong and team2_defense_strong:
+                factors.append("Both teams have strong defense")
+                factor_weights.append(0.25)
+            # Factor 2: At least one team has elite defense (top 10%)
+            elif team1_def_pct >= 90 or team2_def_pct >= 90:
+                factors.append("One team has elite defense")
+                factor_weights.append(0.20)
+            # Factor 3: One team has strong defense
+            elif team1_defense_strong or team2_defense_strong:
+                factors.append("One team has strong defense")
+                factor_weights.append(0.10)
+        
+        # Check if the controlling team is slow-paced
+        if self.tempo_percentiles:
+            controlling_team_tempo_pct = self.tempo_percentiles.get(controlling_team, 50)
+            strong_control = control_factor >= 0.65
+            
+            # Factor 4: Controlling team is slow-paced and has strong control
+            if controlling_team_tempo_pct <= self.UNDER_SLOW_TEMPO_PERCENTILE and strong_control:
+                factors.append("Slow-paced team strongly controls tempo")
+                factor_weights.append(0.25)
+            # Factor 5: Controlling team is slow-paced
+            elif controlling_team_tempo_pct <= self.UNDER_SLOW_TEMPO_PERCENTILE:
+                factors.append("Slow-paced team controls tempo")
+                factor_weights.append(0.15)
+            # Factor 6: Controlling team has strong control
+            elif strong_control:
+                factors.append("Strong tempo control")
+                factor_weights.append(0.05)
+        
+        # Factor 7: Strong defensive matchup score
+        if defensive_matchup_score >= 70:
+            factors.append("Exceptionally strong defensive matchup")
+            factor_weights.append(0.25)
+        elif defensive_matchup_score >= 60:
+            factors.append("Strong defensive matchup")
+            factor_weights.append(0.15)
+        
+        # Factor 8: Historical matchup data suggests low scoring
+        if 'historical_data' in locals() and isinstance(historical_data, dict) and historical_data.get('total_matchups', 0) >= 3:
+            avg_total = historical_data.get('avg_total', None)
+            if avg_total and avg_total < predicted_total * 0.9:  # Historical average at least 10% below prediction
+                factors.append("Historical matchups have been low-scoring")
+                factor_weights.append(0.15)
+        
+        # Calculate overall under probability based on weights
+        under_probability = 0
+        if factors:
+            under_probability = sum(factor_weights)
+        
+        # Determine recommendation
+        recommendation = "No clear indication"
+        if under_probability >= self.UNDER_PROBABILITY_THRESHOLD:
+            recommendation = "Strong under opportunity"
+        elif under_probability >= 0.4:
+            recommendation = "Possible under opportunity"
+        
+        # Return analysis
+        return {
+            "predicted_total": predicted_total,
+            "under_probability": under_probability,
+            "recommendation": recommendation,
+            "factors": factors,
+            "factor_weights": factor_weights
+        }
     
     def _adjust_win_probability(self, base_probability, point_adjustment):
         """
@@ -1185,6 +1471,7 @@ class GamePredictor:
         historical_matchups = []
         team1_wins = 0
         team2_wins = 0
+        total_points = []
         
         # Check historical data for each available year
         for year in range(2009, 2025):
@@ -1240,6 +1527,20 @@ class GamePredictor:
                         team2_em = team2_metrics['AdjEM']
                         em_diff = team1_em - team2_em
                         
+                        # Estimate score
+                        if 'AdjOE' in team1_metrics and 'AdjOE' in team2_metrics and 'AdjDE' in team1_metrics and 'AdjDE' in team2_metrics and 'AdjTempo' in team1_metrics and 'AdjTempo' in team2_metrics:
+                            team1_o = team1_metrics['AdjOE']
+                            team1_d = team1_metrics['AdjDE']
+                            team2_o = team2_metrics['AdjOE']
+                            team2_d = team2_metrics['AdjDE']
+                            avg_tempo = (team1_metrics['AdjTempo'] + team2_metrics['AdjTempo']) / 2
+                            
+                            # Estimate points
+                            team1_pts = (team1_o / 100) * avg_tempo
+                            team2_pts = (team2_o / 100) * avg_tempo
+                            game_total = team1_pts + team2_pts
+                            total_points.append(game_total)
+                        
                         if em_diff > 0:
                             team1_wins += 1
                             winner = team1_name
@@ -1260,16 +1561,21 @@ class GamePredictor:
                 
         # Calculate average margin between the teams historically
         avg_margin = 0
+        avg_total = 0
         if historical_matchups:
             margins = [matchup['diff'] for matchup in historical_matchups]
             avg_margin = sum(margins) / len(margins) if margins else 0
+            
+            if total_points:
+                avg_total = sum(total_points) / len(total_points)
             
         return {
             'team1_wins': team1_wins,
             'team2_wins': team2_wins,
             'total_matchups': len(historical_matchups),
             'matchups': historical_matchups,
-            'avg_margin': avg_margin
+            'avg_margin': avg_margin,
+            'avg_total': avg_total
         }
     
     def _calculate_stat_comparisons(self, team1, team2):
