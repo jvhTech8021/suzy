@@ -148,6 +148,21 @@ def layout(data_loader=None):
             vegas_spread = pick['vegas_spread']
             spread_diff = model_spread - vegas_spread
             
+            # Determine confidence level based on the absolute difference
+            if abs(spread_diff) < 0.5:
+                spread_confidence = "Very Low"
+                spread_confidence_color = "secondary"
+            elif abs(spread_diff) < 1.0:
+                spread_confidence = "Low"
+                spread_confidence_color = "warning"
+            elif abs(spread_diff) < 1.5:
+                spread_confidence = "Medium"
+                spread_confidence_color = "primary"
+            else:
+                # Anything above 1.5 points difference is high confidence
+                spread_confidence = "High"
+                spread_confidence_color = "success"
+            
             # Create spread analysis components
             betting_analysis_children.extend([
                 html.Div([
@@ -170,7 +185,8 @@ def layout(data_loader=None):
                 
                 betting_analysis_children.append(html.Div([
                     html.Span("Spread "),
-                    html.Strong(f"Bet: {team_to_bet} {bet_spread}")
+                    html.Strong(f"Bet: {team_to_bet} {bet_spread}"),
+                    dbc.Badge(spread_confidence, color=spread_confidence_color, className="ml-2")
                 ]))
                 
                 # Add buttons for tracking spread bet outcomes
@@ -204,9 +220,28 @@ def layout(data_loader=None):
             # Recommended bet based on total
             if abs(total_diff) > 3:
                 bet_direction = "Over" if total_diff > 0 else "Under"
+                
+                # Determine confidence level for total
+                total_confidence = "Very Low"  # Default for no edge
+                total_confidence_color = "secondary"  # Default for no edge
+                if abs(total_diff) < 2:
+                    total_confidence = "Very Low"
+                    total_confidence_color = "secondary"
+                elif abs(total_diff) < 4:
+                    total_confidence = "Low"
+                    total_confidence_color = "warning"
+                elif abs(total_diff) < 8:
+                    total_confidence = "Medium"
+                    total_confidence_color = "primary"
+                else:
+                    # Anything above 8 points difference is high confidence
+                    total_confidence = "High"
+                    total_confidence_color = "success"
+                
                 betting_analysis_children.append(html.Div([
                     html.Span("Total "),
-                    html.Strong(f"Bet: {bet_direction}")
+                    html.Strong(f"Bet: {bet_direction}"),
+                    dbc.Badge(total_confidence, color=total_confidence_color, className="ml-2")
                 ]))
                 
                 # Add buttons for tracking total bet outcomes
@@ -223,12 +258,143 @@ def layout(data_loader=None):
                 
         # Create a div for betting analysis with buttons
         if betting_analysis_children:
-            betting_div = html.Div([
-                html.Div(betting_analysis_children),
-                spread_buttons,
-                html.Div(className="mt-1") if spread_buttons and total_buttons else None,
-                total_buttons
-            ])
+            # Create a betting recommendation summary card similar to game_predictor.py
+            if 'spread' in pick and 'vegas_spread' in pick and pick['vegas_spread'] is not None:
+                model_spread = round(pick['spread'], 1)
+                vegas_spread = pick['vegas_spread']
+                spread_diff = model_spread - vegas_spread
+                
+                # Determine which team is favored
+                model_favored_team = pick['team1']['name'] if pick['team1']['predicted_score'] > pick['team2']['predicted_score'] else pick['team2']['name']
+                vegas_favored_team = pick['team1']['name'] if vegas_spread > 0 else pick['team2']['name']
+                
+                # Determine team to bet
+                if abs(spread_diff) > 1.5:
+                    if model_favored_team == vegas_favored_team:
+                        # If same team favored, bet on favorite if model spread is higher, underdog if model spread is lower
+                        if spread_diff > 0:
+                            team_to_bet = pick['team1']['name']
+                            bet_spread = f"-{abs(vegas_spread)}"
+                        else:
+                            team_to_bet = pick['team2']['name']
+                            bet_spread = f"+{abs(vegas_spread)}"
+                    else:
+                        # If different teams favored, bet on model's favorite
+                        team_to_bet = model_favored_team
+                        bet_spread = f"+{abs(vegas_spread)}" if team_to_bet == pick['team2']['name'] else f"-{abs(vegas_spread)}"
+                    
+                    bet_text = f"Take {team_to_bet} {bet_spread}"
+                    has_spread_edge = True
+                else:
+                    bet_text = "No Strong Edge"
+                    has_spread_edge = False
+                
+                # Total bet
+                has_total_edge = False
+                total_bet_text = "No Strong Edge"
+                if 'total' in pick and 'vegas_total' in pick and pick['vegas_total'] is not None:
+                    model_total = round(pick['total'], 1)
+                    vegas_total = pick['vegas_total']
+                    total_diff = model_total - vegas_total
+                    
+                    # Set confidence level for total
+                    if abs(total_diff) < 2:
+                        total_confidence = "Very Low"
+                        total_confidence_color = "secondary"
+                    elif abs(total_diff) < 4:
+                        total_confidence = "Low"
+                        total_confidence_color = "warning"
+                    elif abs(total_diff) < 8:
+                        total_confidence = "Medium"
+                        total_confidence_color = "primary"
+                    else:
+                        # Anything above 8 points difference is high confidence
+                        total_confidence = "High"
+                        total_confidence_color = "success"
+                    
+                    if abs(total_diff) > 3:
+                        bet_direction = "Over" if total_diff > 0 else "Under"
+                        total_bet_text = f"Take {bet_direction} {vegas_total}"
+                        has_total_edge = True
+                
+                # Create the betting recommendation card
+                betting_div = dbc.Card([
+                    dbc.CardHeader(html.H5("Betting Recommendation Summary", className="mb-0 text-center")),
+                    dbc.CardBody([
+                        dbc.Row([
+                            dbc.Col([
+                                html.H6("Spread Bet", className="text-center"),
+                                html.Div([
+                                    html.H5([
+                                        # Only show "No Strong Edge" when the difference is small
+                                        not has_spread_edge
+                                        and html.Span("No Strong Edge", className="text-muted")
+                                        # Otherwise show a recommendation
+                                        or dbc.Badge(
+                                            bet_text,
+                                            color=spread_confidence_color,
+                                            className="p-2",
+                                            style={"font-size": "0.9rem"}
+                                        )
+                                    ], className="text-center mt-2"),
+                                    html.Div([
+                                        html.Strong("Confidence: "),
+                                        html.Span(spread_confidence)
+                                    ], className="text-center mt-2 small"),
+                                    html.Div([
+                                        html.Strong("Difference: "),
+                                        html.Span(f"{abs(spread_diff):.1f} points")
+                                    ], className="text-center small")
+                                ])
+                            ], width=6, className="border-right"),
+                            
+                            dbc.Col([
+                                html.H6("Total Bet", className="text-center"),
+                                html.Div([
+                                    html.H5([
+                                        # Only show "No Strong Edge" when no edge
+                                        not has_total_edge
+                                        and html.Span("No Strong Edge", className="text-muted")
+                                        # Otherwise show a recommendation
+                                        or dbc.Badge(
+                                            total_bet_text,
+                                            color=total_confidence_color,
+                                            className="p-2",
+                                            style={"font-size": "0.9rem"}
+                                        )
+                                    ], className="text-center mt-2"),
+                                    html.Div([
+                                        html.Strong("Confidence: "),
+                                        html.Span(total_confidence)
+                                    ], className="text-center mt-2 small"),
+                                    html.Div([
+                                        html.Strong("Difference: "),
+                                        html.Span(f"{abs(total_diff):.1f} points" if 'total_diff' in locals() else "0.0 points")
+                                    ], className="text-center small")
+                                ])
+                            ], width=6)
+                        ]),
+                    ])
+                ], className="mb-2")
+                
+                # Add tracking buttons below the summary card
+                if spread_buttons or total_buttons:
+                    betting_div = html.Div([
+                        betting_div,
+                        html.Div([
+                            spread_buttons,
+                            html.Div(className="mt-1") if spread_buttons and total_buttons else None,
+                            total_buttons
+                        ], className="mt-2")
+                    ])
+            else:
+                # Fallback to original display if no spread/vegas data
+                betting_div = html.Div([
+                    html.Div(betting_analysis_children),
+                    spread_buttons,
+                    html.Div(className="mt-1") if spread_buttons and total_buttons else None,
+                    total_buttons
+                ])
         else:
             betting_div = html.Div("No betting data")
         

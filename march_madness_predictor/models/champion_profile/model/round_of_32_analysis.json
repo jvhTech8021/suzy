@@ -1,876 +1,876 @@
 {
     "RoundName": "Round of 32",
-    "TeamCount": 193,
+    "TeamCount": 417,
     "Profile": {
-        "AdjEM": 23.034115025906733,
-        "RankAdjEM": 17.797927461139896,
-        "AdjOE": 116.4974518134715,
-        "AdjDE": 93.46333005181349,
-        "RankAdjOE": 25.40414507772021,
-        "RankAdjDE": 34.87564766839378
+        "AdjEM": 20.47228776978417,
+        "RankAdjEM": 23.820143884892087,
+        "AdjOE": 114.7561107913669,
+        "AdjDE": 94.28383021582734,
+        "RankAdjOE": 34.541966426858515,
+        "RankAdjDE": 39.326139088729015
     },
     "CurrentTeams": [
         {
-            "TeamName": "Illinois",
-            "Similarity": 96.32651135418004,
+            "TeamName": "Baylor",
+            "Similarity": 97.97526948710193,
             "SimilarTeams": [
-                {
-                    "Season": 2017,
-                    "TeamName": "UCLA",
-                    "Similarity": 98.5216830803647,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2019,
-                    "TeamName": "LSU",
-                    "Similarity": 97.68888278701404,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Syracuse",
-                    "Similarity": 97.17509255786318,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2018,
-                    "TeamName": "Kentucky",
-                    "Similarity": 96.73386241877046,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2021,
-                    "TeamName": "Arkansas",
-                    "Similarity": 93.85173020555538,
-                    "ExitRound": 4
-                }
-            ]
-        },
-        {
-            "TeamName": "Texas A&M",
-            "Similarity": 92.65091199601616,
-            "SimilarTeams": [
-                {
-                    "Season": 2016,
-                    "TeamName": "Texas A&M",
-                    "Similarity": 98.17293128405088,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Villanova",
-                    "Similarity": 97.97101293961741,
-                    "ExitRound": 5
-                },
-                {
-                    "Season": 2013,
-                    "TeamName": "Arizona",
-                    "Similarity": 97.58909631721215,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2012,
-                    "TeamName": "Florida",
-                    "Similarity": 95.41128278463795,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2017,
-                    "TeamName": "Oregon",
-                    "Similarity": 90.81754288913038,
-                    "ExitRound": 5
-                }
-            ]
-        },
-        {
-            "TeamName": "Clemson",
-            "Similarity": 88.81447132793716,
-            "SimilarTeams": [
-                {
-                    "Season": 2017,
-                    "TeamName": "Arizona",
-                    "Similarity": 98.43996235081329,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2014,
-                    "TeamName": "Kentucky",
-                    "Similarity": 97.52154537594089,
-                    "ExitRound": 6
-                },
-                {
-                    "Season": 2021,
-                    "TeamName": "Creighton",
-                    "Similarity": 96.86808523661324,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2018,
-                    "TeamName": "Clemson",
-                    "Similarity": 96.1999087468641,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2012,
-                    "TeamName": "Marquette",
-                    "Similarity": 95.39898691169869,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "Arizona",
-            "Similarity": 83.26398841476008,
-            "SimilarTeams": [
-                {
-                    "Season": 2017,
-                    "TeamName": "Oregon",
-                    "Similarity": 97.32802536305451,
-                    "ExitRound": 5
-                },
-                {
-                    "Season": 2011,
-                    "TeamName": "North Carolina",
-                    "Similarity": 93.14666488713122,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2024,
-                    "TeamName": "Gonzaga",
-                    "Similarity": 90.66536130543447,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2012,
-                    "TeamName": "Florida",
-                    "Similarity": 90.48570218408526,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2017,
-                    "TeamName": "Purdue",
-                    "Similarity": 90.3005751637079,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "Missouri",
-            "Similarity": 79.07211353517096,
-            "SimilarTeams": [
-                {
-                    "Season": 2022,
-                    "TeamName": "Arkansas",
-                    "Similarity": 91.32989893523265,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2017,
-                    "TeamName": "Michigan",
-                    "Similarity": 90.54911355021551,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2017,
-                    "TeamName": "Arizona",
-                    "Similarity": 89.55729760041014,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2014,
-                    "TeamName": "Kentucky",
-                    "Similarity": 89.24778953582474,
-                    "ExitRound": 6
-                },
-                {
-                    "Season": 2011,
-                    "TeamName": "Florida",
-                    "Similarity": 88.76464843886049,
-                    "ExitRound": 4
-                }
-            ]
-        },
-        {
-            "TeamName": "St. John's",
-            "Similarity": 74.35472589047782,
-            "SimilarTeams": [
-                {
-                    "Season": 2019,
-                    "TeamName": "Houston",
-                    "Similarity": 98.28765769945376,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2017,
-                    "TeamName": "Purdue",
-                    "Similarity": 97.81914567873963,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Purdue",
-                    "Similarity": 97.62372741906994,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2011,
-                    "TeamName": "Connecticut",
-                    "Similarity": 97.54032288616574,
-                    "ExitRound": 7
-                },
-                {
-                    "Season": 2024,
-                    "TeamName": "Gonzaga",
-                    "Similarity": 93.90770865634283,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "Kansas",
-            "Similarity": 70.78258648226624,
-            "SimilarTeams": [
-                {
-                    "Season": 2011,
-                    "TeamName": "Florida",
-                    "Similarity": 97.43509760510074,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2017,
-                    "TeamName": "Michigan",
-                    "Similarity": 95.79801812999628,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2016,
-                    "TeamName": "Maryland",
-                    "Similarity": 90.61527074339169,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2010,
-                    "TeamName": "Butler",
-                    "Similarity": 90.34278466433724,
-                    "ExitRound": 6
-                },
-                {
-                    "Season": 2022,
-                    "TeamName": "Arkansas",
-                    "Similarity": 90.30416527852088,
-                    "ExitRound": 4
-                }
-            ]
-        },
-        {
-            "TeamName": "Purdue",
-            "Similarity": 65.00077804384264,
-            "SimilarTeams": [
-                {
-                    "Season": 2016,
-                    "TeamName": "Duke",
-                    "Similarity": 97.99162880474749,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2022,
-                    "TeamName": "Purdue",
-                    "Similarity": 97.85916694113718,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2014,
-                    "TeamName": "Tennessee",
-                    "Similarity": 94.36901232634985,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2021,
-                    "TeamName": "USC",
-                    "Similarity": 92.81673538073392,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2010,
-                    "TeamName": "Purdue",
-                    "Similarity": 91.34581254306102,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "Saint Mary's",
-            "Similarity": 61.67068693636286,
-            "SimilarTeams": [
-                {
-                    "Season": 2016,
-                    "TeamName": "Maryland",
-                    "Similarity": 98.32057719248546,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2010,
-                    "TeamName": "Butler",
-                    "Similarity": 96.57759975937356,
-                    "ExitRound": 6
-                },
-                {
-                    "Season": 2017,
-                    "TeamName": "Wisconsin",
-                    "Similarity": 90.70506847539801,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2010,
-                    "TeamName": "Xavier",
-                    "Similarity": 90.64936070260006,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2011,
-                    "TeamName": "Florida",
-                    "Similarity": 90.60907913785661,
-                    "ExitRound": 4
-                }
-            ]
-        },
-        {
-            "TeamName": "Maryland",
-            "Similarity": 56.2134574879129,
-            "SimilarTeams": [
-                {
-                    "Season": 2017,
-                    "TeamName": "Baylor",
-                    "Similarity": 99.69060522357351,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Kansas",
-                    "Similarity": 98.19659898635939,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2014,
-                    "TeamName": "UCLA",
-                    "Similarity": 97.71246356563223,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2019,
-                    "TeamName": "Auburn",
-                    "Similarity": 97.70736160918474,
-                    "ExitRound": 5
-                },
-                {
-                    "Season": 2016,
-                    "TeamName": "Oregon",
-                    "Similarity": 97.34489271617134,
-                    "ExitRound": 4
-                }
-            ]
-        },
-        {
-            "TeamName": "Louisville",
-            "Similarity": 52.531619807679384,
-            "SimilarTeams": [
-                {
-                    "Season": 2010,
-                    "TeamName": "Xavier",
-                    "Similarity": 97.70866570840482,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2017,
-                    "TeamName": "Wisconsin",
-                    "Similarity": 96.96379736412736,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2015,
-                    "TeamName": "West Virginia",
-                    "Similarity": 96.81260668663562,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2016,
-                    "TeamName": "Maryland",
-                    "Similarity": 90.7615964506588,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2011,
-                    "TeamName": "Arizona",
-                    "Similarity": 90.57270127100239,
-                    "ExitRound": 4
-                }
-            ]
-        },
-        {
-            "TeamName": "Wisconsin",
-            "Similarity": 46.9758344946458,
-            "SimilarTeams": [
-                {
-                    "Season": 2014,
-                    "TeamName": "Michigan",
-                    "Similarity": 98.34197995727433,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2016,
-                    "TeamName": "Indiana",
-                    "Similarity": 98.32379342542752,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2022,
-                    "TeamName": "Duke",
-                    "Similarity": 97.86156856738403,
-                    "ExitRound": 5
-                },
-                {
-                    "Season": 2021,
-                    "TeamName": "Villanova",
-                    "Similarity": 97.3808338939273,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2024,
-                    "TeamName": "Marquette",
-                    "Similarity": 97.22920093570103,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "BYU",
-            "Similarity": 43.26230765081468,
-            "SimilarTeams": [
-                {
-                    "Season": 2018,
-                    "TeamName": "Nevada",
-                    "Similarity": 97.34112131255299,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2011,
-                    "TeamName": "Arizona",
-                    "Similarity": 96.00741726593925,
-                    "ExitRound": 4
-                },
                 {
                     "Season": 2015,
                     "TeamName": "Xavier",
-                    "Similarity": 95.63300628770776,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Xavier",
-                    "Similarity": 93.08565173570206,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2010,
-                    "TeamName": "Xavier",
-                    "Similarity": 89.72865877466045,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "Kentucky",
-            "Similarity": 37.760334041358696,
-            "SimilarTeams": [
-                {
-                    "Season": 2024,
-                    "TeamName": "Creighton",
-                    "Similarity": 96.84508497230115,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2012,
-                    "TeamName": "Indiana",
-                    "Similarity": 96.5485353062562,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2016,
-                    "TeamName": "Miami FL",
-                    "Similarity": 96.12295448540516,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2010,
-                    "TeamName": "Baylor",
-                    "Similarity": 95.77256172208274,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2019,
-                    "TeamName": "Virginia Tech",
-                    "Similarity": 95.59328976291837,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "UCLA",
-            "Similarity": 34.30402970304455,
-            "SimilarTeams": [
-                {
-                    "Season": 2013,
-                    "TeamName": "Marquette",
-                    "Similarity": 97.64886122434255,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2014,
-                    "TeamName": "Connecticut",
-                    "Similarity": 96.68596158525584,
-                    "ExitRound": 7
-                },
-                {
-                    "Season": 2017,
-                    "TeamName": "Butler",
-                    "Similarity": 90.75959606363445,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2010,
-                    "TeamName": "Saint Mary's",
-                    "Similarity": 90.68234342246078,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2016,
-                    "TeamName": "Gonzaga",
-                    "Similarity": 90.66456695145641,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "Iowa St.",
-            "Similarity": 28.840837480136827,
-            "SimilarTeams": [
-                {
-                    "Season": 2017,
-                    "TeamName": "Kansas",
-                    "Similarity": 98.1359235896348,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2019,
-                    "TeamName": "Purdue",
-                    "Similarity": 97.99887050422018,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2018,
-                    "TeamName": "Michigan",
-                    "Similarity": 97.91518100008658,
-                    "ExitRound": 6
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Missouri",
-                    "Similarity": 97.58406820202225,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2014,
-                    "TeamName": "Wisconsin",
-                    "Similarity": 97.06124330594042,
-                    "ExitRound": 5
-                }
-            ]
-        },
-        {
-            "TeamName": "Marquette",
-            "Similarity": 25.171857445636817,
-            "SimilarTeams": [
-                {
-                    "Season": 2017,
-                    "TeamName": "Butler",
-                    "Similarity": 99.23077643509835,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2010,
-                    "TeamName": "Saint Mary's",
-                    "Similarity": 98.4521004873959,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2016,
-                    "TeamName": "Gonzaga",
-                    "Similarity": 98.38010063917538,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2013,
-                    "TeamName": "Marquette",
-                    "Similarity": 90.54249441057104,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2014,
-                    "TeamName": "Connecticut",
-                    "Similarity": 90.0994351955699,
-                    "ExitRound": 7
-                }
-            ]
-        },
-        {
-            "TeamName": "Gonzaga",
-            "Similarity": 19.60989538243774,
-            "SimilarTeams": [
-                {
-                    "Season": 2013,
-                    "TeamName": "Michigan",
-                    "Similarity": 97.77616805958723,
-                    "ExitRound": 6
-                },
-                {
-                    "Season": 2018,
-                    "TeamName": "Kansas",
-                    "Similarity": 97.44672469169501,
-                    "ExitRound": 5
-                },
-                {
-                    "Season": 2024,
-                    "TeamName": "North Carolina",
-                    "Similarity": 95.94555864496229,
+                    "Similarity": 99.61994410937338,
                     "ExitRound": 3
                 },
                 {
                     "Season": 2011,
-                    "TeamName": "Kentucky",
-                    "Similarity": 95.83159761021085,
-                    "ExitRound": 5
+                    "TeamName": "Arizona",
+                    "Similarity": 99.57603314393694,
+                    "ExitRound": 4
                 },
                 {
-                    "Season": 2017,
-                    "TeamName": "Florida",
-                    "Similarity": 94.30192426409056,
-                    "ExitRound": 4
+                    "Season": 2019,
+                    "TeamName": "Maryland",
+                    "Similarity": 98.51187177595477,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2024,
+                    "TeamName": "Texas Tech",
+                    "Similarity": 98.1429721785606,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "Baylor",
+                    "Similarity": 98.07934901510973,
+                    "ExitRound": 2
                 }
             ]
         },
         {
             "TeamName": "Mississippi",
-            "Similarity": 16.04167913752501,
+            "Similarity": 89.08513309952492,
             "SimilarTeams": [
                 {
                     "Season": 2017,
-                    "TeamName": "Butler",
-                    "Similarity": 90.85568279292106,
-                    "ExitRound": 3
+                    "TeamName": "Notre Dame",
+                    "Similarity": 98.85630975508226,
+                    "ExitRound": 2
                 },
                 {
-                    "Season": 2010,
-                    "TeamName": "Saint Mary's",
-                    "Similarity": 90.731623744694,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2016,
-                    "TeamName": "Gonzaga",
-                    "Similarity": 90.72206308272362,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2011,
-                    "TeamName": "Marquette",
-                    "Similarity": 90.5741537754958,
-                    "ExitRound": 3
+                    "Season": 2019,
+                    "TeamName": "Nevada",
+                    "Similarity": 97.60229044874906,
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2013,
                     "TeamName": "Marquette",
-                    "Similarity": 81.53963492729355,
+                    "Similarity": 97.53391939933829,
                     "ExitRound": 4
+                },
+                {
+                    "Season": 2022,
+                    "TeamName": "Alabama",
+                    "Similarity": 97.24437402073504,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2015,
+                    "TeamName": "Iowa",
+                    "Similarity": 97.17173649069257,
+                    "ExitRound": 2
                 }
             ]
         },
         {
-            "TeamName": "Michigan St.",
-            "Similarity": 10.591287870905362,
+            "TeamName": "Saint Mary's",
+            "Similarity": 83.32104146504255,
             "SimilarTeams": [
                 {
-                    "Season": 2015,
-                    "TeamName": "Utah",
-                    "Similarity": 98.71962601963332,
-                    "ExitRound": 3
+                    "Season": 2017,
+                    "TeamName": "Cincinnati",
+                    "Similarity": 99.34043080726887,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2014,
+                    "TeamName": "Gonzaga",
+                    "Similarity": 98.53856586305096,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2019,
+                    "TeamName": "Buffalo",
+                    "Similarity": 98.28273582733465,
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2016,
-                    "TeamName": "Oklahoma",
-                    "Similarity": 98.45230113161507,
-                    "ExitRound": 5
+                    "TeamName": "Maryland",
+                    "Similarity": 98.00260131290722,
+                    "ExitRound": 3
                 },
                 {
-                    "Season": 2022,
-                    "TeamName": "UCLA",
-                    "Similarity": 98.26583241160492,
-                    "ExitRound": 3
+                    "Season": 2011,
+                    "TeamName": "Georgetown",
+                    "Similarity": 97.53077566167835,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Kansas",
+            "Similarity": 83.16567552096657,
+            "SimilarTeams": [
+                {
+                    "Season": 2009,
+                    "TeamName": "Clemson",
+                    "Similarity": 98.608009863943,
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2018,
-                    "TeamName": "Gonzaga",
-                    "Similarity": 97.60816231968806,
+                    "TeamName": "TCU",
+                    "Similarity": 98.24161067965026,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "Maryland",
+                    "Similarity": 98.10721182252213,
                     "ExitRound": 3
                 },
                 {
-                    "Season": 2010,
-                    "TeamName": "Kentucky",
-                    "Similarity": 97.54489140606775,
+                    "Season": 2013,
+                    "TeamName": "Missouri",
+                    "Similarity": 97.81624291094454,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2011,
+                    "TeamName": "Georgetown",
+                    "Similarity": 97.3959860215429,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "BYU",
+            "Similarity": 74.18651159237714,
+            "SimilarTeams": [
+                {
+                    "Season": 2019,
+                    "TeamName": "Mississippi St.",
+                    "Similarity": 99.4223456405081,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Arizona",
+                    "Similarity": 98.85284123212172,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2011,
+                    "TeamName": "Florida",
+                    "Similarity": 98.02466285231104,
                     "ExitRound": 4
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "Michigan",
+                    "Similarity": 97.71639306835874,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2013,
+                    "TeamName": "VCU",
+                    "Similarity": 97.5373830131342,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Texas",
+            "Similarity": 70.781208740089,
+            "SimilarTeams": [
+                {
+                    "Season": 2024,
+                    "TeamName": "Texas",
+                    "Similarity": 99.87228083933881,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2014,
+                    "TeamName": "Oregon",
+                    "Similarity": 99.53853150330711,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2009,
+                    "TeamName": "California",
+                    "Similarity": 98.80193079986171,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Creighton",
+                    "Similarity": 98.6719910650903,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "Creighton",
+                    "Similarity": 97.46704118053215,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Arizona",
+            "Similarity": 65.02629714513604,
+            "SimilarTeams": [
+                {
+                    "Season": 2009,
+                    "TeamName": "Marquette",
+                    "Similarity": 98.32310209865955,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Wichita St.",
+                    "Similarity": 98.05740895997124,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2010,
+                    "TeamName": "Michigan St.",
+                    "Similarity": 95.39865996189806,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2022,
+                    "TeamName": "Arkansas",
+                    "Similarity": 94.9737416300393,
+                    "ExitRound": 4
+                },
+                {
+                    "Season": 2021,
+                    "TeamName": "San Diego St.",
+                    "Similarity": 94.07517638624743,
+                    "ExitRound": 2
                 }
             ]
         },
         {
             "TeamName": "Michigan",
-            "Similarity": 6.930566237140212,
+            "Similarity": 61.583871382124585,
             "SimilarTeams": [
+                {
+                    "Season": 2014,
+                    "TeamName": "Oklahoma",
+                    "Similarity": 98.25662287453345,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2024,
+                    "TeamName": "Nebraska",
+                    "Similarity": 96.98055032240642,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2013,
+                    "TeamName": "Notre Dame",
+                    "Similarity": 96.96269112193046,
+                    "ExitRound": 2
+                },
                 {
                     "Season": 2011,
                     "TeamName": "Marquette",
-                    "Similarity": 98.47544796108497,
+                    "Similarity": 96.83689605254585,
                     "ExitRound": 3
+                },
+                {
+                    "Season": 2015,
+                    "TeamName": "Providence",
+                    "Similarity": 95.22442132612183,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Memphis",
+            "Similarity": 55.970785944649435,
+            "SimilarTeams": [
+                {
+                    "Season": 2019,
+                    "TeamName": "Wofford",
+                    "Similarity": 99.84880675570648,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2013,
+                    "TeamName": "Colorado St.",
+                    "Similarity": 99.53777909523691,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "Arizona",
+                    "Similarity": 98.42371316569604,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2014,
+                    "TeamName": "Kentucky",
+                    "Similarity": 98.40603901126784,
+                    "ExitRound": 6
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "Iowa",
+                    "Similarity": 98.3896986925423,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Creighton",
+            "Similarity": 55.77385847274029,
+            "SimilarTeams": [
+                {
+                    "Season": 2019,
+                    "TeamName": "Wofford",
+                    "Similarity": 97.54635196897354,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2013,
+                    "TeamName": "Colorado St.",
+                    "Similarity": 97.52371321596225,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "Arizona",
+                    "Similarity": 96.25386827268447,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2014,
+                    "TeamName": "Kentucky",
+                    "Similarity": 95.97269100663979,
+                    "ExitRound": 6
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "Iowa",
+                    "Similarity": 95.9669997060253,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Georgia",
+            "Similarity": 52.70504646565234,
+            "SimilarTeams": [
+                {
+                    "Season": 2009,
+                    "TeamName": "Oklahoma St.",
+                    "Similarity": 99.44359592524856,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2015,
+                    "TeamName": "Arkansas",
+                    "Similarity": 99.2508956005469,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2013,
+                    "TeamName": "North Carolina St.",
+                    "Similarity": 99.13921020322032,
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2022,
                     "TeamName": "North Carolina",
-                    "Similarity": 90.49238447037324,
+                    "Similarity": 98.23647916031594,
                     "ExitRound": 6
                 },
                 {
-                    "Season": 2010,
-                    "TeamName": "Saint Mary's",
-                    "Similarity": 81.73251354605785,
+                    "Season": 2024,
+                    "TeamName": "Florida",
+                    "Similarity": 97.80686161042217,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Illinois",
+            "Similarity": 37.721077411577824,
+            "SimilarTeams": [
+                {
+                    "Season": 2017,
+                    "TeamName": "Iowa St.",
+                    "Similarity": 99.46867975005652,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2012,
+                    "TeamName": "Florida",
+                    "Similarity": 98.35374198911592,
                     "ExitRound": 3
                 },
                 {
-                    "Season": 2016,
-                    "TeamName": "Gonzaga",
-                    "Similarity": 81.72795600114755,
+                    "Season": 2018,
+                    "TeamName": "Houston",
+                    "Similarity": 97.67287652741845,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2015,
+                    "TeamName": "Northern Iowa",
+                    "Similarity": 97.26469318050059,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2013,
+                    "TeamName": "Arizona",
+                    "Similarity": 96.74358806915342,
                     "ExitRound": 3
+                }
+            ]
+        },
+        {
+            "TeamName": "Oregon",
+            "Similarity": 37.716915201114006,
+            "SimilarTeams": [
+                {
+                    "Season": 2017,
+                    "TeamName": "Iowa St.",
+                    "Similarity": 99.65386873518851,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2012,
+                    "TeamName": "Florida",
+                    "Similarity": 97.59781684521766,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Houston",
+                    "Similarity": 97.48909517491403,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2015,
+                    "TeamName": "Northern Iowa",
+                    "Similarity": 97.22804866951816,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2021,
+                    "TeamName": "Colorado",
+                    "Similarity": 96.76445959421923,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Maryland",
+            "Similarity": 28.652048946811874,
+            "SimilarTeams": [
+                {
+                    "Season": 2016,
+                    "TeamName": "Arizona",
+                    "Similarity": 99.54779019701029,
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2017,
-                    "TeamName": "Butler",
-                    "Similarity": 81.7186708236496,
-                    "ExitRound": 3
+                    "TeamName": "Oregon",
+                    "Similarity": 99.2306772534755,
+                    "ExitRound": 5
+                },
+                {
+                    "Season": 2019,
+                    "TeamName": "Iowa St.",
+                    "Similarity": 98.59001160504066,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2012,
+                    "TeamName": "Vanderbilt",
+                    "Similarity": 98.40339827483496,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Auburn",
+                    "Similarity": 98.3542379052123,
+                    "ExitRound": 2
                 }
             ]
         },
         {
             "TeamName": "Texas Tech",
-            "Similarity": 1.3750677661206367,
+            "Similarity": 28.5849532519412,
             "SimilarTeams": [
                 {
-                    "Season": 2015,
-                    "TeamName": "Gonzaga",
-                    "Similarity": 97.73487803842707,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Duke",
-                    "Similarity": 95.75385299024163,
-                    "ExitRound": 3
-                },
-                {
                     "Season": 2019,
-                    "TeamName": "Kentucky",
-                    "Similarity": 95.70429376803301,
-                    "ExitRound": 4
+                    "TeamName": "Iowa St.",
+                    "Similarity": 98.48608692878356,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "Oregon",
+                    "Similarity": 98.22731266025843,
+                    "ExitRound": 5
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "Arizona",
+                    "Similarity": 98.01466811721566,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Auburn",
+                    "Similarity": 97.77212643374898,
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2024,
-                    "TeamName": "Tennessee",
-                    "Similarity": 95.18506072983678,
-                    "ExitRound": 4
-                },
-                {
-                    "Season": 2012,
-                    "TeamName": "Syracuse",
-                    "Similarity": 94.60907750792873,
-                    "ExitRound": 4
+                    "TeamName": "BYU",
+                    "Similarity": 97.75602025884368,
+                    "ExitRound": 2
                 }
             ]
         },
         {
-            "TeamName": "Florida",
-            "Similarity": 0,
+            "TeamName": "Iowa St.",
+            "Similarity": 28.57652763298286,
             "SimilarTeams": [
                 {
-                    "Season": 2021,
-                    "TeamName": "Baylor",
-                    "Similarity": 96.9269612394244,
-                    "ExitRound": 7
+                    "Season": 2017,
+                    "TeamName": "Oregon",
+                    "Similarity": 98.28761724213305,
+                    "ExitRound": 5
+                },
+                {
+                    "Season": 2019,
+                    "TeamName": "Iowa St.",
+                    "Similarity": 98.03666710971369,
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2016,
-                    "TeamName": "North Carolina",
-                    "Similarity": 95.79204643086452,
-                    "ExitRound": 6
+                    "TeamName": "Arizona",
+                    "Similarity": 97.76968911060364,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Auburn",
+                    "Similarity": 97.33105425727685,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2024,
+                    "TeamName": "BYU",
+                    "Similarity": 97.2347296039049,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Wisconsin",
+            "Similarity": 28.553815065746946,
+            "SimilarTeams": [
+                {
+                    "Season": 2019,
+                    "TeamName": "Iowa St.",
+                    "Similarity": 97.98808995207042,
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2017,
-                    "TeamName": "Kentucky",
-                    "Similarity": 94.85665490430206,
-                    "ExitRound": 4
+                    "TeamName": "Oregon",
+                    "Similarity": 97.70384474183473,
+                    "ExitRound": 5
                 },
                 {
-                    "Season": 2022,
-                    "TeamName": "Houston",
-                    "Similarity": 93.93162470573877,
-                    "ExitRound": 4
+                    "Season": 2024,
+                    "TeamName": "BYU",
+                    "Similarity": 97.5344949955354,
+                    "ExitRound": 2
                 },
                 {
-                    "Season": 2010,
-                    "TeamName": "West Virginia",
-                    "Similarity": 93.72771275425623,
+                    "Season": 2016,
+                    "TeamName": "Arizona",
+                    "Similarity": 97.42539996650353,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Auburn",
+                    "Similarity": 97.28031944146376,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Kentucky",
+            "Similarity": 28.547967846070165,
+            "SimilarTeams": [
+                {
+                    "Season": 2024,
+                    "TeamName": "BYU",
+                    "Similarity": 98.9723194004361,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2019,
+                    "TeamName": "Iowa St.",
+                    "Similarity": 98.34268713027383,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Auburn",
+                    "Similarity": 97.91254524391066,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "Arizona",
+                    "Similarity": 97.27796084942189,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "Oregon",
+                    "Similarity": 96.84225610502688,
                     "ExitRound": 5
                 }
             ]
         },
         {
-            "TeamName": "Auburn",
+            "TeamName": "North Carolina",
+            "Similarity": 28.540405177179935,
+            "SimilarTeams": [
+                {
+                    "Season": 2024,
+                    "TeamName": "BYU",
+                    "Similarity": 98.23767638195477,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2019,
+                    "TeamName": "Iowa St.",
+                    "Similarity": 98.12028556858229,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Auburn",
+                    "Similarity": 97.51304888089854,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "Arizona",
+                    "Similarity": 97.22020976918041,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "Oregon",
+                    "Similarity": 97.10590707588024,
+                    "ExitRound": 5
+                }
+            ]
+        },
+        {
+            "TeamName": "Florida",
+            "Similarity": 19.485127983919213,
+            "SimilarTeams": [
+                {
+                    "Season": 2017,
+                    "TeamName": "Purdue",
+                    "Similarity": 98.78609143092241,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2021,
+                    "TeamName": "Florida St.",
+                    "Similarity": 97.88083688254065,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Ohio St.",
+                    "Similarity": 97.35703384551373,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2015,
+                    "TeamName": "Wichita St.",
+                    "Similarity": 97.33360640678838,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2011,
+                    "TeamName": "Connecticut",
+                    "Similarity": 97.29321861682182,
+                    "ExitRound": 7
+                }
+            ]
+        },
+        {
+            "TeamName": "Purdue",
+            "Similarity": 19.43802129004112,
+            "SimilarTeams": [
+                {
+                    "Season": 2024,
+                    "TeamName": "Gonzaga",
+                    "Similarity": 97.91572148671057,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "Purdue",
+                    "Similarity": 96.8814308382978,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2021,
+                    "TeamName": "Florida St.",
+                    "Similarity": 96.81876425519893,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Ohio St.",
+                    "Similarity": 96.5815072111821,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2015,
+                    "TeamName": "Wichita St.",
+                    "Similarity": 95.96379906347565,
+                    "ExitRound": 2
+                }
+            ]
+        },
+        {
+            "TeamName": "Oklahoma",
+            "Similarity": 10.344273846225903,
+            "SimilarTeams": [
+                {
+                    "Season": 2017,
+                    "TeamName": "Saint Mary's",
+                    "Similarity": 98.85433354438563,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2013,
+                    "TeamName": "Creighton",
+                    "Similarity": 97.95310649734775,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2022,
+                    "TeamName": "Purdue",
+                    "Similarity": 97.54283872438133,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2011,
+                    "TeamName": "Washington",
+                    "Similarity": 97.30891492873228,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "Duke",
+                    "Similarity": 97.17303574887832,
+                    "ExitRound": 3
+                }
+            ]
+        },
+        {
+            "TeamName": "Marquette",
             "Similarity": 0,
             "SimilarTeams": [
                 {
                     "Season": 2015,
-                    "TeamName": "Wisconsin",
-                    "Similarity": 98.07756722633015,
-                    "ExitRound": 6
-                },
-                {
-                    "Season": 2018,
-                    "TeamName": "Villanova",
-                    "Similarity": 97.38683271632297,
-                    "ExitRound": 7
-                },
-                {
-                    "Season": 2019,
                     "TeamName": "Gonzaga",
-                    "Similarity": 97.13411861375947,
+                    "Similarity": 99.19436297066235,
                     "ExitRound": 4
                 },
                 {
+                    "Season": 2016,
+                    "TeamName": "Kentucky",
+                    "Similarity": 97.96417128437582,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2019,
+                    "TeamName": "Kentucky",
+                    "Similarity": 97.24592875763898,
+                    "ExitRound": 4
+                },
+                {
+                    "Season": 2009,
+                    "TeamName": "Duke",
+                    "Similarity": 97.15912459925465,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2024,
+                    "TeamName": "Tennessee",
+                    "Similarity": 96.68358659874859,
+                    "ExitRound": 4
+                }
+            ]
+        },
+        {
+            "TeamName": "Tennessee",
+            "Similarity": 0,
+            "SimilarTeams": [
+                {
                     "Season": 2021,
-                    "TeamName": "Michigan",
-                    "Similarity": 93.86887999665967,
+                    "TeamName": "Baylor",
+                    "Similarity": 98.90733973602039,
+                    "ExitRound": 7
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "North Carolina",
+                    "Similarity": 97.83604588706692,
+                    "ExitRound": 6
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "Kentucky",
+                    "Similarity": 96.85936306740177,
+                    "ExitRound": 4
+                },
+                {
+                    "Season": 2022,
+                    "TeamName": "Houston",
+                    "Similarity": 95.8864522793676,
                     "ExitRound": 4
                 },
                 {
                     "Season": 2010,
-                    "TeamName": "Duke",
-                    "Similarity": 93.75335156651826,
-                    "ExitRound": 7
+                    "TeamName": "West Virginia",
+                    "Similarity": 95.72955300385544,
+                    "ExitRound": 5
                 }
             ]
         },
@@ -881,31 +881,103 @@
                 {
                     "Season": 2021,
                     "TeamName": "Gonzaga",
-                    "Similarity": 97.98952728265216,
+                    "Similarity": 98.36169011820108,
                     "ExitRound": 6
-                },
-                {
-                    "Season": 2019,
-                    "TeamName": "Virginia",
-                    "Similarity": 96.70030132595112,
-                    "ExitRound": 7
                 },
                 {
                     "Season": 2024,
                     "TeamName": "Connecticut",
-                    "Similarity": 95.5980800531041,
+                    "Similarity": 98.02641376251252,
                     "ExitRound": 7
                 },
                 {
-                    "Season": 2015,
-                    "TeamName": "Kentucky",
-                    "Similarity": 95.3399210076738,
-                    "ExitRound": 5
+                    "Season": 2019,
+                    "TeamName": "Virginia",
+                    "Similarity": 97.10109582839308,
+                    "ExitRound": 7
                 },
                 {
                     "Season": 2022,
                     "TeamName": "Gonzaga",
-                    "Similarity": 95.31391162309545,
+                    "Similarity": 96.47612613792151,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2009,
+                    "TeamName": "Pittsburgh",
+                    "Similarity": 95.8172010031559,
+                    "ExitRound": 4
+                }
+            ]
+        },
+        {
+            "TeamName": "Connecticut",
+            "Similarity": 0,
+            "SimilarTeams": [
+                {
+                    "Season": 2019,
+                    "TeamName": "Tennessee",
+                    "Similarity": 99.41551874568982,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2011,
+                    "TeamName": "Wisconsin",
+                    "Similarity": 98.62748611419775,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2024,
+                    "TeamName": "Duke",
+                    "Similarity": 98.2037275774538,
+                    "ExitRound": 4
+                },
+                {
+                    "Season": 2009,
+                    "TeamName": "UCLA",
+                    "Similarity": 97.97085688595408,
+                    "ExitRound": 2
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Gonzaga",
+                    "Similarity": 97.80269313451215,
+                    "ExitRound": 3
+                }
+            ]
+        },
+        {
+            "TeamName": "Michigan St.",
+            "Similarity": 0,
+            "SimilarTeams": [
+                {
+                    "Season": 2013,
+                    "TeamName": "Duke",
+                    "Similarity": 97.89010543383799,
+                    "ExitRound": 4
+                },
+                {
+                    "Season": 2016,
+                    "TeamName": "Villanova",
+                    "Similarity": 97.54151802779032,
+                    "ExitRound": 7
+                },
+                {
+                    "Season": 2018,
+                    "TeamName": "Purdue",
+                    "Similarity": 97.11849685559775,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2009,
+                    "TeamName": "Gonzaga",
+                    "Similarity": 96.75666998864439,
+                    "ExitRound": 3
+                },
+                {
+                    "Season": 2017,
+                    "TeamName": "West Virginia",
+                    "Similarity": 96.7083749507819,
                     "ExitRound": 3
                 }
             ]
@@ -915,34 +987,34 @@
             "Similarity": 0,
             "SimilarTeams": [
                 {
-                    "Season": 2019,
+                    "Season": 2010,
                     "TeamName": "Duke",
-                    "Similarity": 97.52227062720725,
-                    "ExitRound": 4
+                    "Similarity": 97.56889926184866,
+                    "ExitRound": 7
                 },
                 {
-                    "Season": 2013,
-                    "TeamName": "Indiana",
-                    "Similarity": 96.8533316748027,
+                    "Season": 2024,
+                    "TeamName": "Houston",
+                    "Similarity": 97.49047786062765,
                     "ExitRound": 3
                 },
                 {
-                    "Season": 2015,
-                    "TeamName": "Arizona",
-                    "Similarity": 96.58276922172354,
+                    "Season": 2021,
+                    "TeamName": "Michigan",
+                    "Similarity": 97.26862542707889,
                     "ExitRound": 4
                 },
                 {
-                    "Season": 2016,
-                    "TeamName": "Virginia",
-                    "Similarity": 96.40302916135256,
+                    "Season": 2019,
+                    "TeamName": "Gonzaga",
+                    "Similarity": 97.11383794905414,
                     "ExitRound": 4
                 },
                 {
-                    "Season": 2018,
+                    "Season": 2011,
                     "TeamName": "Duke",
-                    "Similarity": 96.32482750119127,
-                    "ExitRound": 4
+                    "Similarity": 96.54028125466823,
+                    "ExitRound": 3
                 }
             ]
         },
@@ -958,27 +1030,27 @@
                 },
                 {
                     "Season": 2009,
-                    "TeamName": "Connecticut",
+                    "TeamName": "Arizona St.",
                     "Similarity": 0,
-                    "ExitRound": 5
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2009,
-                    "TeamName": "Duke",
+                    "TeamName": "Boston College",
                     "Similarity": 0,
-                    "ExitRound": 3
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2009,
-                    "TeamName": "Gonzaga",
+                    "TeamName": "BYU",
                     "Similarity": 0,
-                    "ExitRound": 3
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2009,
-                    "TeamName": "Kansas",
+                    "TeamName": "California",
                     "Similarity": 0,
-                    "ExitRound": 3
+                    "ExitRound": 2
                 }
             ]
         },
@@ -994,99 +1066,27 @@
                 },
                 {
                     "Season": 2009,
-                    "TeamName": "Connecticut",
+                    "TeamName": "Arizona St.",
                     "Similarity": 0,
-                    "ExitRound": 5
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2009,
-                    "TeamName": "Duke",
+                    "TeamName": "Boston College",
                     "Similarity": 0,
-                    "ExitRound": 3
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2009,
-                    "TeamName": "Gonzaga",
+                    "TeamName": "BYU",
                     "Similarity": 0,
-                    "ExitRound": 3
+                    "ExitRound": 2
                 },
                 {
                     "Season": 2009,
-                    "TeamName": "Kansas",
+                    "TeamName": "California",
                     "Similarity": 0,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "Akron",
-            "Similarity": 0,
-            "SimilarTeams": [
-                {
-                    "Season": 2009,
-                    "TeamName": "Arizona",
-                    "Similarity": 0,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Connecticut",
-                    "Similarity": 0,
-                    "ExitRound": 5
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Duke",
-                    "Similarity": 0,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Gonzaga",
-                    "Similarity": 0,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2009,
-                    "TeamName": "Kansas",
-                    "Similarity": 0,
-                    "ExitRound": 3
-                }
-            ]
-        },
-        {
-            "TeamName": "Alabama",
-            "Similarity": 0,
-            "SimilarTeams": [
-                {
-                    "Season": 2015,
-                    "TeamName": "Duke",
-                    "Similarity": 98.20893527844468,
-                    "ExitRound": 7
-                },
-                {
-                    "Season": 2024,
-                    "TeamName": "Arizona",
-                    "Similarity": 96.51396954712096,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2022,
-                    "TeamName": "Kansas",
-                    "Similarity": 95.49914301639343,
-                    "ExitRound": 7
-                },
-                {
-                    "Season": 2019,
-                    "TeamName": "North Carolina",
-                    "Similarity": 95.33062224088904,
-                    "ExitRound": 3
-                },
-                {
-                    "Season": 2021,
-                    "TeamName": "Houston",
-                    "Similarity": 94.79544890004911,
-                    "ExitRound": 5
+                    "ExitRound": 2
                 }
             ]
         }

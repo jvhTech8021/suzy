@@ -1,26 +1,26 @@
 {
     "EAST": {
-        "1": "Florida",
-        "8": "Alabama",
-        "4": "Houston",
-        "5": "Abilene Christian"
+        "1": "Marquette",
+        "8": "Air Force",
+        "4": "Connecticut",
+        "5": "Michigan St."
     },
     "WEST": {
-        "1": "Auburn",
-        "8": "Akron",
+        "1": "Tennessee",
+        "8": "Abilene Christian",
         "4": "Duke",
-        "5": "Air Force"
+        "5": "Houston"
     },
     "SOUTH": {
-        "1": "Alabama A&M",
-        "8": "Arizona St.",
-        "4": "Alcorn St.",
-        "5": "American"
+        "1": "Akron",
+        "8": "Appalachian St.",
+        "4": "Alabama St.",
+        "5": "Albany"
     },
     "MIDWEST": {
-        "1": "Alabama St.",
-        "8": "Arizona",
-        "4": "Albany",
-        "5": "Appalachian St."
+        "1": "Alabama",
+        "8": "American",
+        "4": "Alabama A&M",
+        "5": "Alcorn St."
     }
 }

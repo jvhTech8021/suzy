@@ -3,6 +3,16 @@ import pandas as pd
 import os
 import json
 
+# Import our new BartHistoricalModel
+try:
+    from march_madness_predictor.models.bart_historical_model import BartHistoricalModel
+except ImportError:
+    try:
+        from models.bart_historical_model import BartHistoricalModel
+    except ImportError:
+        print("Warning: Could not import BartHistoricalModel, historical enhancements will be disabled")
+        BartHistoricalModel = None
+
 class GamePredictor:
     """
     Predicts the outcome of a game between two teams using KenPom metrics.
@@ -48,10 +58,18 @@ class GamePredictor:
         self.exit_round_data = None
         self.champion_profile_data = None
         self.height_data = None  # New field for height, experience, and bench data
+        self.bart_data = None    # New field for BART (Bart Torvik) data
+        self.bart_historical_model = None  # Will hold our historical model instance
         
         # Define core metrics that are most likely available in KenPom data
         self.core_metrics = [
             'AdjEM', 'AdjOE', 'AdjDE', 'AdjTempo'
+        ]
+        
+        # Define BART metrics that we'll try to use if available
+        self.bart_metrics = [
+            'barthag', 'WAB', 'adj_o', 'adj_d', 'adj_t', 
+            'ov_rtg', 'wins', 'losses', 'conf_wins', 'conf_losses'
         ]
         
         # Define supplementary metrics that may or may not be available
@@ -86,16 +104,47 @@ class GamePredictor:
             'AdjEM': ['AdjEM', 'AdjEff', 'Adjusted Efficiency Margin', 'Adj Efficiency Margin', 'AdjustEM'],
             'AdjOE': ['AdjOE', 'AdjO', 'Adjusted Offensive Efficiency', 'Adj Offensive Efficiency', 'AdjOffEff', 'AdjOff'],
             'AdjDE': ['AdjDE', 'AdjD', 'Adjusted Defensive Efficiency', 'Adj Defensive Efficiency', 'AdjDefEff', 'AdjDef'],
-            'AdjTempo': ['AdjTempo', 'Adj Tempo', 'Adjusted Tempo', 'Tempo']
+            'AdjTempo': ['AdjTempo', 'Adj Tempo', 'Adjusted Tempo', 'Tempo'],
+            # Add BART metrics mapping
+            'barthag': ['barthag', 'barthag_rating', 'bart_power'],
+            'WAB': ['WAB', 'wins_above_bubble', 'wins_vs_bubble'],
+            'adj_o': ['adj_o', 'adj_offense', 'bart_offense'],
+            'adj_d': ['adj_d', 'adj_defense', 'bart_defense'],
+            'adj_t': ['adj_t', 'adj_tempo', 'bart_tempo']
         }
         
         # Home court advantage in points
         self.home_court_advantage = 3.5
         
         self._load_data()
+        self._load_bart_data()  # Load BART data
         self._detect_available_columns()
         self.active_metrics = self._get_active_metrics()
         self._load_tournament_prediction_data()
+        self._initialize_bart_historical_model()  # Initialize historical model
+    
+    def _initialize_bart_historical_model(self):
+        """Initialize the BART historical model for enhanced predictions"""
+        if BartHistoricalModel is not None:
+            try:
+                # First, try to load a pre-trained model if it exists
+                model = BartHistoricalModel()
+                
+                # Check if a pre-saved model exists
+                model_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bart_historical_model.json')
+                if os.path.exists(model_file):
+                    if model.load_model(model_file):
+                        self.bart_historical_model = model
+                        print(f"Loaded pre-trained BART historical model")
+                        return
+                
+                # If no pre-saved model, create a new one
+                # This may take a while as it processes all historical data
+                self.bart_historical_model = model
+                print("Initialized BART historical model")
+            except Exception as e:
+                print(f"Error initializing BART historical model: {str(e)}")
+                self.bart_historical_model = None
     
     def _load_data(self):
         """Load current season KenPom data"""
@@ -133,6 +182,92 @@ class GamePredictor:
             except Exception as e:
                 print(f"Error loading height and experience data: {str(e)}")
                 self.height_data = None
+    
+    def _load_bart_data(self):
+        """
+        Load BART (Bart Torvik) data for the current season
+        This data provides additional insights beyond KenPom metrics
+        """
+        try:
+            # Try to load from the BART folder
+            base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            bart_file = os.path.join(base_path, "BART/2024_team_results.csv")
+            
+            if os.path.exists(bart_file):
+                self.bart_data = pd.read_csv(bart_file)
+                
+                # Standardize team names for better matching
+                if 'team' in self.bart_data.columns:
+                    self.bart_data['TeamName'] = self.bart_data['team'].str.strip()
+                elif 'Team' in self.bart_data.columns:
+                    self.bart_data['TeamName'] = self.bart_data['Team'].str.strip()
+                
+                print(f"Loaded BART data for {len(self.bart_data)} teams")
+                
+                # Add mapping between KenPom team names and BART team names if needed
+                self._create_team_name_mapping()
+            else:
+                print(f"BART data file not found at {bart_file}")
+                self.bart_data = None
+        except Exception as e:
+            print(f"Error loading BART data: {str(e)}")
+            self.bart_data = None
+    
+    def _create_team_name_mapping(self):
+        """
+        Create a mapping between KenPom team names and BART team names
+        to handle differences in naming conventions
+        """
+        if self.bart_data is None or self.current_data is None:
+            return
+        
+        # Common name variations to handle
+        name_variations = {
+            "NC State": ["North Carolina St.", "NC State", "N.C. State"],
+            "UConn": ["Connecticut", "UConn", "Connecticut"],
+            "USC": ["Southern California", "USC", "Southern Cal"],
+            "SMU": ["Southern Methodist", "SMU"],
+            "UCF": ["Central Florida", "UCF"],
+            "UNC": ["North Carolina", "UNC"],
+            "UNLV": ["Nevada Las Vegas", "UNLV"],
+            "VCU": ["Virginia Commonwealth", "VCU"],
+            "BYU": ["Brigham Young", "BYU"],
+            "LSU": ["Louisiana State", "LSU"],
+            "Ole Miss": ["Mississippi", "Ole Miss"],
+            "Pitt": ["Pittsburgh", "Pitt"],
+            "UMass": ["Massachusetts", "UMass"],
+            "UTEP": ["Texas El Paso", "UTEP"],
+            "UAB": ["Alabama Birmingham", "UAB"],
+            "St. John's": ["St. John's (NY)", "St. John's", "Saint John's"],
+            "UIC": ["Illinois Chicago", "UIC"],
+            "ETSU": ["East Tennessee St.", "ETSU", "East Tennessee State"],
+        }
+        
+        # Create a dictionary to map BART team names to KenPom team names
+        self.team_name_mapping = {}
+        
+        # First, try exact matches
+        kenpom_teams = set(self.current_data['TeamName'].str.strip())
+        bart_teams = set(self.bart_data['TeamName'].str.strip())
+        
+        # For teams with exact matches, create direct mappings
+        for team in bart_teams:
+            if team in kenpom_teams:
+                self.team_name_mapping[team] = team
+        
+        # For teams without exact matches, try variations
+        for kenpom_name in kenpom_teams:
+            if kenpom_name not in self.team_name_mapping.values():
+                # Check if this team has known variations
+                for common_name, variations in name_variations.items():
+                    if kenpom_name in variations:
+                        # Check if any variation exists in BART data
+                        for var in variations:
+                            if var in bart_teams:
+                                self.team_name_mapping[var] = kenpom_name
+                                break
+        
+        print(f"Created mapping for {len(self.team_name_mapping)} teams between BART and KenPom data")
     
     def _load_tournament_prediction_data(self):
         """Load tournament prediction data from other models"""
@@ -437,6 +572,112 @@ class GamePredictor:
         
         return result
     
+    def _get_bart_data(self, team_name):
+        """
+        Get BART data for a specific team
+        
+        Parameters:
+        -----------
+        team_name : str
+            Name of the team
+            
+        Returns:
+        --------
+        dict
+            Dictionary with BART metrics or None if data not available
+        """
+        if self.bart_data is None:
+            return None
+        
+        # Try to find the team in BART data
+        team_data = self.bart_data[self.bart_data['TeamName'] == team_name]
+        
+        # If no direct match, try using the mapping
+        if len(team_data) == 0 and hasattr(self, 'team_name_mapping'):
+            for bart_name, kenpom_name in self.team_name_mapping.items():
+                if kenpom_name == team_name:
+                    team_data = self.bart_data[self.bart_data['TeamName'] == bart_name]
+                    if len(team_data) > 0:
+                        break
+        
+        if len(team_data) == 0:
+            return None
+        
+        # Extract relevant metrics
+        team_row = team_data.iloc[0]
+        result = {}
+        
+        # Try to get each BART metric
+        for metric in self.bart_metrics:
+            if metric in team_row:
+                result[metric] = team_row[metric]
+            elif metric.lower() in team_row:
+                result[metric] = team_row[metric.lower()]
+        
+        return result
+    
+    def _calculate_barthag_win_probability(self, team1_barthag, team2_barthag, location='neutral'):
+        """
+        Calculate win probability based on Bart Torvik's power ratings (barthag)
+        
+        Parameters:
+        -----------
+        team1_barthag : float
+            barthag rating for team 1
+        team2_barthag : float
+            barthag rating for team 2
+        location : str
+            Game location: 'home_1' (team1 at home), 'home_2' (team2 at home), or 'neutral'
+            
+        Returns:
+        --------
+        float
+            Win probability for team 1
+        """
+        if team1_barthag is None or team2_barthag is None:
+            return None
+        
+        # Basic log5 formula with barthag ratings
+        team1_wp = team1_barthag / (team1_barthag + (1 - team2_barthag))
+        
+        # Adjust for home court advantage
+        if location == 'home_1':
+            team1_wp = min(0.99, team1_wp + 0.04)  # ~4% boost for home team
+        elif location == 'home_2':
+            team1_wp = max(0.01, team1_wp - 0.04)  # ~4% reduction for away team
+        
+        return team1_wp
+    
+    def _calculate_wab_adjustment(self, team1_wab, team2_wab):
+        """
+        Calculate a point adjustment based on Wins Above Bubble (WAB)
+        Teams with higher WAB tend to perform better in high-pressure situations
+        
+        Parameters:
+        -----------
+        team1_wab : float
+            Wins Above Bubble for team 1
+        team2_wab : float
+            Wins Above Bubble for team 2
+            
+        Returns:
+        --------
+        float
+            Point adjustment for team 1 (can be positive or negative)
+        """
+        if team1_wab is None or team2_wab is None:
+            return 0.0
+        
+        # Calculate the difference in WAB
+        wab_diff = team1_wab - team2_wab
+        
+        # Convert WAB difference to point adjustment
+        # Each WAB difference of 3.0 is worth ~1 point
+        adjustment = wab_diff / 3.0
+        
+        # Cap the adjustment at +/- 3 points
+        return max(-3.0, min(3.0, adjustment))
+    
     def predict_game(self, team1_name, team2_name, location='neutral'):
         """
         Predict the outcome of a game between two teams using KenPom metrics
@@ -478,6 +719,10 @@ class GamePredictor:
         team1_height_data = self._get_height_data(team1_name)
         team2_height_data = self._get_height_data(team2_name)
         
+        # Get BART data for both teams
+        team1_bart_data = self._get_bart_data(team1_name)
+        team2_bart_data = self._get_bart_data(team2_name)
+        
         # Get historical matchup data
         historical_data = self._analyze_historical_matchups(team1_name, team2_name)
         
@@ -514,6 +759,34 @@ class GamePredictor:
             team1_expected_score += self.home_court_advantage
         elif location == 'home_2':
             team2_expected_score += self.home_court_advantage
+        
+        # Apply BART adjustments if available
+        bart_adjustment = 0
+        barthag_win_prob = None
+        wab_adjustment = 0
+        
+        if team1_bart_data is not None and team2_bart_data is not None:
+            # Get barthag ratings
+            team1_barthag = team1_bart_data.get('barthag')
+            team2_barthag = team2_bart_data.get('barthag')
+            
+            # Calculate win probability using barthag
+            if team1_barthag is not None and team2_barthag is not None:
+                barthag_win_prob = self._calculate_barthag_win_probability(team1_barthag, team2_barthag, location)
+                
+                # Adjust score based on barthag difference
+                barthag_diff = team1_barthag - team2_barthag
+                # Each 0.1 difference in barthag is ~1.5 points
+                bart_adjustment = barthag_diff * 15
+                team1_expected_score += bart_adjustment
+            
+            # Apply WAB adjustment
+            team1_wab = team1_bart_data.get('WAB')
+            team2_wab = team2_bart_data.get('WAB')
+            
+            if team1_wab is not None and team2_wab is not None:
+                wab_adjustment = self._calculate_wab_adjustment(team1_wab, team2_wab)
+                team1_expected_score += wab_adjustment
         
         # Apply tournament prediction adjustment if available
         tournament_adjustment_team1 = 0
@@ -596,74 +869,6 @@ class GamePredictor:
             team1_expected_score += tournament_adjustment_team1
             team2_expected_score += tournament_adjustment_team2
         
-        # Apply seed adjustment if available
-        seed_adjustment = 0
-        if team1_tournament_data["seed"] is not None and team2_tournament_data["seed"] is not None:
-            # Make sure seed values are valid numbers before calculation
-            seed1 = team1_tournament_data["seed"]
-            seed2 = team2_tournament_data["seed"]
-            
-            if isinstance(seed1, (int, float)) and isinstance(seed2, (int, float)) and not pd.isna(seed1) and not pd.isna(seed2):
-                # Lower seeds (better teams) get a boost
-                seed_diff = seed2 - seed1
-                seed_adjustment = seed_diff / 7  # Scale appropriately
-                team1_expected_score += seed_adjustment
-        
-        # Apply height and experience adjustments if available
-        height_adjustment = 0
-        experience_adjustment = 0
-        bench_adjustment = 0  # Define this variable to avoid undefined errors
-        
-        # Only apply height and experience adjustments if valid data is available for both teams
-        if team1_height_data["has_height_data"] and team2_height_data["has_height_data"]:
-            # Height advantage
-            if team1_height_data["effhgt"] is not None and team2_height_data["effhgt"] is not None:
-                # Make sure both values are not NaN before calculation
-                if not pd.isna(team1_height_data["effhgt"]) and not pd.isna(team2_height_data["effhgt"]):
-                    effhgt_diff = team1_height_data["effhgt"] - team2_height_data["effhgt"]
-                    if abs(effhgt_diff) > 0.7:  # Lowered threshold from 1.0 to 0.7 inch
-                        height_adjustment = effhgt_diff * 0.8  # Increased from 0.5 to 0.8 points per inch
-                        team1_expected_score += height_adjustment
-            
-            # Experience advantage
-            if team1_height_data["experience"] is not None and team2_height_data["experience"] is not None:
-                # Make sure both values are not NaN before calculation
-                if not pd.isna(team1_height_data["experience"]) and not pd.isna(team2_height_data["experience"]):
-                    exp_diff = team1_height_data["experience"] - team2_height_data["experience"]
-                    if abs(exp_diff) > 0.4:  # Lowered threshold from 0.5 to 0.4 years
-                        experience_adjustment = exp_diff * 0.7  # Increased from 0.5 to 0.7 points per year
-                        team1_expected_score += experience_adjustment
-            
-            # Bench depth
-            if team1_height_data["bench"] is not None and team2_height_data["bench"] is not None:
-                # Make sure both values are not NaN before calculation
-                if not pd.isna(team1_height_data["bench"]) and not pd.isna(team2_height_data["bench"]):
-                    bench_diff = team1_height_data["bench"] - team2_height_data["bench"]
-                    if abs(bench_diff) > 6:  # Increased threshold from 4 to 6 percent
-                        bench_adjustment = bench_diff / 5.0  # Decreased importance
-                        team1_expected_score += bench_adjustment
-        
-        # Add a final check to make sure expected scores are not NaN
-        if pd.isna(team1_expected_score) or pd.isna(team2_expected_score):
-            print("WARNING: NaN scores detected, recalculating base scores without adjustments")
-            # If we somehow got NaN values, recalculate without the adjustments
-            # This is a fallback to ensure we always have a prediction
-            team1_expected_score = team1_expected_ppp * avg_tempo
-            team2_expected_score = team2_expected_ppp * avg_tempo
-            
-            # Re-apply only the home court advantage
-            if location == 'home_1':
-                team1_expected_score += self.home_court_advantage
-            elif location == 'home_2':
-                team2_expected_score += self.home_court_advantage
-            
-            # Try to re-apply at least the tournament adjustments safely
-            if tournament_adjustment_team1 != 0 and not pd.isna(tournament_adjustment_team1):
-                team1_expected_score += tournament_adjustment_team1
-            
-            if tournament_adjustment_team2 != 0 and not pd.isna(tournament_adjustment_team2):
-                team2_expected_score += tournament_adjustment_team2
-        
         # Calculate spread (always Team1 - Team2)
         spread = team1_expected_score - team2_expected_score
         
@@ -680,7 +885,12 @@ class GamePredictor:
             team1_wp = self._adjust_win_probability(team1_raw_wp, -self.home_court_advantage)
         else:
             team1_wp = team1_raw_wp
-            
+        
+        # If we have barthag win probability, blend it with the KenPom-based probability
+        if barthag_win_prob is not None:
+            # Weight barthag win probability at 40% and KenPom at 60%
+            team1_wp = (0.6 * team1_wp) + (0.4 * barthag_win_prob)
+        
         # Apply any tournament model adjustments
         if tournament_adjustment_team1 != 0 or tournament_adjustment_team2 != 0:
             total_point_adjustment = tournament_adjustment_team1 - tournament_adjustment_team2
@@ -692,28 +902,8 @@ class GamePredictor:
         key_factors = self._calculate_key_factors(team1, team2)
         
         # Calculate stat comparisons for display
-        stat_comparisons = []
-        for stat in self.active_metrics:
-            team1_value = self._safe_get(team1, stat)
-            team2_value = self._safe_get(team2, stat)
-            difference = team1_value - team2_value
-            
-            # Determine if higher or lower is better for this stat
-            higher_is_better = True
-            if stat in ['AdjDE', 'EFGD_Pct', 'TOR', 'TORD', 'TwoD_Pct', 'ThreeD_Pct']:
-                higher_is_better = False
-                
-            # Format the display name
-            display_name = stat.replace('_', ' ')
-            
-            stat_comparisons.append({
-                "stat": display_name,
-                "team1_value": team1_value,
-                "team2_value": team2_value,
-                "difference": difference,
-                "advantage": team1_name if (higher_is_better and difference > 0) or (not higher_is_better and difference < 0) else team2_name
-            })
-            
+        stat_comparisons = self._calculate_stat_comparisons(team1, team2)
+        
         # Return the prediction data
         result = {
             "team1": {
@@ -722,6 +912,7 @@ class GamePredictor:
                 "win_probability": team1_wp,
                 "tournament_data": team1_tournament_data,
                 "height_data": team1_height_data,
+                "bart_data": team1_bart_data,  # Add BART data
                 "tournament_adjustment_detail": tournament_adjustment_detail_team1
             },
             "team2": {
@@ -730,6 +921,7 @@ class GamePredictor:
                 "win_probability": team2_wp,
                 "tournament_data": team2_tournament_data,
                 "height_data": team2_height_data,
+                "bart_data": team2_bart_data,  # Add BART data
                 "tournament_adjustment_detail": tournament_adjustment_detail_team2
             },
             "spread": spread,
@@ -741,10 +933,9 @@ class GamePredictor:
             "tournament_adjustment": tournament_adjustment_team1 - tournament_adjustment_team2,  # Net adjustment for compatibility
             "tournament_adjustment_team1": tournament_adjustment_team1,
             "tournament_adjustment_team2": tournament_adjustment_team2,
-            "seed_adjustment": seed_adjustment,
-            "height_adjustment": height_adjustment,
-            "experience_adjustment": experience_adjustment,
-            "bench_adjustment": bench_adjustment,
+            "bart_adjustment": bart_adjustment,
+            "wab_adjustment": wab_adjustment,
+            "barthag_win_prob": barthag_win_prob
         }
         
         return result
@@ -1080,39 +1271,114 @@ class GamePredictor:
             'matchups': historical_matchups,
             'avg_margin': avg_margin
         }
-
-    def save_prediction(self, prediction, file_path='historical_picks.json'):
+    
+    def _calculate_stat_comparisons(self, team1, team2):
+        """Calculate statistical comparisons between teams for display"""
+        stat_comparisons = []
+        for stat in self.active_metrics:
+            team1_value = self._safe_get(team1, stat)
+            team2_value = self._safe_get(team2, stat)
+            difference = team1_value - team2_value
+            
+            # Determine if higher or lower is better for this stat
+            higher_is_better = True
+            if stat in ['AdjDE', 'EFGD_Pct', 'TOR', 'TORD', 'TwoD_Pct', 'ThreeD_Pct']:
+                higher_is_better = False
+                
+            # Format the display name
+            display_name = stat.replace('_', ' ')
+            
+            stat_comparisons.append({
+                "stat": display_name,
+                "team1_value": team1_value,
+                "team2_value": team2_value,
+                "difference": difference,
+                "advantage": team1['TeamName'] if (higher_is_better and difference > 0) or (not higher_is_better and difference < 0) else team2['TeamName']
+            })
+        
+        return stat_comparisons
+    
+    def predict_game_with_history(self, team1_name, team2_name, location='neutral'):
         """
-        Save the prediction result to a JSON file.
-
+        Predict a game with additional historical trend analysis
+        
         Parameters:
         -----------
-        prediction : dict
-            The prediction result to save.
-        file_path : str
-            The path to the JSON file where the prediction will be saved.
+        team1_name : str
+            Name of the first team
+        team2_name : str
+            Name of the second team
+        location : str
+            Game location: 'home_1' (team1 at home), 'home_2' (team2 at home), or 'neutral'
+            
+        Returns:
+        --------
+        dict
+            Enhanced prediction with historical adjustments
         """
-        try:
-            # Load existing data
+        # First, get the base prediction
+        base_prediction = self.predict_game(team1_name, team2_name, location)
+        
+        # If no historical model is available, return the base prediction
+        if self.bart_historical_model is None:
+            base_prediction['historical_model_available'] = False
+            return base_prediction
+        
+        # Enhance the prediction with historical data
+        enhanced_prediction = self.bart_historical_model.enhance_game_prediction(base_prediction)
+        enhanced_prediction['historical_model_available'] = True
+        
+        return enhanced_prediction
+
+def load_bart_historical_data(year=None, base_dir=None):
+    """
+    Utility function to load historical BART data for analysis
+    
+    Parameters:
+    -----------
+    year : int or None
+        Year to load (e.g., 2019, 2020). If None, loads data for all available years
+    base_dir : str or None
+        Base directory for BART data. If None, tries to find the BART folder
+        
+    Returns:
+    --------
+    dict or pd.DataFrame
+        Dictionary mapping years to DataFrames or a single DataFrame if year specified
+    """
+    if base_dir is None:
+        # Try to find the BART folder
+        base_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "..", "BART")
+    
+    if year is not None:
+        # Load data for specific year
+        file_path = os.path.join(base_dir, f"{year}_team_results.csv")
+        if os.path.exists(file_path):
             try:
-                with open(file_path, 'r') as file:
-                    data = json.load(file)
-            except FileNotFoundError:
-                data = []
-
-            # Ensure data is a list
-            if not isinstance(data, list):
-                print("Warning: Data is not a list. Resetting to an empty list.")
-                data = []
-
-            # Append new prediction
-            data.append(prediction)
-
-            # Save back to file
-            with open(file_path, 'w') as file:
-                json.dump(data, file, indent=4)
-        except Exception as e:
-            print(f"Error saving prediction: {e}")
+                return pd.read_csv(file_path)
+            except Exception as e:
+                print(f"Error loading BART data for {year}: {str(e)}")
+                return None
+        else:
+            print(f"No BART data available for {year}")
+            return None
+    else:
+        # Load data for all available years
+        result = {}
+        for potential_year in range(2009, 2025):
+            file_path = os.path.join(base_dir, f"{potential_year}_team_results.csv")
+            if os.path.exists(file_path):
+                try:
+                    result[potential_year] = pd.read_csv(file_path)
+                except Exception as e:
+                    print(f"Error loading BART data for {potential_year}: {str(e)}")
+        
+        if result:
+            print(f"Loaded BART data for {len(result)} years")
+        else:
+            print("No BART data found")
+        
+        return result
 
 def predict_matchup(team1, team2, data_loader=None, location='neutral'):
     """
