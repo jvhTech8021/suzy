@@ -1,0 +1,57 @@
+"Akron",13
+"Alabama",2
+"Alabama St.",16
+"American",16
+"Arizona",4
+"Arkansas",10
+"Auburn",1
+"Baylor",9
+"Bryant",15
+"BYU",6
+"Clemson",5
+"Connecticut",8
+"Creighton",9
+"Drake",11
+"Duke",1
+"Florida",1
+"Georgia",9
+"Gonzaga",8
+"Grand Canyon",13
+"High Point",13
+"Houston",1
+"Illinois",6
+"Iowa St.",3
+"Kansas",7
+"Kentucky",3
+"Liberty",12
+"Lipscomb",14
+"Louisville",8
+"Marquette",7
+"Maryland",4
+"McNeese",12
+"Memphis",5
+"Michigan",5
+"Michigan St.",2
+"Mississippi St.",8
+"Missouri",6
+"Montana",14
+"Mount St. Mary's",16
+"New Mexico",10
+"North Carolina",11
+"Oklahoma",9
+"Oregon",5
+"Purdue",4
+"Robert Morris",15
+"Tennessee",2
+"Texas",11
+"Texas A&M",4
+"Texas Tech",3
+"UC San Diego",12
+"UCLA",7
+"UNC Wilmington",14
+"Vanderbilt",10
+"VCU",11
+"Wisconsin",3
+"Wofford",15
+"Xavier",11
+"Yale",13
